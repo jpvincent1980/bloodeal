@@ -58,3 +58,7 @@ class CustomUser(AbstractUser):
 
     class Meta:
         verbose_name = "Utilisateur"
+
+    def __str__(self):
+        name = self.pseudo if self.pseudo else self.email
+        return f"{name}"
