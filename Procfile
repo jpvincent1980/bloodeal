@@ -1,0 +1,1 @@
+web: gunicorn bloodeal.wsgi --log-file -
