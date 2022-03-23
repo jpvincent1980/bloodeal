@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}" defer></script>
+    {% block title %}
+    <title>Bloodeal</title>
+    {% endblock %}
+</head>
+
+<body>
+
+    <header>
+        <a href="{% url 'accounts:index' %}">
+            <h1>Bloodeal</h1>
+        </a>
+        {% if request.user.is_authenticated %}
+            <nav>
+                <ul>
+                    <li>Bienvenue <a href="{% url 'accounts:index' %}">{{ request.user }}</a></li>
+                </ul>
+            </nav>
+        {% endif %}
+    </header>
+
+    <main>
+
+        {% block content %}
+        Bienvenue sur le site de Bloodeal !
+        {% endblock %}
+
+        <button onclick="backToTopFunction()" id="backToTop" title="Go back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
+        <path d="m 4 30 l 16 -20 l 16 20" />
+        </svg>
+        </button>
+
+    </main>
+
+    <footer>
+        &copy; {% now "Y" %} Bloodeal
+    </footer>
+
+</body>
+
+</html>

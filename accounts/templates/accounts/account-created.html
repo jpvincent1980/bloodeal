@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p class="signup-confirmation">Merci de vous êtes inscrit sur Bloodeal !
+        <br>
+        <a href="{% url 'accounts:dashboard' %}">
+            <button class="btn btn-submit">Revenir à l'accueil</button>
+        </a>
+    </p>
+{% endblock %}
