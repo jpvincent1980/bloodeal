@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="identification">
+                    <h2>Connectez-vous</h2>
+                    {% if message %}
+                    <p class="btn btn-delete"><b>{{ message }}</b></p>
+                    {% endif %}
+                    <br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                                <p>{{ field.label_tag }}</p>
+                                <p>{{ field }}
+                                    {% if forloop.counter == 2 %}
+                                        <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
+                                    {% endif %}
+                                </p>
+                                <br>
+                        {% endfor %}
+                        <p><input name="button" type="submit" value="Je me connecte" class="btn btn-submit"></p>
+                    </form>
+                </div>
 {% endblock %}

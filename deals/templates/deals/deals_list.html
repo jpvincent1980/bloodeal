@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+    <section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+    </section>
+
+    <section class="dashboard-block main-block-min-width">
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>TOUS LES BONS PLANS ({{ deal_list|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap">
+            {% for deal in deal_list %}
+            <div class="capsule width-25">
+                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
+                <div class="capsule-text">
+                    <h2>{{ deal.bluray.movie.title_vf }}</h2>
+                    <p>{{ deal.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+
+    </section>
+
+    <section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh">
+            <div class="dashboard-block-element-title">
+                <h2>TOP 5</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-column">
+            {% for deal in top_deals %}
+            <div class="capsule align-items-center flex-column width-100">
+                <div class="capsule-image" style="background-image: url({% static 'img/thegreenknight.jpg' %});"></div>
+                <div class="capsule-text text-align-center">
+                    <h2>{{ deal }}</h2>
+                    {% with total=deal.num_favorites %}
+                        ♥ par {{ total }} membre{{total|pluralize}}
+                    {% endwith %}
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

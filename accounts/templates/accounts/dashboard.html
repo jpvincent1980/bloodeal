@@ -1,5 +1,62 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+
+<div class="dashboard-wrapper">
+
+    <section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+    </section>
+
+    <section class="dashboard-block main-block-min-width">
+
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>VOS BONS PLANS PERSONNALISES ({{ favorite_deals|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content">
+                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
+                <div class="capsule-text">
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>BONS PLANS A LA UNE ({{ deals_list|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content">
+                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
+                <div class="capsule-text">
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>LES DERNIERS PLANS PERSONNALISES ({{ favorite_deals|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content">
+                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
+                <div class="capsule-text">
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+
+    <section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+        <div class="dashboard-block-element min-height-20vh"></div>
+    </section>
+
+</div>
 
 {% endblock %}

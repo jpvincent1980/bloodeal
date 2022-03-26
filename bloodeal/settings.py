@@ -146,6 +146,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = "accounts:login"
 
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView
@@ -18,10 +18,47 @@ def index_view(request):
     Template:
         None
     """
+    next_url = request.GET.get("next", "accounts:dashboard")
     if request.user.is_authenticated:
         return redirect("accounts:dashboard")
+    elif request.method == "POST" and request.POST["button"] == "Je me connecte":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect(next_url)
+        else:
+            login_form = LoginForm(auto_id="login_%s")
+            signup_form = SignupForm(auto_id="signup_%s")
+            login_message = f"Adresse email et/ou mot de passe non  valide."
+            context = {"login_form": login_form,
+                       "signup_form": signup_form,
+                       "login_message": login_message,
+                       "next": next_url}
+            return render(request, "accounts/index.html", context)
+    elif request.method == "POST" and request.POST["button"] == "Je m'inscris":
+        signup_form = SignupForm(request.POST)
+        if signup_form.is_valid():
+            signup_form.save()
+            username = request.POST["email"]
+            password = request.POST["password1"]
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('accounts:dashboard'))
+        else:
+            login_form = LoginForm(auto_id="login_%s")
+            print(signup_form.errors)
+            print(signup_form.error_messages)
+            context = {"login_form": login_form,
+                       "signup_form": signup_form}
+            return render(request, "accounts/index.html", context)
     else:
-        return redirect("accounts:login")
+        login_form = LoginForm(auto_id="login_%s")
+        signup_form = SignupForm(auto_id="signup_%s")
+        context = {"login_form": login_form,
+                   "signup_form": signup_form}
+        return render(request, "accounts/index.html", context)
 
 
 def login_view(request):
@@ -37,6 +74,7 @@ def login_view(request):
         :template:"accounts/login.html"
     """
     next_url = request.GET.get("next", "accounts:dashboard")
+    context = {"next": next_url}
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -44,11 +82,14 @@ def login_view(request):
         if user:
             login(request, user)
             return redirect(next_url)
+        else:
+            form = LoginForm
+            context["form"] = form
+            context["message"] = "Adresse email ou mot de passe non valide."
+            return render(request, "accounts/login.html", context)
     else:
-        form = LoginForm
-        context = {"next": next_url,
-                   "form": form,
-                   "message": "Merci de vous identifier ci-dessous :"}
+        form = LoginForm()
+        context["form"] = form
         return render(request, "accounts/login.html", context)
 
 
@@ -113,7 +154,6 @@ def logout_view(request):
     return redirect("accounts:index")
 
 
-@login_required
 def dashboard_view(request):
     context = {}
     return render(request, "accounts/dashboard.html", context)

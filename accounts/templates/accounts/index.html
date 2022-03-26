@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<h1>BLOODEAL</h1>
+<h1 class="text-align-center">BL💿💿DEAL</h1>
 <section class="main-section">
 
-    <div class="identification">
+    <div class="identification identification-login">
         <h2>CONNEXION</h2>
             <form method="POST">
                 {% csrf_token %}
@@ -13,7 +13,7 @@
                         <p>{{ field.label_tag }}</p>
                         <p>{{ field }}
                             {% if forloop.counter == 2 %}
-                                <span class="show-password" onclick="ShowPassword('login_password')">👁</span>
+                                <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
                             {% endif %}
                         </p>
                         <br>
@@ -25,15 +25,15 @@
             </form>
     </div>
 
-    <div class="identification">
+    <div class="identification identification-login">
         <h2>INSCRIPTION</h2>
             <form method="POST">
                 {% csrf_token %}
                 {% for field in signup_form %}
                         <p>{{ field.label_tag }}</p>
                         <p>{{ field }}
-                            {% if forloop.counter == 3 %}
-                                <span class="show-password" onclick="ShowPassword('signup_password1')">👁</span>
+                            {% if forloop.counter >= 3 %}
+                                <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
                             {% endif %}
                         </p>
                         {{ field.errors }}

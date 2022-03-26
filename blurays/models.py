@@ -19,3 +19,6 @@ class BluRay(models.Model):
 
     class Meta:
         verbose_name = "Blu-Ray"
+
+    def __str__(self):
+        return f"Blu-Ray de {self.movie}"

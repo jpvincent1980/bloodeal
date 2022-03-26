@@ -1,5 +1,55 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% load static %}
 
-{% endblock %}
+    {% block title %}
+        <TITLE>Inscription</TITLE>
+    {% endblock %}
+
+    {% block content %}
+
+    {% if user.is_authenticated %}
+
+        <section class="main-section">
+            <p><h2>Vous êtes déjà inscrit sur notre site.</h2></p>
+            <p>
+                <a href="{% url 'accounts:dashboard' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+            </p>
+        </section>
+
+    {% else %}
+
+        <section class="main-section">
+
+            <form method="POST" class="identification">
+                <h2>INSCRIPTION</h2>
+                {% csrf_token %}
+
+                {% for field in form %}
+                    {% if forloop.counter >= 3 %}
+                        <p>{{ field.label_tag }} {{ field }}
+                        <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
+                        </p>
+                    {% else %}
+                        <p>{{ field.label_tag }} {{ field }}
+                    {% endif %}
+                {% endfor %}
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                          <div class="errors">
+                               <p>{{ error|escape }}</p>
+                          </div>
+                       {% endfor %}
+                   {% endfor %}
+                {% endif %}
+
+                <p>
+                    <input name="button" type="submit" value="Je m'inscris" class="btn btn-submit">
+                </p>
+            </form>
+
+        </section>
+    {% endif %}
+    {% endblock %}

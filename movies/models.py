@@ -21,6 +21,16 @@ class Movie(models.Model):
     def __str__(self):
         return f"{self.title_vf}"
 
+    def directors(self):
+        directors = MovieDirector.objects.filter(movie=self)
+        directors = [director.director for director in directors]
+        return directors
+
+    def actors(self):
+        actors = MovieActor.objects.filter(movie=self)
+        actors = [actor.actor for actor in actors]
+        return actors
+
 
 class MovieDirector(models.Model):
     """

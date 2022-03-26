@@ -16,15 +16,21 @@
 <body>
 
     <header>
-        <a href="{% url 'accounts:index' %}">
-            <h1>Bloodeal</h1>
-        </a>
+
         {% if request.user.is_authenticated %}
             <nav>
-                <ul>
-                    <li>Bienvenue <a href="{% url 'accounts:index' %}">{{ request.user }}</a></li>
+                <span>BL💿💿DEAL</span>
+                <ul class="nav">
+                    <li>BIENVENUE <a href="{% url 'profiles:profile_update' %}">{{ request.user }}</a></li>
+                    <li><a href="{% url 'deals:deals_list' %}">MES BONS PLANS</a></li>
+                    <li><a href="{% url 'blurays:blurays_list' %}">BLU-RAYS</a></li>
+                    <li><a href="{% url 'movies:movies_list' %}">FILMS</a></li>
+                    <li><a href="{% url 'profiles:favorites_list' %}">FAVORIS</a></li>
+                    <li><a href="{% url 'profiles:profile_update' %}">PROFIL</a></li>
+                    <li><a href="{% url 'accounts:logout' %}">SE DECONNECTER</a></li>
                 </ul>
             </nav>
+
         {% endif %}
     </header>
 
