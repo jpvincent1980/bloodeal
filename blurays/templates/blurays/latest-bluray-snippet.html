@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-20vh padding-1rem">
+    <h2>Dernière sortie</h2>
+    <p>{{ latest_bluray.release_date|date:"d F Y"|title }}</p>
+    <div class="capsule">
+                {% if latest_bluray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ latest_bluray.blu_ray_image.url }});">
+                {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                {% endif %}
+                </div>
+                <div class="capsule-text">
+                    <p><a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}"><h2>{{ latest_bluray.movie }}</h2></a></p>
+                    <p>Un film de {% for director in latest_bluray.movie.directors %}
+                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+                    <p>Avec {% for actor in latest_bluray.movie.actors %}
+                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+                </div>
+            </div>
+</div>

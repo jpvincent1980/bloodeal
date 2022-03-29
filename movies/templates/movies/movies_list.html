@@ -1,67 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% if modal %}
+    {% include modal %}
+{% endif %}
+
+{% block left-block %}
+    {% include "movies/list-left-block.html" %}
+{% endblock %}
+
 {% block content %}
+    {% include "movies/list-main-block.html" %}
+{% endblock %}
 
-<div class="dashboard-wrapper">
-
-    <section class="dashboard-block side-block-min-width">
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-    </section>
-
-    <section class="dashboard-block main-block-min-width">
-        <div class="dashboard-block-element min-height-30vh">
-            <div class="dashboard-block-element-title">
-                <h2>TOUS LES FILMS ({{ movie_list|length }})</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-wrap">
-            {% for movie in movie_list %}
-            <div class="capsule width-25">
-                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
-                <div class="capsule-text">
-                    <h2>{{ movie }}</h2>
-                    <p>{{ movie.release_year }}</p>
-                    {% if movie.directors %}
-                        <p>De
-                        {% for director in movie.directors %}{{ director }}
-                        {% endfor %}</p>
-                    {% endif %}
-                    {% if movie.actors %}
-                        <p>Avec
-                        {% for actor in movie.actors %}{{ actor }}
-                        {% endfor %}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-
-    </section>
-
-    <section class="dashboard-block side-block-min-width">
-        <div class="dashboard-block-element min-height-20vh">
-            <div class="dashboard-block-element-title">
-                <h2>TOP 5</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-column">
-            {% for movie in top_movies %}
-            <div class="capsule align-items-center flex-column width-100">
-                <div class="capsule-image" style="background-image: url({% static 'img/thegreenknight.jpg' %});"></div>
-                <div class="capsule-text text-align-center">
-                    <h2>{{ movie }}</h2>
-                    {% with total=movie.num_favorites %}
-                        ♥ par {{ total }} membre{{total|pluralize}}
-                    {% endwith %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-    </section>
-
-</div>
-
+{% block right-block %}
+    {% include "movies/list-right-block.html" %}
 {% endblock %}

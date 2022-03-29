@@ -1,6 +1,15 @@
 {% extends "base.html" %}
-{% load profiles_tags %}
+{% load static %}
+
+{% if modal %}
+    {% include modal %}
+{% endif %}
+
+{% block left-block %}
+{% endblock %}
 
 {% block content %}
+{% endblock %}
 
+{% block right-block %}
 {% endblock %}

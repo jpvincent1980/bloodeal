@@ -1,11 +1,18 @@
+import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.generic import CreateView
 
 from accounts.forms import LoginForm, SignupForm
+from deals.models import Deal
+from movies.models import Movie
+from blurays.models import BluRay
+from user_requests.forms import (
+    BluRayCreationForm,
+    MovieCreationForm,
+    PeopleCreationForm)
 
 
 # Create your views here.
@@ -45,11 +52,12 @@ def index_view(request):
             password = request.POST["password1"]
             user = authenticate(request, username=username, password=password)
             login(request, user)
-            return HttpResponseRedirect(reverse('accounts:dashboard'))
+            message = "Merci de votre inscription !"
+            context = {"modal": "modal.html",
+                       "modal_content": message}
+            return render(request, "accounts/dashboard.html", context)
         else:
             login_form = LoginForm(auto_id="login_%s")
-            print(signup_form.errors)
-            print(signup_form.error_messages)
             context = {"login_form": login_form,
                        "signup_form": signup_form}
             return render(request, "accounts/index.html", context)
@@ -111,11 +119,14 @@ class SignupView(CreateView):
         # Override form_valid function from parent class to add automatic login
         # after signup
         form.save()
-        username = self.request.POST["username"]
+        username = self.request.POST["email"]
         password = self.request.POST["password1"]
         user = authenticate(self.request, username=username, password=password)
         login(self.request, user)
-        return HttpResponseRedirect(reverse('accounts:dashboard'))
+        message = "Merci de votre inscription !"
+        context = {"modal": "modal.html",
+                   "modal_content": message}
+        return render(self.request, "accounts/dashboard.html", context)
 
 
 @login_required
@@ -155,5 +166,33 @@ def logout_view(request):
 
 
 def dashboard_view(request):
-    context = {}
+    favorite_deals = Deal.objects.all()
+    best_deals = Deal.objects.all().order_by("price")
+    latest_deals = Deal.objects.all().order_by("-date_created")
+    latest_movies = Movie.objects.all().order_by("-date_created")
+    all_blurays = BluRay.objects.all()
+    latest_blurays = all_blurays.filter(release_date__lte=datetime.date.today()).order_by("-release_date")
+    next_blurays = all_blurays.filter(release_date__gte=datetime.date.today()).order_by("release_date")
+    context = {"favorite_deals": favorite_deals,
+               "best_deals": best_deals,
+               "latest_deals": latest_deals,
+               "latest_movie": latest_movies[0],
+               "latest_bluray": latest_blurays[0],
+               "next_bluray": next_blurays[0],
+               }
+    bluray_request_form = BluRayCreationForm(
+        initial={"user": request.user,
+                 "status": "1"},
+        auto_id="bluray_request_%s")
+    movie_request_form = MovieCreationForm(initial={"user": request.user,
+                                                    "status": "1"},
+                                           auto_id="movie_request_%s")
+    people_creation_form = PeopleCreationForm(
+        initial={"user": request.user,
+                 "status": "1"},
+        auto_id="people_request_%s")
+    requests_forms = {"bluray_request_form": bluray_request_form,
+                      "movie_request_form": movie_request_form,
+                      "people_request_form": people_creation_form}
+    context.update(requests_forms)
     return render(request, "accounts/dashboard.html", context)

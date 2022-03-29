@@ -1,24 +1,63 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% if modal %}
+    {% include modal %}
+{% endif %}
+
+    {% if user.is_authenticated %}
+
+        <section class="dashboard-block-element min-height-20vh width-25 justify-content-center margin-auto">
+            <div class="dashboard-block-element-title">
+                <h2>Vous êtes déjà inscrit sur notre site.</h2>
+            </div>
+            <div class="dashboard-block-element-content justify-content-center">
+                <p>
+                    <a href="{% url 'accounts:dashboard' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+                </p>
+            </div>
+        </section>
+
+    {% else %}
+
+{% block left-block %}
+{% endblock %}
 
 {% block content %}
-<div class="identification">
-                    <h2>Connectez-vous</h2>
-                    {% if message %}
-                    <p class="btn btn-delete"><b>{{ message }}</b></p>
-                    {% endif %}
-                    <br>
-                    <form method="POST">
-                        {% csrf_token %}
-                        {% for field in form %}
-                                <p>{{ field.label_tag }}</p>
-                                <p>{{ field }}
-                                    {% if forloop.counter == 2 %}
-                                        <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
-                                    {% endif %}
-                                </p>
-                                <br>
-                        {% endfor %}
-                        <p><input name="button" type="submit" value="Je me connecte" class="btn btn-submit"></p>
-                    </form>
-                </div>
+<div class="flex-column height-fit-content">
+    <h1 class="text-align-center">BL💿💿DEAL</h1>
+    <section class="dashboard-block side-block-min-width index-page">
+
+        <div class="dashboard-block-element margin-1rem height-fit-content">
+            <div class="dashboard-block-element-title">
+                <h2>CONNEXION</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap padding-1rem">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                            <p>{{ field.label_tag }}</p>
+                            <p>{{ field }}
+                                {% if forloop.counter == 2 %}
+                                    <span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span>
+                                {% endif %}
+                            </p>
+                            <br>
+                    {% endfor %}
+                        {% if login_message %}
+                            <p class="errorlist">{{ login_message }}</p>
+                            <br>
+                        {% endif %}
+                    <p class="btn"><input name="button" type="submit" value="Je me connecte" class="btn-submit"></p>
+                </form>
+            </div>
+        </div>
+
+    </section>
+</div>
 {% endblock %}
+
+{% block right-block %}
+{% endblock %}
+
+{% endif %}

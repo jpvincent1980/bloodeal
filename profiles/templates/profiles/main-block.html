@@ -1,0 +1,92 @@
+{% load static %}
+
+<section class="dashboard-block main-block-min-width">
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>VOS FILMS PREFERES ({{ favorite_movies|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for favorite_movie in favorite_movies %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if favorite_movie.movie_image %}
+            <div class="capsule-image" style="background-image: url({{ favorite_movie.movie_image.url }});"></div>
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            {% endif %}
+            <div class="capsule-text">
+                <h2><a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">{{ favorite_movie }}</a></h2>
+                <p>{{ favorite_movie.release_year }}</p>
+                {% if favorite_movie.directors %}
+                    <p>De
+                    {% for director in favorite_movie.directors %}
+                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a>
+                    {% endfor %}</p>
+                {% endif %}
+                {% if favorite_movie.actors %}
+                    <p>Avec
+                    {% for actor in favorite_movie.actors %}
+                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a>
+                    {% endfor %}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>VOS PERSONNALITES PREFEREES ({{ favorite_people|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for people in favorite_people %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if people.people_image %}
+            <div class="capsule-image" style="background-image: url({{ people.people_image.url }});"></div>
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            {% endif %}
+            <div class="capsule-text">
+                <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
+                    <h2>{{ people }}</h2>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>VOS BLU-RAYS PREFERES ({{ favorite_blurays|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for favorite_bluray in favorite_blurays %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if favorite_bluray.blu_ray_image %}
+            <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});"></div>
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            {% endif %}
+            <div class="capsule-text">
+                <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}">
+                    <h2>{{ favorite_bluray.movie }}</h2>
+                </a>
+                {% if favorite_bluray.movie.directors %}
+                    <p>De
+                    {% for director in favorite_bluray.movie.directors %}{{ director }}
+                    {% endfor %}</p>
+                {% endif %}
+                {% if favorite_bluray.movie.actors %}
+                    <p>Avec
+                    {% for actor in favorite_bluray.movie.actors %}{{ actor }}
+                    {% endfor %}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+</section>

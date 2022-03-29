@@ -1,49 +1,70 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% if modal %}
+    {% include modal %}
+{% endif %}
+
+{% block left-block %}
+{% endblock %}
 
 {% block content %}
+<div class="flex-column">
+    <h1 class="text-align-center">BL💿💿DEAL</h1>
+        <section class="dashboard-block side-block-min-width index-page">
 
-<h1 class="text-align-center">BL💿💿DEAL</h1>
-<section class="main-section">
-
-    <div class="identification identification-login">
-        <h2>CONNEXION</h2>
-            <form method="POST">
-                {% csrf_token %}
-                {% for field in login_form %}
-                        <p>{{ field.label_tag }}</p>
-                        <p>{{ field }}
-                            {% if forloop.counter == 2 %}
-                                <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
+            <div class="dashboard-block-element margin-1rem height-fit-content">
+                <div class="dashboard-block-element-title">
+                    <h2>CONNEXION</h2>
+                </div>
+                <div class="dashboard-block-element-content flex-wrap padding-1rem">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in login_form %}
+                                <p>{{ field.label_tag }}</p>
+                                <p>{{ field }}
+                                    {% if forloop.counter == 2 %}
+                                        <span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span>
+                                    {% endif %}
+                                </p>
+                                <br>
+                        {% endfor %}
+                            {% if login_message %}
+                                <p class="errorlist">{{ login_message }}</p>
+                                <br>
                             {% endif %}
-                        </p>
-                        <br>
-                {% endfor %}
-                    {% if login_message %}
-                        <p class="errorlist">{{ login_message }}</p>
-                    {% endif %}
-                <p class="btn"><input name="button" type="submit" value="Je me connecte" class="btn-submit"></p>
-            </form>
-    </div>
+                        <p class="btn"><input name="button" type="submit" value="Je me connecte" class="btn-submit"></p>
+                    </form>
+                </div>
+            </div>
 
-    <div class="identification identification-login">
-        <h2>INSCRIPTION</h2>
-            <form method="POST">
-                {% csrf_token %}
-                {% for field in signup_form %}
-                        <p>{{ field.label_tag }}</p>
-                        <p>{{ field }}
-                            {% if forloop.counter >= 3 %}
-                                <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
-                            {% endif %}
-                        </p>
-                        {{ field.errors }}
-                        {% if signup_message %}
-                            {{ signup_message }}
-                        {% endif %}
-                        <br>
-                {% endfor %}
-                <p class="btn"><input name="button" type="submit" value="Je m'inscris" class="btn-submit"></p>
-            </form>
-    </div>
-</section>
+            <div class="dashboard-block-element margin-1rem height-fit-content">
+                <div class="dashboard-block-element-title">
+                    <h2>INSCRIPTION</h2>
+                </div>
+                <div class="dashboard-block-element-content flex-wrap padding-1rem">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in signup_form %}
+                                <p>{{ field.label_tag }}</p>
+                                <p>{{ field }}
+                                    {% if forloop.counter >= 3 %}
+                                        <span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span>
+                                    {% endif %}
+                                </p>
+                                {{ field.errors }}
+                                {% if signup_message %}
+                                    {{ signup_message }}
+                                {% endif %}
+                                <br>
+                        {% endfor %}
+                        <p class="btn"><input name="button" type="submit" value="Je m'inscris" class="btn-submit"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+</div>
+{% endblock %}
+
+{% block right-block %}
 {% endblock %}

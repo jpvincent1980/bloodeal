@@ -1,0 +1,15 @@
+{% load static %}
+
+<section class="dashboard-block side-block-min-width">
+    {% include "deals/ihaveadeal-snippet.html" %}
+    <div class="dashboard-block-element min-height-20vh padding-1rem">
+        <p><a href="{% url 'movies:movies_detail' slug=bluray.movie.slug pk=bluray.movie.pk %}"><h2>{{ bluray.movie }}</h2></a></p>
+        <p>{{ bluray.movie.release_year }}</p>
+        <p>Un film de {% for director in bluray.movie.directors %}
+            <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+        <p>Avec {% for actor in bluray.movie.actors %}
+            <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+    </div>
+    <div class="dashboard-block-element min-height-20vh"></div>
+    <div class="dashboard-block-element min-height-20vh"></div>
+</section>

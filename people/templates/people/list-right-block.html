@@ -1,0 +1,22 @@
+{% load static %}
+
+<section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh">
+            <div class="dashboard-block-element-title">
+                <h2>TOP 5</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-column">
+            {% for movie in top_movies %}
+            <div class="capsule align-items-center flex-column width-100">
+                <div class="capsule-image" style="background-image: url({% static 'img/thegreenknight.jpg' %});"></div>
+                <div class="capsule-text text-align-center">
+                    <h2>{{ movie }}</h2>
+                    {% with total=movie.num_favorites %}
+                        ♥ par {{ total }} membre{{total|pluralize}}
+                    {% endwith %}
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+</section>

@@ -1,0 +1,27 @@
+<div class="dashboard-block-element min-height-20vh justify-content-center padding-1rem">
+    <h2>Suggérer un Blu-Ray</h2>
+    <form method="post" action="{% url 'user_requests:bluray_request_create' %}">
+        {% csrf_token %}
+            {% for field in bluray_request_form %}
+                    {% if forloop.counter >= 2 %}{{ field.as_hidden }}{% else %}
+                    <div class="capsule">
+                        <div class="capsule-text">
+                        <p>{{ field.label_tag }}</p>
+                        <p>{{ field }}</p>
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <p class="errorlist">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p class="errorlist">{{ message }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+            {% endfor %}
+        <button type="submit" name="bluray_request_form" class="btn btn-submit">J'envoie ma suggestion</button>
+    </form>
+</div>

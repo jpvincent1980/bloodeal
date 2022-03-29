@@ -78,39 +78,6 @@ h1 {
     padding: 0 1.5rem;
 }
 
-.main-section {
-    margin: 2rem auto;
-    width: 40vw;
-    min-height: 50vh;
-    display: flex;
-}
-
-.identification {
-    display: flex;
-    flex-direction: column;
-    align-items: self-start;
-    width: 50vw;
-    margin: 0 auto;
-    padding: 1rem;
-    background: rgba(255,255,255,1);
-    filter: drop-shadow(0 0 1rem black);
-}
-
-.identification-login {
-    margin: 0 2rem;
-}
-
-.identification p {
-    margin: 0.1rem 0;
-}
-
-.identification h2, .main-section h2 {
-    margin-bottom: 1rem;
-    margin: 0 auto 1rem auto;
-    text-align: justify;
-    padding: 1rem 1rem 0 0;
-}
-
 form {
     width: 100%;
 }
@@ -147,7 +114,7 @@ p .btn {
     background-color: var(--btn-delete-bg-color);
 }
 
-.identification .errorlist {
+.errorlist {
     display: inline-block;
     background: red;
     color: #fff;
@@ -178,6 +145,7 @@ p .btn {
 }
 
 .capsule-image {
+    position: relative;
     width: var(--capsule-image-width);
     margin-right: var(--capsule-image-margin-width);
     height: 150px;
@@ -189,13 +157,19 @@ p .btn {
 .capsule-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: var(--capsule-text-width);
 }
 
 .capsule-text h2,p {
+    color: black;
     margin:0;
     padding: 0.2rem;
     overflow: hidden;
+}
+
+.capsule-text a {
+    color: black !important;
 }
 
 .dashboard-wrapper {
@@ -210,7 +184,7 @@ p .btn {
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin: 0 auto;
     padding: 1rem;
     background: var(--site-bg-color);
@@ -219,13 +193,16 @@ p .btn {
 .dashboard-block-element {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 100%;
     box-sizing: border-box;
     border: 0;
     filter: drop-shadow(0 0 0.2rem black);
     background: var(--element-bg-color);
     margin: 0 0 1rem 0;
+}
+
+.dashboard-block-element  a {
+    color: black;
 }
 
 .dashboard-block-element-title {
@@ -239,7 +216,27 @@ p .btn {
 .dashboard-block-element-content {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
     background: var(--element-bg-color);
+}
+
+.deal-price {
+    position: absolute;
+    bottom: -1.25rem;
+    right: -1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: red;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: white;
+}
+
+.inactif {
+    background: grey;
 }
 
 .side-block-min-width {
@@ -247,6 +244,7 @@ p .btn {
 }
 
 .main-block-min-width {
+    justify-content: flex-start;
     min-width: 65%;
 }
 
@@ -262,6 +260,10 @@ p .btn {
     min-height: 30vh;
 }
 
+.height-fit-content {
+    height: fit-content;
+}
+
 .width-25 {
     width: 25%;
 }
@@ -272,6 +274,11 @@ p .btn {
 
 .flex-column {
     flex-direction: column;
+}
+
+.index-page {
+    flex-direction: row;
+    justify-content: center;
 }
 
 .flex-wrap {
@@ -286,8 +293,28 @@ p .btn {
     text-align: center;
 }
 
+.justify-content-center {
+    justify-content: center;
+}
+
 .padding-1rem {
     padding: 1rem;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.margin-1rem {
+    margin: 1rem;
+}
+
+.margin-bottom-1rem {
+    margin-bottom: 1rem;
+}
+
+a .color-black {
+    color: black;
 }
 
 footer {
@@ -302,3 +329,167 @@ footer {
     background: var(--site-bg-color);
     color: var(--main-txt-color);
 }
+
+/* Beginning of favorite handling */
+
+.favorite-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin:0 auto;
+}
+
+.favorite {
+  cursor:pointer;
+  padding:10px 12px 8px;
+  background:#fff;
+  border-radius:50%;
+  display:inline-block;
+  margin:0 0 15px;
+  color:#aaa;
+  transition:.2s;
+}
+
+.favorite:hover {
+  color:#666;
+}
+
+.favorite:before {
+  content:'❤';
+  font-style:normal;
+}
+
+.press {
+  animation: size .4s;
+}
+
+.press:before {
+  color:#e23b3b;
+}
+
+@keyframes size {
+  0% {padding:10px 12px 8px;}
+  50% {padding:14px 16px 12px;
+    margin-top:-4px;}
+  100% {padding:10px 12px 8px;}
+}
+
+/* End of favorite handling */
+
+/* Beginning of bell handling */
+
+.deal {
+  cursor:pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding:6px 10px 6px;
+  background:#fff;
+  border-radius:50%;
+}
+
+.deal:before {
+    content: "🔔";
+}
+
+/* End of bell handling */
+
+/* backToTop button handling */
+
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--element-bg-color);
+  border-radius: 50%;
+  border: 0;
+  outline: 0;
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+
+#backToTop svg {
+  background-color: var(--element-bg-color);
+  width: 38px;
+  height: 38px;
+}
+
+path {
+    stroke: var(--site-bg-color);
+    stroke-width: 6;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+/* End of backToTop button handling */
+
+/* Beginning of the modal handling */
+
+#modal {
+    display: flex;
+    width: fit-content;
+    width: fit-content;
+    height: fit-content;
+    max-width: 25%;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: absolute;
+    top: 35.5%;
+    left: 35.5%;
+    background-color: rgba(0,0,0,0.5);
+    visibility: visible;
+    z-index: 2;
+    cursor: pointer;
+}
+
+#close-modal {
+    right: 0;
+    top: 36px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 0.5rem;
+    background: white;
+    border-radius: 50%;"
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 25%;
+  min-height: 25%;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 1.5rem;
+  font-size: 2rem;
+  color: black;
+  background-color: white;
+}
+
+.modal-content button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 45px;
+  height: 45px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  background-color: black;
+  vertical-align: text-bottom;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* End of the modal handling */

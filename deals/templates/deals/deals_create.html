@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% if modal %}
+    {% include modal %}
+{% endif %}
+
+    {% block left-block %}
+        {% include "deals/list-left-block.html" %}
+    {% endblock %}
+
+    {% block content %}
+    <section class="dashboard-block main-block-min-width">
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>POSTER VOTRE BON PLAN</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap  padding-1rem">
+                <form method="post" >
+                    {% csrf_token %}
+                        {% for field in form %}
+                        <div class="capsule width-25">
+                            <div class="capsule-text">
+                                {% if forloop.counter >= 3 %}
+                                    <p>{{ field.as_hidden }}</p>
+                                {% else %}
+                                    <h2>{{ field.label_tag }}</h2>
+                                    <p>{{ field }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    <button type="submit" name="form" class="btn btn-submit">J'envoie mon bon plan</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+
+    {% block right-block %}
+    <section class="dashboard-block side-block-min-width">
+        <div class="dashboard-block-element min-height-20vh">
+            <div class="dashboard-block-element-title">
+                <h2>VOS BONS PLANS</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-column">
+            {% for deal in user_deals %}
+            <div class="capsule align-items-center flex-column width-100">
+                {% if deal.blu_ray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});"></div>
+                {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+                {% endif %}
+                <div class="capsule-text text-align-center">
+                    <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
+                        <h2>{{ deal.blu_ray.movie }}</h2>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+                <p>Vous n'avez posté aucun bon plan.</p>
+            {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endblock %}

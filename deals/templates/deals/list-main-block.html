@@ -1,0 +1,31 @@
+{% load static %}
+
+<section class="dashboard-block main-block-min-width">
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>TOUS LES BONS PLANS ({{ deal_list|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for deal in deal_list %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if deal.blu_ray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+            {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">
+                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">
+                    {{ deal.price }}€
+                    </p>
+                </a>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
+                    <h2>{{ deal.blu_ray.movie }}</h2>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</section>

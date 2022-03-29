@@ -1,0 +1,55 @@
+{% load static %}
+
+<section class="dashboard-block main-block-min-width">
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>BONS PLANS SUR LE FILM {{ movie|upper }} ({{ deals|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for deal in deals %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if deal.blu_ray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+            {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if movie in favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}')" id="movie_{{ movie.pk }}"></i>
+                </div>
+                <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
+                <h2>{{ deal.blu_ray.movie }}</h2>
+                </a>
+                <p><a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">Acheter</a></p>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>BLU-RAYS DE {{ object|upper }} ({{ blurays|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for bluray in blurays %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if bluray.blu_ray_image %}
+            <div class="capsule-image" style="background-image: url({{bluray.blu_ray_image.url }});"></div>
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            {% endif %}
+            <div class="capsule-text">
+                <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
+                <h2>{{ bluray.movie.title_vf }}</h2>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+</section>

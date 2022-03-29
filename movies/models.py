@@ -1,5 +1,10 @@
+from PIL import Image
 from django.db import models
+from django.db.models import CASCADE
+from django.utils.text import slugify
+
 from people.models import People
+from user_requests.models import MovieRequest
 
 
 # Create your models here.
@@ -9,9 +14,14 @@ class Movie(models.Model):
     """
     title_vf = models.CharField(max_length=256, blank=False, null=False)
     title_vo = models.CharField(max_length=256, blank=True, null=True)
+    slug = models.SlugField(max_length=200, unique=False, blank=True)
     release_year = models.IntegerField(blank=True, null=True)
     imdb_id = models.CharField(max_length=7, blank=True, null=True)
     movie_image = models.ImageField(null=True, blank=True, upload_to="movies/")
+    request = models.ForeignKey(MovieRequest,
+                                on_delete=CASCADE,
+                                blank=True,
+                                null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -30,6 +40,31 @@ class Movie(models.Model):
         actors = MovieActor.objects.filter(movie=self)
         actors = [actor.actor for actor in actors]
         return actors
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        """
+        Overrides the save method to update image size at upload to limit width
+        and height
+
+        Args:
+            force_insert: False
+            force_update: False
+            using: None
+            update_fields: None
+
+        Returns: Nothing
+
+        """
+        if not self.slug:
+            self.slug = slugify(self.title_vf)
+        if self.movie_image:
+            updated_image = Image.open(self.movie_image)
+            if updated_image.width > 100 or updated_image.height > 150:
+                output_size = (100, 150)
+                updated_image.thumbnail(output_size)
+                updated_image.save(self.movie_image)
+        return super(Movie, self).save()
 
 
 class MovieDirector(models.Model):

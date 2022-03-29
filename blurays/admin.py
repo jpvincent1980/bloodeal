@@ -9,7 +9,7 @@ class BluRayAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage BluRay instances in the Admin
     interface.
     """
-    list_display = ("id", "movie", "ean", "amazon_asin", "blu_ray_image",
+    list_display = ("id", "movie", "slug", "ean", "amazon_aff_link", "amazon_asin", "blu_ray_image",
                     "release_date")
     list_editable = ("movie", "ean", "amazon_asin", "blu_ray_image",
                      "release_date")

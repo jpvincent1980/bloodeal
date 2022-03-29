@@ -1,55 +1,62 @@
 {% extends "base.html" %}
-
 {% load static %}
 
-    {% block title %}
-        <TITLE>Inscription</TITLE>
-    {% endblock %}
-
-    {% block content %}
+{% if modal %}
+    {% include modal %}
+{% endif %}
 
     {% if user.is_authenticated %}
 
-        <section class="main-section">
-            <p><h2>Vous êtes déjà inscrit sur notre site.</h2></p>
-            <p>
-                <a href="{% url 'accounts:dashboard' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
-            </p>
+        <section class="dashboard-block-element min-height-20vh width-25 justify-content-center margin-auto">
+            <div class="dashboard-block-element-title">
+                <h2>Vous êtes déjà inscrit sur notre site.</h2>
+            </div>
+            <div class="dashboard-block-element-content justify-content-center">
+                <p>
+                    <a href="{% url 'accounts:dashboard' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+                </p>
+            </div>
         </section>
 
     {% else %}
 
-        <section class="main-section">
+{% block left-block %}
+{% endblock %}
 
-            <form method="POST" class="identification">
+{% block content %}
+<div class="flex-column height-fit-content">
+    <h1 class="text-align-center">BL💿💿DEAL</h1>
+    <section class="dashboard-block side-block-min-width index-page">
+
+        <div class="dashboard-block-element margin-1rem">
+            <div class="dashboard-block-element-title">
                 <h2>INSCRIPTION</h2>
-                {% csrf_token %}
-
-                {% for field in form %}
-                    {% if forloop.counter >= 3 %}
-                        <p>{{ field.label_tag }} {{ field }}
-                        <span class="show-password" onclick="ShowPassword('{{ field.auto_id }}')">👁</span>
-                        </p>
-                    {% else %}
-                        <p>{{ field.label_tag }} {{ field }}
-                    {% endif %}
-                {% endfor %}
-
-                {% if form.errors %}
+            </div>
+            <div class="dashboard-block-element-content flex-wrap padding-1rem">
+                <form method="POST">
+                    {% csrf_token %}
                     {% for field in form %}
-                        {% for error in field.errors %}
-                          <div class="errors">
-                               <p>{{ error|escape }}</p>
-                          </div>
-                       {% endfor %}
-                   {% endfor %}
-                {% endif %}
+                            <p>{{ field.label_tag }}</p>
+                            <p>{{ field }}
+                                {% if forloop.counter >= 3 %}
+                                    <span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span>
+                                {% endif %}
+                            </p>
+                            {{ field.errors }}
+                            {% if signup_message %}
+                                {{ signup_message }}
+                            {% endif %}
+                            <br>
+                    {% endfor %}
+                    <p class="btn"><input name="button" type="submit" value="Je m'inscris" class="btn-submit"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
 
-                <p>
-                    <input name="button" type="submit" value="Je m'inscris" class="btn btn-submit">
-                </p>
-            </form>
+{% block right-block %}
+{% endblock %}
 
-        </section>
-    {% endif %}
-    {% endblock %}
+{% endif %}

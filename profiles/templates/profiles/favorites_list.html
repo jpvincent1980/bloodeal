@@ -1,111 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
 
-<div class="dashboard-wrapper">
+{% if modal %}
+    {% include modal %}
+{% endif %}
 
-    <section class="dashboard-block side-block-min-width">
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-        <div class="dashboard-block-element min-height-20vh"></div>
-    </section>
-
-    <section class="dashboard-block main-block-min-width">
-
-        <div class="dashboard-block-element min-height-30vh">
-            <div class="dashboard-block-element-title">
-                <h2>VOS FILMS PREFERES ({{ favorite_movies|length }})</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-wrap">
-            {% for favorite_movie in favorite_movies %}
-            <div class="capsule width-25">
-                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
-                <div class="capsule-text">
-                    <h2>{{ favorite_movie }}</h2>
-                    <p>{{ favorite_movie.release_year }}</p>
-                    {% if favorite_movie.directors %}
-                        <p>De
-                        {% for director in favorite_movie.directors %}{{ director }}
-                        {% endfor %}</p>
-                    {% endif %}
-                    {% if favorite_movie.actors %}
-                        <p>Avec
-                        {% for actor in favorite_movie.actors %}{{ actor }}
-                        {% endfor %}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-
-        <div class="dashboard-block-element min-height-30vh">
-            <div class="dashboard-block-element-title">
-                <h2>VOS PERSONNALITES PREFEREES ({{ favorite_people|length }})</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-wrap">
-            {% for people in favorite_people %}
-            <div class="capsule width-25">
-                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
-                <div class="capsule-text">
-                    <h2>{{ people }}</h2>
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-
-        <div class="dashboard-block-element min-height-30vh">
-            <div class="dashboard-block-element-title">
-                <h2>VOS BLU-RAYS PREFERES ({{ favorite_blurays|length }})</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-wrap">
-            {% for favorite_bluray in favorite_blurays %}
-            <div class="capsule width-25">
-                <div class="capsule-image" style="background-image: url({% static 'img/dune.jpg' %});"></div>
-                <div class="capsule-text">
-                    <h2>{{ favorite_bluray }}</h2>
-                    <p>{{ favorite_bluray.movie.title_vf }}</p>
-                    {% if favorite_bluray.movie.directors %}
-                        <p>De
-                        {% for director in favorite_bluray.movie.directors %}{{ director }}
-                        {% endfor %}</p>
-                    {% endif %}
-                    {% if favorite_bluray.movie.actors %}
-                        <p>Avec
-                        {% for actor in favorite_bluray.movie.actors %}{{ actor }}
-                        {% endfor %}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-
-    </section>
-
-    <section class="dashboard-block side-block-min-width">
-        <div class="dashboard-block-element min-height-20vh">
-            <div class="dashboard-block-element-title">
-                <h2>TOP 5</h2>
-            </div>
-            <div class="dashboard-block-element-content flex-column">
-            {% for movie in top_movies %}
-            <div class="capsule align-items-center flex-column width-100">
-                <div class="capsule-image" style="background-image: url({% static 'img/thegreenknight.jpg' %});"></div>
-                <div class="capsule-text text-align-center">
-                    <h2>{{ movie }}</h2>
-                    {% with total=movie.num_favorites %}
-                        ♥ par {{ total }} membre{{total|pluralize}}
-                    {% endwith %}
-                </div>
-            </div>
-            {% endfor %}
-            </div>
-        </div>
-    </section>
-
-</div>
-
+{% block left-block %}
+    {% include "profiles/left-block.html" %}
 {% endblock %}
+
+{% block content %}
+    {% include "profiles/main-block.html" %}
+{% endblock %}
+
+{% block right-block %}
+    {% include "profiles/right-block.html" %}
+{% endblock %}
+

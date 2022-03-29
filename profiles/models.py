@@ -56,7 +56,7 @@ class FavoritePeople(models.Model):
                              related_name='user_people')
     people = models.ForeignKey(People,
                                on_delete=models.CASCADE,
-                               related_name='people')
+                               related_name='favorite_people')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -77,7 +77,7 @@ class FavoriteBluRay(models.Model):
                              related_name='user_bluray')
     blu_ray = models.ForeignKey(BluRay,
                                 on_delete=models.CASCADE,
-                                related_name='blu_ray')
+                                related_name='favorite_blu_ray')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 

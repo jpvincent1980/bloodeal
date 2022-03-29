@@ -9,7 +9,7 @@ class MovieAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage Movie instances in the Admin
     interface.
     """
-    list_display = ("id", "title_vf", "title_vo", "release_year", "imdb_id",
+    list_display = ("id", "title_vf", "title_vo", "slug", "release_year", "imdb_id",
                     "movie_image")
     list_editable = ("title_vf", "title_vo", "release_year", "imdb_id",
                      "movie_image")

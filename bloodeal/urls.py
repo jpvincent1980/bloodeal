@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import RedirectView
@@ -28,5 +30,6 @@ urlpatterns = [
     path('deals/', include("deals.urls"), name="deals"),
     path('movies/', include("movies.urls"), name="movies"),
     path('people/', include("people.urls"), name="people"),
+    path('requests/', include("user_requests.urls"), name="user_requests"),
     path('site-admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

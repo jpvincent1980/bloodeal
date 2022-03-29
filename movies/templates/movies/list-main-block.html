@@ -1,0 +1,39 @@
+{% load static %}
+
+<section class="dashboard-block main-block-min-width">
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>TOUS LES FILMS ({{ movie_list|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for movie in movie_list %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if movie.movie_image %}
+                <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});">
+            {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <div class="favorite-wrapper">
+                  <i class="favorite {% if movie in favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}')" id="movie_{{ movie.pk }}"></i>
+                </div>
+            </div>
+            <div class="capsule-text">
+                <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie }}</a></h2>
+                <p>{{ movie.release_year }}</p>
+                {% if movie.directors %}
+                    <p>De
+                    {% for director in movie.directors %}<a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a>
+                    {% endfor %}</p>
+                {% endif %}
+                {% if movie.actors %}
+                    <p>Avec
+                        {% for actor in movie.actors %}<a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a>
+                    {% endfor %}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+</section>
