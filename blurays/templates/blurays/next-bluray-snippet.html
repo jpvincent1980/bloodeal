@@ -2,7 +2,7 @@
 
 <div class="dashboard-block-element min-height-20vh padding-1rem">
     <h2>Prochaine sortie</h2>
-    <p>{{ next_bluray.release_date|date:"d F Y"|title }}</p>
+    <p>{% with next_blurays|first as next_bluray %}{{ next_bluray.release_date|date:"d F Y"|title }}</p>
     <div class="capsule">
                 {% if next_bluray.blu_ray_image %}
                 <div class="capsule-image" style="background-image: url({{ next_bluray.blu_ray_image.url }});">
@@ -16,6 +16,6 @@
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
                     <p>Avec {% for actor in next_bluray.movie.actors %}
                         <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
-                </div>
+                </div>{% endwith %}
             </div>
 </div>

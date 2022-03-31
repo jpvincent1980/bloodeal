@@ -1,18 +1,16 @@
-import datetime
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 
 from accounts.forms import LoginForm, SignupForm
-from deals.models import Deal
-from movies.models import Movie
-from blurays.models import BluRay
-from user_requests.forms import (
-    BluRayCreationForm,
-    MovieCreationForm,
-    PeopleCreationForm)
+from deals.models import get_deals, get_user_favorites_deals
+from movies.models import get_movies
+from blurays.models import get_blurays
+from profiles.models import get_user_all_favorites, get_user_suggested_blurays
+from user_requests.forms import generate_initialized_request_forms
+from user_requests.models import get_user_requests_total, get_user_requests
 
 
 # Create your views here.
@@ -53,8 +51,18 @@ def index_view(request):
             user = authenticate(request, username=username, password=password)
             login(request, user)
             message = "Merci de votre inscription !"
+            storage = [message]
             context = {"modal": "modal.html",
-                       "modal_content": message}
+                       "modal_content": storage}
+            # Récupère les données pour le bloc de droite
+            context.update(get_movies(request.user))
+            context.update(get_blurays(request.user))
+            # Récupère les données pour le bloc de gauche
+            requests_forms = generate_initialized_request_forms(request.user)
+            context.update(requests_forms)
+            # Récupère le nombre de demandes de l'utilisateur
+            context.update(get_user_requests_total(request.user,
+                                                   only_open=True))
             return render(request, "accounts/dashboard.html", context)
         else:
             login_form = LoginForm(auto_id="login_%s")
@@ -124,8 +132,12 @@ class SignupView(CreateView):
         user = authenticate(self.request, username=username, password=password)
         login(self.request, user)
         message = "Merci de votre inscription !"
+        storage = [message]
         context = {"modal": "modal.html",
-                   "modal_content": message}
+                   "modal_content": storage}
+        # Récupère le nombre de demandes de l'utilisateur
+        context.update(get_user_requests_total(self.request.user,
+                                               only_open=True))
         return render(self.request, "accounts/dashboard.html", context)
 
 
@@ -166,33 +178,26 @@ def logout_view(request):
 
 
 def dashboard_view(request):
-    favorite_deals = Deal.objects.all()
-    best_deals = Deal.objects.all().order_by("price")
-    latest_deals = Deal.objects.all().order_by("-date_created")
-    latest_movies = Movie.objects.all().order_by("-date_created")
-    all_blurays = BluRay.objects.all()
-    latest_blurays = all_blurays.filter(release_date__lte=datetime.date.today()).order_by("-release_date")
-    next_blurays = all_blurays.filter(release_date__gte=datetime.date.today()).order_by("release_date")
-    context = {"favorite_deals": favorite_deals,
-               "best_deals": best_deals,
-               "latest_deals": latest_deals,
-               "latest_movie": latest_movies[0],
-               "latest_bluray": latest_blurays[0],
-               "next_bluray": next_blurays[0],
-               }
-    bluray_request_form = BluRayCreationForm(
-        initial={"user": request.user,
-                 "status": "1"},
-        auto_id="bluray_request_%s")
-    movie_request_form = MovieCreationForm(initial={"user": request.user,
-                                                    "status": "1"},
-                                           auto_id="movie_request_%s")
-    people_creation_form = PeopleCreationForm(
-        initial={"user": request.user,
-                 "status": "1"},
-        auto_id="people_request_%s")
-    requests_forms = {"bluray_request_form": bluray_request_form,
-                      "movie_request_form": movie_request_form,
-                      "people_request_form": people_creation_form}
+    # Récupère les données pour le bloc de droite
+    context = get_deals()
+    context.update(get_movies(request.user))
+    context.update(get_blurays(request.user))
+    # Récupère les données pour le bloc de gauche
+    requests_forms = generate_initialized_request_forms(request.user)
     context.update(requests_forms)
+    # Récupère les blu-rays recommandés selon les favoris de l'utilisateur
+    context.update(get_user_all_favorites(request.user))
+    # Récupère les bons plans recommandés selon les favoris de l'utilisateur
+    context.update(get_user_favorites_deals(request.user))
+    # Récupère les suggestions de blurays pour l'utilisateur
+    context.update(get_user_suggested_blurays(request.user))
+    # Récupère les messages le cas échéant et les envoie à la fenêtre modale
+    storage = messages.get_messages(request)
+    if storage:
+        context.update({"modal": "modal.html",
+                        "modal_content": storage})
+    # Récupère le nombre de demandes de l'utilisateur
+    context.update(get_user_requests(request.user, only_open=True))
+    # Récupère le nombre de demandes de l'utilisateur pour la navbar
+    context.update(get_user_requests_total(request.user, only_open=True))
     return render(request, "accounts/dashboard.html", context)

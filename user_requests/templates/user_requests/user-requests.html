@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block left-block %}
-    {% include "movies/detail-left-block.html" %}
+    {% include "profiles/left-block.html" %}
 {% endblock %}
 
 {% block content %}
     {% if modal %}
         {% include modal %}
     {% endif %}
-    {% include "movies/detail-main-block.html" %}
+    {% include "user_requests/list-main-block.html" %}
 {% endblock %}
 
 {% block right-block %}
-    {% include "movies/detail-right-block.html" %}
+    {% include "profiles/right-block.html" %}
 {% endblock %}

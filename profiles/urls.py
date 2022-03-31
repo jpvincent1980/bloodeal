@@ -7,7 +7,11 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetDoneView)
 
-from .views import ProfileList, ProfileUpdate, FavoriteView
+from .views import (ProfileList,
+                    ProfileUpdate,
+                    FavoriteView,
+                    add_to_favorite_view)
+
 
 # Création d'un espace de noms
 app_name = 'profiles'
@@ -25,4 +29,5 @@ urlpatterns = [path('list/', ProfileList.as_view(), name="profiles_list"),
                path('reset-password-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(success_url=reverse_lazy('profiles:password_reset_complete')), name="password_reset_confirm"),
                path('reset-password-complete/', PasswordResetCompleteView.as_view(), name="password_reset_complete"),
                path('favorites/', FavoriteView.as_view(), name="favorites_list"),
+               path('add-to-favorite/', add_to_favorite_view, name="add_to_favorite"),
 ]

@@ -5,7 +5,7 @@
             {% for field in people_request_form %}
                     {% if forloop.counter >= 2 %}{{ field.as_hidden }}{% else %}
                     <div class="capsule">
-                        <div class="capsule-text">
+                        <div class="capsule-text width-100">
                         <p>{{ field.label_tag }}</p>
                         <p>{{ field }}</p>
                             {% if field.errors %}
@@ -15,7 +15,9 @@
                             {% endif %}
                             {% if messages %}
                                 {% for message in messages %}
-                                    <p class="errorlist">{{ message }}</p>
+                                    {% if message.level != DEFAULT_MESSAGE_LEVELS.INFO %}
+                                        <p class="errorlist">{{ message }}</p>
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         </div>

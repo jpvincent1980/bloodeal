@@ -77,7 +77,7 @@ class FavoriteBluRay(models.Model):
                              related_name='user_bluray')
     blu_ray = models.ForeignKey(BluRay,
                                 on_delete=models.CASCADE,
-                                related_name='favorite_blu_ray')
+                                related_name='favorite_bluray')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -90,3 +90,30 @@ class FavoriteBluRay(models.Model):
         user_name = self.user.pseudo if self.user.pseudo else self.user.email
         movie_name = self.blu_ray.movie.title_vf
         return user_name + " aime le Blu-Ray de " + movie_name
+
+
+def get_user_all_favorites(user):
+    # Get BluRay queryset from favorite blurays
+    bluray_favorites = BluRay.objects.filter(favorite_bluray__user=user)
+    # Get BluRay queryset from favorite movies
+    favorite_movies = Movie.objects.filter(favorite_movie__user=user)
+    bluray_movies_favorites = BluRay.objects.filter(movie__in=favorite_movies)
+    # Get BluRay queryset from favorite people
+    favorite_people = People.objects.filter(favorite_people__user=user)
+    movies_director_favorites = Movie.objects.filter(movie_director__director__in=favorite_people)
+    movies_actor_favorites = Movie.objects.filter(movie_actor__actor__in=favorite_people)
+    movies_favorites = movies_director_favorites | movies_actor_favorites
+    bluray_people_favorites = BluRay.objects.filter(movie__in=movies_favorites)
+    # Join all BluRay querysets from previous queries
+    user_favorites = bluray_favorites | bluray_movies_favorites | bluray_people_favorites
+    return {"user_favorites": user_favorites}
+
+
+def get_user_suggested_blurays(user):
+    # User all favorites minus already favorites
+    user_all_favorites = get_user_all_favorites(user).get("user_favorites", BluRay.objects.none())
+    # Get user already favorite blurays
+    favorite_blurays = BluRay.objects.filter(favorite_bluray__user=user)
+    # Get the difference between both querysets
+    user_suggested_blurays = user_all_favorites.difference(favorite_blurays)
+    return {"user_suggested_blurays": user_suggested_blurays}

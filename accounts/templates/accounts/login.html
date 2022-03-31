@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% if modal %}
-    {% include modal %}
-{% endif %}
-
     {% if user.is_authenticated %}
 
         <section class="dashboard-block-element min-height-20vh width-25 justify-content-center margin-auto">
@@ -24,6 +20,9 @@
 {% endblock %}
 
 {% block content %}
+{% if modal %}
+    {% include modal %}
+{% endif %}
 <div class="flex-column height-fit-content">
     <h1 class="text-align-center">BL💿💿DEAL</h1>
     <section class="dashboard-block side-block-min-width index-page">

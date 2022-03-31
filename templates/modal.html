@@ -2,16 +2,14 @@
     <div class="modal" id="modal" aria-hidden="true" role="dialog">
         <div class="modal-content" id="modal-content">
             <svg width="24px" height="24px" viewBox="-4 -4 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" id="close-modal">
-               <path d="M0,0 L77,77" id="Line" stroke-width="4" style="stroke: black;"></path>
-               <path d="M77,0 L0,77" id="Line" stroke-width="4" style="stroke: black;"></path>
+               <path d="M0,0 L77,77" id="Line"></path>
+               <path d="M77,0 L0,77" id="Line"></path>
             </svg>
-            </button>
-            <header id="modal-header"></header>
-            <section class="modal-section">
-                <h2 id="movie-title">{{ modal_content }}</h2>
+            <section>
+                {% for message in modal_content %}
+                    <h2>{{ message }}</h2>
+                {% endfor %}
             </section>
-            <aside id="movie-image"></aside>
-            <footer class="modal-footer"></footer>
         </div>
     </div>
 {% endblock %}

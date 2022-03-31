@@ -9,10 +9,14 @@
         {% for movie in top_movies %}
         <div class="capsule align-items-center flex-column width-100">
             {% if movie.movie_image %}
-            <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});"></div>
+            <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});">
             {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if movie in favorite_movies %}press{% endif %}" onclick="favorite('top_movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="top_movie_{{ movie.pk }}"></i>
+            </div>
+            </div>
             <div class="capsule-text text-align-center">
                 <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie }}</a></h2>
                 {% with total=movie.num_favorites %}

@@ -4,12 +4,20 @@
     {% include "deals/ihaveadeal-snippet.html" %}
     <div class="dashboard-block-element min-height-20vh padding-1rem">
         <p><a href="{% url 'movies:movies_detail' slug=bluray.movie.slug pk=bluray.movie.pk %}"><h2>{{ bluray.movie }}</h2></a></p>
+        {% if bluray.movie.imdb_id %}
+        <span class="imdbRatingPlugin" data-user="ur113694504" data-title="{{ bluray.movie.imdb_id }}" data-style="p4">
+            <a href="https://www.imdb.com/title/{{ bluray.movie.imdb_id }}/?ref_=plg_rt_1">
+                <img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_37x18.png" alt="{{ movie }}" />
+            </a>
+        </span>
+        <script>(function(d,s,id){var js,stags=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;}js=d.createElement(s);js.id=id;js.src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js";stags.parentNode.insertBefore(js,stags);})(document,"script","imdb-rating-api");</script>
+        {% endif %}
         <p>{{ bluray.movie.release_year }}</p>
         <p>Un film de {% for director in bluray.movie.directors %}
             <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
         <p>Avec {% for actor in bluray.movie.actors %}
             <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
     </div>
-    <div class="dashboard-block-element min-height-20vh"></div>
-    <div class="dashboard-block-element min-height-20vh"></div>
+<!--    <div class="dashboard-block-element min-height-20vh"></div>-->
+<!--    <div class="dashboard-block-element min-height-20vh"></div>-->
 </section>

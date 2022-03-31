@@ -4,19 +4,18 @@ from .views import (
     MovieRequestCreateView,
     BluRayRequestCreateView,
     PeopleRequestCreateView,
-    MovieRequestView,
-    BluRayRequestView,
-    PeopleRequestView
+    UserRequestListView
 )
 
 # Création d'un espace de noms
 app_name = 'user_requests'
 
-urlpatterns = [path('add-a-bluray/',
+urlpatterns = [path('<int:pk>/',
+                    UserRequestListView.as_view(),
+                    name="user_requests"),
+               path('add-a-bluray/',
                     BluRayRequestCreateView.as_view(),
                     name="bluray_request_create"),
-               path('bluray/<int:pk>/', BluRayRequestView.as_view(),
-                    name="bluray_request_detail"),
                path('add-a-movie/',
                     MovieRequestCreateView.as_view(),
                     name="movie_request_create"),

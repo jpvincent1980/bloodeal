@@ -1,6 +1,8 @@
+import datetime
+
 from PIL import Image
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Count
 from django.utils.text import slugify
 
 from movies.models import Movie
@@ -51,10 +53,6 @@ class BluRay(models.Model):
         """
         if not self.slug:
             self.slug = slugify(self.movie)
-        # super(BluRay, self).save(force_insert=False,
-        #                          force_update=False,
-        #                          using=None,
-        #                          update_fields=None)
         if self.amazon_asin:
             self.amazon_aff_link = f"https://www.amazon.fr/dp/{self.amazon_asin}?m=A1X6FK5RDHNB96&tag=laureatis-21"
         if self.blu_ray_image:
@@ -64,3 +62,14 @@ class BluRay(models.Model):
                 updated_image.thumbnail(output_size)
                 updated_image.save(self.blu_ray_image)
         return super(BluRay, self).save(*args, **kwargs)
+
+
+def get_blurays(user):
+    blurays = BluRay.objects.all()
+    top_blurays = blurays.annotate(num_favorites=Count("favorite_bluray")).order_by("-num_favorites")[:5]
+    favorite_blurays = blurays.filter(favorite_bluray__user=user)
+    return {"blurays": blurays,
+            "top_blurays": top_blurays,
+            "favorite_blurays": favorite_blurays,
+            "latest_blurays": blurays.filter(release_date__lte=datetime.date.today()).order_by("release_date"),
+            "next_blurays": blurays.filter(release_date__gte=datetime.date.today()).order_by("release_date")}

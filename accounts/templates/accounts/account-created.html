@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% if modal %}
-    {% include modal %}
-{% endif %}
-
 {% block left-block %}
 {% endblock %}
 
 {% block content %}
-
+{% if modal %}
+    {% include modal %}
+{% endif %}
 <section class="dashboard-block main-block-min-width">
     <div class="dashboard-block-element min-height-30vh justify-content-center">
         <div class="dashboard-block-element-title">

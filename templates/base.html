@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/script.js' %}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" defer></script>
 
     {% block title %}
     <title>Bloodeal</title>
@@ -21,13 +22,14 @@
     <header>
         {% if request.user.is_authenticated %}
             <nav>
-                <span>BL💿💿DEAL</span>
+                <span><a href="{% url 'accounts:dashboard' %}">BL💿💿DEAL</a></span>
                 <ul class="nav">
-                    <li><a href="{% url 'accounts:dashboard' %}">BIENVENUE {{ request.user|upper }}</a></li>
-                    <li><a href="{% url 'deals:deals_list' %}">MES BONS PLANS</a></li>
+                    <li><a href="{% url 'deals:deals_list' %}">BONS PLANS</a></li>
                     <li><a href="{% url 'blurays:blurays_list' %}">BLU-RAYS</a></li>
                     <li><a href="{% url 'movies:movies_list' %}">FILMS</a></li>
                     <li><a href="{% url 'profiles:favorites_list' %}">FAVORIS</a></li>
+                    <li style="position: relative;"><a href="{% url 'user_requests:user_requests' pk=request.user.pk %}">VOS DEMANDES</a>
+                    {% if user_requests_total %}<span class="notification">{{ user_requests_total }}</span>{% endif %}</li>
                     <li><a href="{% url 'profiles:profile_update' %}">PROFIL</a></li>
                     <li><a href="{% url 'accounts:logout' %}">SE DECONNECTER</a></li>
                 </ul>

@@ -2,28 +2,61 @@
 
 <section class="dashboard-block main-block-min-width">
 
-    <div class="dashboard-block-element min-height-30vh">
-        <div class="dashboard-block-element-title">
-            <h2>BONS PLANS AVEC {{ people|upper }} ({{ deals|length }})</h2>
-        </div>
+    {% if people_deals|length > 0 %}
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                    <h2>BONS PLANS AVEC {{ people|upper }} ({{ people_deals|length }})</h2>
+            </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for deal in deals %}
+        {% for people_deal in people_deals %}
         <div class="capsule width-25">
-            {% if deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+            {% if people_deal.blu_ray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ people_deal.blu_ray.blu_ray_image.url }});">
             {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-                <a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">
-                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">
-                    {{ deal.price }}€
+                <a href="{{ people_deal.blu_ray.amazon_aff_link }}" target="_blank">
+                    <p class="deal-price {% if people_deal.status != '1' %}inactif{% endif %}">
+                    {{ people_deal.price }}€
                     </p>
                 </a>
+                </div>
+                <div class="capsule-text">
+                    <a href="{% url 'deals:deals_detail' pk=people_deal.pk %}">
+                        <h2>{{ people_deal.blu_ray.movie }}</h2>
+                    </a>
+                </div>
+        </div>
+        {% endfor %}
+        </div>
+        </div>
+        {% else %}
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="capsule text-align-center margin-auto">
+                <h2>Aucun bon plan avec {{ people }}.</h2>
+            </div>
+        </div>
+        {% endif %}
+
+
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="dashboard-block-element-title">
+            <h2>FILMS AVEC {{ people|upper }} ({{ people_movies|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for people_movie in people_movies %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if people_movie.movie_image %}
+            <div class="capsule-image" style="background-image: url({{ people_movie.movie_image.url }});">
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if people_movie in favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
+            </div>
             </div>
             <div class="capsule-text">
-                <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
-                    <h2>{{ deal.blu_ray.movie }}</h2>
-                </a>
+                <h2><a href="{% url 'movies:movies_detail' slug=people_movie.slug pk=people_movie.pk %}">{{ people_movie.title_vf }}</a></h2>
             </div>
         </div>
         {% endfor %}
@@ -32,39 +65,23 @@
 
     <div class="dashboard-block-element min-height-30vh">
         <div class="dashboard-block-element-title">
-            <h2>FILMS AVEC {{ people|upper }} ({{ movies|length }})</h2>
+            <h2>BLU-RAYS AVEC {{ people|upper }} ({{ people_blurays|length }})</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for movie in movies %}
+        {% for people_bluray in people_blurays %}
         <div class="capsule width-25 margin-bottom-1rem">
-            {% if movie.movie_image %}
-            <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});"></div>
+            {% if people_bluray.blu_ray_image %}
+            <div class="capsule-image" style="background-image: url({{ people_bluray.blu_ray_image.url }});">
             {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-            <div class="capsule-text">
-                <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie.title_vf }}</a></h2>
+            <div class="favorite-wrapper">
+                <i class="favorite {% if people_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
             </div>
-        </div>
-        {% endfor %}
-        </div>
-    </div>
-
-    <div class="dashboard-block-element min-height-30vh">
-        <div class="dashboard-block-element-title">
-            <h2>BLU-RAYS AVEC {{ people|upper }} ({{ blurays|length }})</h2>
-        </div>
-        <div class="dashboard-block-element-content flex-wrap">
-        {% for bluray in blurays %}
-        <div class="capsule width-25 margin-bottom-1rem">
-            {% if bluray.blu_ray_image %}
-            <div class="capsule-image" style="background-image: url({{ bluray.blu_ray_image.url }});"></div>
-            {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
-            {% endif %}
+            </div>
             <div class="capsule-text">
-                <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
-                <h2>{{ bluray.movie.title_vf }}</h2>
+                <a href="{% url 'blurays:blurays_detail' slug=people_bluray.slug pk=people_bluray.pk %}">
+                <h2>{{ people_bluray.movie.title_vf }}</h2>
                 </a>
             </div>
         </div>

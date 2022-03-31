@@ -1,13 +1,12 @@
-import datetime
-
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 
-from blurays.models import BluRay
-from movies.models import Movie
-from user_requests.forms import BluRayCreationForm, PeopleCreationForm, \
-    MovieCreationForm
+from blurays.models import get_blurays, BluRay
+from movies.models import get_movies, Movie
+from user_requests.forms import generate_initialized_request_forms
+from user_requests.models import get_user_requests_total
 from .models import Deal
 
 
@@ -20,17 +19,10 @@ class DealListView(ListView):
         context = super(DealListView, self).get_context_data(**kwargs)
         user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
         context.update({"user_deals": user_deals})
-        bluray_request_form = BluRayCreationForm(initial={"user": self.request.user,
-                                                          "status": "1"})
-        movie_request_form = MovieCreationForm(initial={"user": self.request.user,
-                                                        "status": "1"})
-        people_creation_form = PeopleCreationForm(
-            initial={"user": self.request.user,
-                     "status": "1"})
-        requests_forms = {"bluray_request_form": bluray_request_form,
-                          "movie_request_form": movie_request_form,
-                          "people_request_form": people_creation_form}
+        requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
+        context.update(get_user_requests_total(self.request.user,
+                                               only_open=True))
         return context
 
 
@@ -41,8 +33,13 @@ class DealDetailView(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealDetailView, self).get_context_data(**kwargs)
         user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
+        bluray = BluRay.objects.filter(deal_blu_ray=self.object)
+        movie = Movie.objects.filter(bluray_movie__in=bluray)
+        movie = movie[0] if movie else movie
         context.update({"user_deals": user_deals,
-                        })
+                        "movie": movie})
+        context.update(get_user_requests_total(self.request.user,
+                                               only_open=True))
         return context
 
 
@@ -62,31 +59,20 @@ class DealCreateView(CreateView):
         # Override form_valid function from parent class to add automatic login
         # after signup
         form.save()
+        message = "Merci pour ce bon plan ! Nous allons procéder à sa vérification."
+        messages.add_message(self.request,
+                             level=messages.INFO,
+                             message=message)
         return HttpResponseRedirect(reverse_lazy("accounts:dashboard"))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealCreateView, self).get_context_data(**kwargs)
         user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
-        latest_movies = Movie.objects.all().order_by("-date_created")
-        all_blurays = BluRay.objects.all()
-        latest_blurays = all_blurays.filter(
-            release_date__lte=datetime.date.today()).order_by("-release_date")
-        next_blurays = all_blurays.filter(
-            release_date__gte=datetime.date.today()).order_by("release_date")
-        context.update({"user_deals": user_deals,
-                        "latest_movie": latest_movies[0],
-                        "latest_bluray": latest_blurays[0],
-                        "next_bluray": next_blurays[0],
-                        })
-        bluray_request_form = BluRayCreationForm(initial={"user": self.request.user,
-                                                          "status": "1"})
-        movie_request_form = MovieCreationForm(initial={"user": self.request.user,
-                                                        "status": "1"})
-        people_creation_form = PeopleCreationForm(
-            initial={"user": self.request.user,
-                     "status": "1"})
-        requests_forms = {"bluray_request_form": bluray_request_form,
-                          "movie_request_form": movie_request_form,
-                          "people_request_form": people_creation_form}
+        context.update({"user_deals": user_deals})
+        context.update(get_movies(self.request.user))
+        context.update(get_blurays(self.request.user))
+        requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
+        context.update(get_user_requests_total(self.request.user,
+                                               only_open=True))
         return context

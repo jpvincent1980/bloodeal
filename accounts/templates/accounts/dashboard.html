@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% if modal %}
-    {% include modal %}
-{% endif %}
+{% load profiles_tags %}
 
     {% block left-block %}
         {% include "profiles/left-block.html" %}
     {% endblock %}
 
     {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
     <section class="dashboard-block main-block-min-width">
 
         <div class="dashboard-block-element min-height-30vh">
+            {% if user_favorite_deals %}
             <div class="dashboard-block-element-title">
-                <h2>VOS BONS PLANS PERSONNALISES ({{ favorite_deals|length }})</h2>
+                <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_favorite_deals|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for deal in favorite_deals %}
+            {% for deal in user_favorite_deals %}
             <div class="capsule width-25 margin-bottom-1rem">
                 {% if deal.blu_ray.blu_ray_image %}
                 <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
@@ -33,52 +34,73 @@
             </div>
             {% endfor %}
             </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Nous n'avons trouvé aucune recommandation de bon plan pour vous.<br><br>
+                Pensez à ajouter des blu-rays, des films ou des personnalités à vos favoris.</h2>
+            </div>
+            {% endif %}
         </div>
 
         <div class="dashboard-block-element min-height-30vh">
+            {% if user_suggested_blurays %}
             <div class="dashboard-block-element-title">
-                <h2>BONS PLANS AUX MEILLEURS PRIX ({{ best_deals|length }})</h2>
+                <h2>SUGGESTIONS DE BLU-RAYS POUR VOUS ({{ user_suggested_blurays|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for deal in best_deals %}
+            {% for user_suggested_bluray in user_suggested_blurays %}
             <div class="capsule width-25 margin-bottom-1rem">
-                {% if deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+                {% if user_suggested_bluray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ user_suggested_bluray.blu_ray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
-                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if user_suggested_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('user_suggested_bluray_{{ user_suggested_bluray.pk }}',{{ user_suggested_bluray.pk }}, 'bluray')" id="user_suggested_bluray_{{ user_suggested_bluray.pk }}"></i>
+                </div>
                 </div>
                 <div class="capsule-text">
-                    <a href="{% url 'deals:deals_detail' pk=deal.pk %}"><h2>{{ deal.blu_ray.movie }}</h2></a>
-                    <p><a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">Acheter</a></p>
+                    <a href="{% url 'blurays:blurays_detail' slug=user_suggested_bluray.slug pk=user_suggested_bluray.pk %}"><h2>{{ user_suggested_bluray.movie }}</h2></a>
                 </div>
             </div>
             {% endfor %}
             </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Nous n'avons aucune suggestion de blu-ray pour vous.<br><br>
+                Pensez à ajouter des films ou des personnalités à vos favoris.</h2>
+            </div>
+            {% endif %}
         </div>
 
         <div class="dashboard-block-element min-height-30vh">
+            {% if favorite_blurays %}
             <div class="dashboard-block-element-title">
-                <h2>LES DERNIERS BONS PLANS ({{ latest_deals|length }})</h2>
+                <h2>VOS BLU-RAYS FAVORIS ({{ favorite_blurays|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for deal in latest_deals %}
+            {% for favorite_bluray in favorite_blurays %}
             <div class="capsule width-25 margin-bottom-1rem">
-                {% if deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+                {% if favorite_bluray.blu_ray_image %}
+                <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
-                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if favorite_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ favorite_bluray.pk }}',{{ favorite_bluray.pk }}, 'bluray')" id="favorite_bluray_{{ favorite_bluray.pk }}"></i>
+                </div>
                 </div>
                 <div class="capsule-text">
-                    <a href="{% url 'deals:deals_detail' pk=deal.pk %}"><h2>{{ deal.blu_ray.movie }}</h2></a>
-                    <p><a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">Acheter</a></p>
+                    <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}"><h2>{{ favorite_bluray.movie }}</h2></a>
                 </div>
             </div>
             {% endfor %}
             </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Vous n'avez aucun blu-ray dans vos favoris.</h2>
+            </div>
+            {% endif %}
         </div>
 
     </section>

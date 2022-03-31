@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.timezone import now
 
 from blurays.models import BluRay
-
+from profiles.models import get_user_all_favorites
 
 CHOICES = [("1", "Actif"),
            ("2", "Expiré"),
@@ -50,10 +50,35 @@ class Deal(models.Model):
         if self.end_date:
             self.status = "2"
         if not self.blu_ray:
-            print(self.amazon_link)
             amazon_asin = re.search(r"B0[.]*[^/]+", f"{self.amazon_link}")
             if amazon_asin:
                 bluray = BluRay.objects.filter(amazon_asin=amazon_asin[0])
                 if bluray:
                     self.blu_ray = bluray[0]
         return super(Deal, self).save(*args, **kwargs)
+
+
+def get_deals(bluray=None, movie=None, people=None):
+    deals = Deal.objects.all()
+    context = {"deals": deals,
+               "best_deals": deals.order_by("price"),
+               "latest_deals": deals.order_by("-date_created")}
+    if bluray:
+        bluray_deals = Deal.objects.filter(blu_ray=bluray)
+        context.update({"bluray_deals": bluray_deals})
+    if movie:
+        movie_deals = Deal.objects.filter(blu_ray__movie=movie)
+        context.update({"movie_deals":movie_deals})
+    if people:
+        people_actor_deals = Deal.objects.filter(blu_ray__movie__actor=people)
+        people_director_deals = Deal.objects.filter(blu_ray__movie__director=people)
+        people_deals = people_actor_deals | people_director_deals
+        context.update({"people_deals": people_deals})
+    return context
+
+
+def get_user_favorites_deals(user):
+    user_favorite_blurays = get_user_all_favorites(user)
+    user_favorite_blurays = user_favorite_blurays.get("user_favorites")
+    user_favorite_deals = Deal.objects.filter(blu_ray__in=user_favorite_blurays)
+    return {"user_favorite_deals": user_favorite_deals}

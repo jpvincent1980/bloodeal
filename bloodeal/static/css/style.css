@@ -5,11 +5,14 @@
     --site-bg-color: rgba(70,130,180,1);
     --element-bg-color: rgba(255,255,255,1);
     --capsule-bg-color: rgba(255,255,255,1);
+    --modal-bg-color: rgba(0,0,0,0.8);
     --capsule-image-width: 45%;
     --capsule-image-margin-width: 2%;
     --capsule-text-width: 73%;
     --elements-bg-color: steelblue;
     --btn-delete-bg-color: indianred;
+    --btn-validated-bg-color: green;
+    --btn-unknown-bg-color: grey;
     --autofill-input-color: rgba(232,240,254,1);
     --main-txt-color: rgba(255,255,255,1);
     --footer-height: 5vh;
@@ -35,7 +38,13 @@ nav span {
 }
 
 ul {
+    display: flex;
     list-style-type: none;
+    align-items: center;
+}
+
+li {
+    display: inline;
 }
 
 a {
@@ -71,7 +80,6 @@ h1 {
 }
 
 .nav li {
-    display: inline;
     line-height: 4rem;
     font-size: 1rem;
     color: var(--main-txt-color);
@@ -112,6 +120,16 @@ p .btn {
 .btn-delete {
     color: #fff;
     background-color: var(--btn-delete-bg-color);
+}
+
+.btn-validated {
+    color: #fff;
+    background-color: var(--btn-validated-bg-color);
+}
+
+.btn-unknown {
+    color: #fff;
+    background-color: var(--btn-unknown-bg-color);
 }
 
 .errorlist {
@@ -235,6 +253,22 @@ p .btn {
     color: white;
 }
 
+.notification {
+    position: absolute;
+    top: 0.7rem;
+    right:0.7rem;
+    background: red;
+    border-radius: 50%;
+    line-height: 0.8rem;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin: auto;
+    text-align: center;
+    z-index: -1;
+}
+
 .inactif {
     background: grey;
 }
@@ -250,6 +284,10 @@ p .btn {
 
 .shadow {
     filter: drop-shadow(0 0 0.2rem black);
+}
+
+.min-height-10vh {
+    min-height: 10vh;
 }
 
 .min-height-20vh {
@@ -311,6 +349,10 @@ p .btn {
 
 .margin-bottom-1rem {
     margin-bottom: 1rem;
+}
+
+.cursor-default {
+ cursor: default;
 }
 
 a .color-black {
@@ -434,16 +476,14 @@ path {
 #modal {
     display: flex;
     width: fit-content;
-    width: fit-content;
     height: fit-content;
     max-width: 25%;
     justify-content: center;
     text-align: center;
     padding: 2rem;
-    position: absolute;
-    top: 35.5%;
-    left: 35.5%;
-    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    margin: auto;
+    top: 35%;
     visibility: visible;
     z-index: 2;
     cursor: pointer;
@@ -455,7 +495,7 @@ path {
     position: absolute;
     transform: translate(-50%, -50%);
     padding: 0.5rem;
-    background: white;
+    background: var(--modal-bg-color);
     border-radius: 50%;"
 }
 
@@ -470,26 +510,13 @@ path {
   margin: auto;
   padding: 1.5rem;
   font-size: 2rem;
-  color: black;
-  background-color: white;
+  color: rgba(255,255,255,1);
+  background: var(--modal-bg-color);
 }
 
-.modal-content button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 45px;
-  height: 45px;
-  background: none;
-  border: none;
-  border-radius: 50%;
-  background-color: black;
-  vertical-align: text-bottom;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  z-index: 1;
+.modal-content path{
+    stroke-width: 10;
+    stroke: white;
 }
 
 /* End of the modal handling */

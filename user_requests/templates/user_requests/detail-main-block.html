@@ -3,7 +3,6 @@
 <section class="dashboard-block main-block-min-width">
 
     <div class="dashboard-block-element min-height-30vh">
-        {% if favorite_movies %}
         <div class="dashboard-block-element-title">
             <h2>VOS FILMS PREFERES ({{ favorite_movies|length }})</h2>
         </div>
@@ -11,14 +10,10 @@
         {% for favorite_movie in favorite_movies %}
         <div class="capsule width-25 margin-bottom-1rem">
             {% if favorite_movie.movie_image %}
-            <div class="capsule-image" style="background-image: url({{ favorite_movie.movie_image.url }});">
+            <div class="capsule-image" style="background-image: url({{ favorite_movie.movie_image.url }});"></div>
             {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
             {% endif %}
-            <div class="favorite-wrapper">
-                <i class="favorite {% if favorite_movie in favorite_movies %}press{% endif %}" onclick="favorite('favorite_movie_{{ favorite_movie.pk }}',{{ favorite_movie.pk }}, 'movie')" id="favorite_movie_{{ favorite_movie.pk }}"></i>
-            </div>
-            </div>
             <div class="capsule-text">
                 <h2><a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">{{ favorite_movie }}</a></h2>
                 <p>{{ favorite_movie.release_year }}</p>
@@ -38,15 +33,9 @@
         </div>
         {% endfor %}
         </div>
-        {% else %}
-        <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez aucun film dans vos favoris.</h2>
-        </div>
-        {% endif %}
     </div>
 
     <div class="dashboard-block-element min-height-30vh">
-        {% if favorite_people %}
         <div class="dashboard-block-element-title">
             <h2>VOS PERSONNALITES PREFEREES ({{ favorite_people|length }})</h2>
         </div>
@@ -54,14 +43,10 @@
         {% for people in favorite_people %}
         <div class="capsule width-25 margin-bottom-1rem">
             {% if people.people_image %}
-            <div class="capsule-image" style="background-image: url({{ people.people_image.url }});">
+            <div class="capsule-image" style="background-image: url({{ people.people_image.url }});"></div>
             {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
             {% endif %}
-                <div class="favorite-wrapper">
-                    <i class="favorite {% if people in favorite_people %}press{% endif %}" onclick="favorite('favorite_people_{{ people.pk }}',{{ people.pk }}, 'people')" id="favorite_people_{{ people.pk }}"></i>
-                </div>
-            </div>
             <div class="capsule-text">
                 <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
                     <h2>{{ people }}</h2>
@@ -70,15 +55,9 @@
         </div>
         {% endfor %}
         </div>
-        {% else %}
-        <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez aucune personnalité dans vos favoris.</h2>
-        </div>
-        {% endif %}
     </div>
 
     <div class="dashboard-block-element min-height-30vh">
-        {% if favorite_blurays %}
         <div class="dashboard-block-element-title">
             <h2>VOS BLU-RAYS PREFERES ({{ favorite_blurays|length }})</h2>
         </div>
@@ -86,14 +65,10 @@
         {% for favorite_bluray in favorite_blurays %}
         <div class="capsule width-25 margin-bottom-1rem">
             {% if favorite_bluray.blu_ray_image %}
-            <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});">
+            <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});"></div>
             {% else %}
-            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
             {% endif %}
-                <div class="favorite-wrapper">
-                    <i class="favorite {% if favorite_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ favorite_bluray.pk }}',{{ favorite_bluray.pk }}, 'bluray')" id="favorite_bluray_{{ favorite_bluray.pk }}"></i>
-                </div>
-            </div>
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}">
                     <h2>{{ favorite_bluray.movie }}</h2>
@@ -112,11 +87,6 @@
         </div>
         {% endfor %}
         </div>
-        {% else %}
-        <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez aucun blu-ray dans vos favoris.</h2>
-        </div>
-        {% endif %}
     </div>
 
 </section>

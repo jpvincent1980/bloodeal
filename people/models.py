@@ -15,7 +15,7 @@ class People(models.Model):
     last_name = models.CharField(max_length=256, blank=False, null=False)
     slug = models.SlugField(max_length=200, unique=False, blank=True)
     birth_date = models.DateField("Date de naissance", blank=True, null=True)
-    imdb_id = models.CharField(max_length=7, blank=True, null=True)
+    imdb_id = models.CharField(max_length=9, blank=True, null=True)
     people_image = models.ImageField(null=True,
                                      blank=True,
                                      upload_to="people/")

@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% if modal %}
-    {% include modal %}
-{% endif %}
-
 {% block left-block %}
     {% include "people/detail-left-block.html" %}
 {% endblock %}
 
 {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
     {% include "people/detail-main-block.html" %}
 {% endblock %}
 

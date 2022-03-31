@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-20vh padding-1rem"
      xmlns="http://www.w3.org/1999/html">
     <h2>A l'affiche</h2>
-    <p>Publié le {{ latest_movie.date_created|date:"d F Y"|title }}</p>
+    <p>Publié le {% with latest_movies|first as latest_movie %}{{ latest_movie.date_created|date:"d F Y"|title }}</p>
     <div class="capsule">
                 {% if latest_movie.movie_image %}
                 <div class="capsule-image" style="background-image: url({{ latest_movie.movie_image.url }});">
@@ -17,6 +17,6 @@
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
                     <p>Avec {% for actor in latest_movie.actors %}
                         <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
-                </div>
+                </div>{% endwith %}
             </div>
 </div>

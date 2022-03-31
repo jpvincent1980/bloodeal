@@ -12,7 +12,7 @@ class PeopleRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id", "user", "imdb_link", "imdb_id", "status")
     list_editable = ("user", "imdb_link", "status")
-    search_fields = ("user", "imdb_id", "status")
+    search_fields = ("user__pseudo", "imdb_id", "status")
     ordering = ("user", )
 
 
@@ -24,7 +24,7 @@ class MovieRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id", "user", "imdb_link", "imdb_id", "status")
     list_editable = ("user", "imdb_link", "status")
-    search_fields = ("user", "imdb_id", "status")
+    search_fields = ("user__pseudo", "imdb_id", "status")
     ordering = ("user", )
 
 
@@ -36,5 +36,5 @@ class BluRayRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id", "user", "amazon_link", "asin", "status")
     list_editable = ("user", "amazon_link", "status")
-    search_fields = ("user", "asin", "status")
+    search_fields = ("user__pseudo", "asin", "status")
     ordering = ("user", )

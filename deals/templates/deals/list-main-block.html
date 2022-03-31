@@ -2,6 +2,7 @@
 
 <section class="dashboard-block main-block-min-width">
     <div class="dashboard-block-element min-height-30vh">
+        {% if deal_list %}
         <div class="dashboard-block-element-title">
             <h2>TOUS LES BONS PLANS ({{ deal_list|length }})</h2>
         </div>
@@ -27,5 +28,10 @@
         </div>
         {% endfor %}
         </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto">
+            <h2>Nous n'avons aucun bon plan à partager.</h2>
+        </div>
+        {% endif %}
     </div>
 </section>

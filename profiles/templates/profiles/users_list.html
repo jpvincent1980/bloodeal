@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% if modal %}
-    {% include modal %}
-{% endif %}
-
 {% block left-block %}
 {% endblock %}
 
 {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
 {% endblock %}
 
 {% block right-block %}

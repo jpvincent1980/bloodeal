@@ -1,6 +1,6 @@
 from PIL import Image
 from django.db import models
-from django.db.models import CASCADE
+from django.db.models import CASCADE, Count
 from django.utils.text import slugify
 
 from people.models import People
@@ -16,7 +16,7 @@ class Movie(models.Model):
     title_vo = models.CharField(max_length=256, blank=True, null=True)
     slug = models.SlugField(max_length=200, unique=False, blank=True)
     release_year = models.IntegerField(blank=True, null=True)
-    imdb_id = models.CharField(max_length=7, blank=True, null=True)
+    imdb_id = models.CharField(max_length=9, blank=True, null=True)
     movie_image = models.ImageField(null=True, blank=True, upload_to="movies/")
     request = models.ForeignKey(MovieRequest,
                                 on_delete=CASCADE,
@@ -41,8 +41,7 @@ class Movie(models.Model):
         actors = [actor.actor for actor in actors]
         return actors
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
+    def save(self, **kwargs):
         """
         Overrides the save method to update image size at upload to limit width
         and height
@@ -58,13 +57,16 @@ class Movie(models.Model):
         """
         if not self.slug:
             self.slug = slugify(self.title_vf)
-        if self.movie_image:
-            updated_image = Image.open(self.movie_image)
-            if updated_image.width > 100 or updated_image.height > 150:
-                output_size = (100, 150)
-                updated_image.thumbnail(output_size)
-                updated_image.save(self.movie_image)
-        return super(Movie, self).save()
+        try:
+            if self.movie_image:
+                updated_image = Image.open(self.movie_image)
+                if updated_image.width > 100 or updated_image.height > 150:
+                    output_size = (100, 150)
+                    updated_image.thumbnail(output_size)
+                    updated_image.save(self.movie_image)
+        except (OSError,) as error:
+            print(error)
+        return super(Movie, self).save(**kwargs)
 
 
 class MovieDirector(models.Model):
@@ -97,3 +99,13 @@ class MovieActor(models.Model):
     class Meta:
         verbose_name = "Acteur par film"
         verbose_name_plural = "Acteurs par film"
+
+
+def get_movies(user):
+    movies = Movie.objects.all()
+    top_movies = movies.annotate(num_favorites=Count("favorite_movie")).order_by("-num_favorites")[:5]
+    favorite_movies = movies.filter(favorite_movie__user=user)
+    return {"movies": movies,
+            "top_movies": top_movies,
+            "favorite_movies": favorite_movies,
+            "latest_movies": movies.order_by("-date_created")}

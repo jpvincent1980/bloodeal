@@ -3,9 +3,11 @@ from itertools import chain
 from django.views.generic import ListView, DetailView
 
 from deals.models import Deal
+from user_requests.forms import generate_initialized_request_forms
+from user_requests.models import get_user_requests_total
 from .models import People
-from movies.models import Movie, MovieDirector, MovieActor
-from blurays.models import BluRay
+from movies.models import Movie, MovieDirector, MovieActor, get_movies
+from blurays.models import BluRay, get_blurays
 
 
 # Create your views here.
@@ -19,67 +21,45 @@ class PeopleDetailView(DetailView):
     template_name = "people/people_detail.html"
 
     def get_movies_as_director(self):
-        movies = MovieDirector.objects.filter(director=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        movies = Movie.objects.filter(id__in=movies)
+        director = People.objects.filter(pk=self.object.pk)
+        movies = Movie.objects.filter(movie_director__director=director[0])
         return movies
 
     def get_movies_as_actor(self):
-        movies = MovieActor.objects.filter(actor=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        movies = Movie.objects.filter(id__in=movies)
+        actor = People.objects.filter(pk=self.object.pk)
+        movies = Movie.objects.filter(movie_actor__actor=actor[0])
         return movies
 
     # TODO Supprimer les doublons si réalisateur et acteur du même film
     def get_movies(self):
-        return sorted(chain(self.get_movies_as_director(),
+        movies = sorted(chain(self.get_movies_as_director(),
                      self.get_movies_as_actor()),
-                      key=lambda movie:movie.release_year,
+                      key=lambda movie: movie.release_year,
                       reverse=True)
+        return movies
 
-    def get_blurays_as_director(self):
-        movies = MovieDirector.objects.filter(director=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        movies = Movie.objects.filter(id__in=movies)
-        movies = [movie.pk for movie in movies]
-        blurays = BluRay.objects.filter(movie__in=movies)
-        return blurays
-
-    def get_blurays_as_actor(self):
-        movies = MovieActor.objects.filter(actor=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        movies = Movie.objects.filter(id__in=movies)
-        movies = [movie.pk for movie in movies]
-        blurays = BluRay.objects.filter(movie__in=movies)
-        return blurays
-
-    # TODO Supprimer les doublons si réalisateur et acteur du même film
     def get_blurays(self):
-        return sorted(chain(self.get_blurays_as_director(),
-                     self.get_blurays_as_actor()))
-
-    def get_deals_as_director(self):
-        movies = MovieDirector.objects.filter(director=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        deals = Deal.objects.filter(blu_ray__movie__in=movies)
-        return deals
-
-    def get_deals_as_actor(self):
-        movies = MovieActor.objects.filter(actor=self.object)
-        movies = [movie.movie.pk for movie in movies]
-        deals = Deal.objects.filter(blu_ray__movie__in=movies)
-        return deals
+        blurays = BluRay.objects.filter(movie__in=self.get_movies())
+        return blurays
 
     # TODO Supprimer les doublons si réalisateur et acteur du même film
     def get_deals(self):
-        return sorted(chain(self.get_deals_as_director(),
-                     self.get_deals_as_actor()),
-                      key=lambda deal:deal.date_created,
-                      reverse=True)
+        deals = Deal.objects.filter(blu_ray__in=self.get_blurays())
+        return deals
 
     def get_context_data(self, **kwargs):
         context = super(PeopleDetailView, self).get_context_data()
-        context.update({"movies": self.get_movies(),
-                        "blurays": self.get_blurays(),
-                        "deals": self.get_deals()})
+        context.update(get_movies(self.request.user))
+        context.update(get_blurays(self.request.user))
+        # Le queryset 'movies' ci-dessous qui ne comporte que les films de
+        # l'instance de personnalité écrasera le queryset également appelé 'movies'
+        # importés plus haut qui contient tous les films
+        context.update({"people_movies": self.get_movies(),
+                        "people_blurays": self.get_blurays(),
+                        "people_deals": self.get_deals()})
+        requests_forms = generate_initialized_request_forms(self.request.user)
+        context.update(requests_forms)
+        context.update(get_user_requests_total(self.request.user,
+                                               only_open=True))
+        print(context)
         return context

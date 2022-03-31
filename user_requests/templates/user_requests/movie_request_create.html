@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% if modal %}
-    {% include modal %}
-{% endif %}
+{% block left-block %}
+    {% include "movies/list-left-block.html" %}
+{% endblock %}
 
-    {% block left-block %}
-        {% include "movies/list-left-block.html" %}
-    {% endblock %}
+{% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
+    {% include "user_requests/add-a-movie-snippet.html" %}
+{% endblock %}
 
-    {% block content %}
-        {% include "user_requests/add-a-movie-snippet.html" %}
-    {% endblock %}
-
-    {% block right-block %}
-        {% include "movies/list-right-block.html" %}
-    {% endblock %}
+{% block right-block %}
+    {% include "movies/list-right-block.html" %}
+{% endblock %}
