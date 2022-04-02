@@ -49,7 +49,11 @@ class CustomUser(AbstractUser):
     """
     username = None
     email = models.EmailField(unique=True)
-    pseudo = models.CharField(max_length=24, blank=True, null=True)
+    pseudo = models.CharField(max_length=24,
+                              blank=True,
+                              null=True,
+                              unique=True,
+                              error_messages={'unique': 'Ce pseudo est déjà pris.'})
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

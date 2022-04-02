@@ -29,20 +29,12 @@ class FavoriteView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(FavoriteView, self).get_context_data(**kwargs)
-        favorite_movies = FavoriteMovie.objects.filter(user=self.request.user)
-        favorite_movies = [movie.movie for movie in favorite_movies]
-        favorite_people = FavoritePeople.objects.filter(user=self.request.user)
-        favorite_people = [people.people for people in favorite_people]
-        favorite_blurays = FavoriteBluRay.objects.filter(user=self.request.user)
-        favorite_blurays = [blu_ray.blu_ray for blu_ray in favorite_blurays]
-        favorite_users = FavoriteUser.objects.filter(user=self.request.user)
-        favorite_users = [user.followed_user for user in favorite_users]
-        context.update({"favorite_movies": favorite_movies,
-                        "favorite_people": favorite_people,
-                        "favorite_blurays": favorite_blurays,
-                        "favorite_users": favorite_users})
+        favorite_users = CustomUser.objects.filter(user_followed__user=self.request.user)
+        context.update({"favorite_users": favorite_users})
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,
@@ -86,6 +78,8 @@ class ProfileUpdate(UpdateView):
             context["form2"] = CustomUserChangePasswordForm(user=self.request.user)
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,
@@ -146,11 +140,11 @@ def add_to_favorite_view(request):
         if type == "bluray":
             bluray = BluRay.objects.filter(pk=pk)
             if bluray:
-                duplicate = FavoriteBluRay.objects.filter(user=user, blu_ray=bluray[0])
+                duplicate = FavoriteBluRay.objects.filter(user=user, bluray=bluray[0])
                 if duplicate:
                     duplicate.delete()
                 else:
-                    FavoriteBluRay.objects.create(user=user, blu_ray=bluray[0])
+                    FavoriteBluRay.objects.create(user=user, bluray=bluray[0])
         elif type == "movie":
             movie = Movie.objects.filter(pk=pk)
             if movie:

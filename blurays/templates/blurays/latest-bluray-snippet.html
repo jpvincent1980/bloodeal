@@ -4,14 +4,23 @@
     <h2>Dernière sortie</h2>
     <p>{% with latest_blurays|first as latest_bluray %}{{ latest_bluray.release_date|date:"d F Y"|title }}</p>
     <div class="capsule">
-                {% if latest_bluray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ latest_bluray.blu_ray_image.url }});">
+                {% if latest_bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ latest_bluray.bluray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                 </div>
                 <div class="capsule-text">
-                    <p><a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}"><h2>{{ latest_bluray.movie }}</h2></a></p>
+                    <a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}">
+                    {% if latest_bluray.title %}
+                        <h2>{{ latest_bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ latest_bluray.movie }}</h2>
+                    {% endif %}
+                    </a>
+                    {% if latest_bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
                     <p>Un film de {% for director in latest_bluray.movie.directors %}
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
                     <p>Avec {% for actor in latest_bluray.movie.actors %}

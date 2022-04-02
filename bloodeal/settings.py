@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'blurays',
-    'deals',
     'movies',
     'people',
     'profiles',
     'user_requests',
+    'deals',
     # 'cloudinary',
     # 'cloudinary_storage',
 ]

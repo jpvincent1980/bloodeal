@@ -1,9 +1,7 @@
-import datetime
-
-from django.db.models import Count
+from django.contrib import messages
 from django.views.generic import ListView, DetailView
 
-from profiles.models import FavoriteMovie
+from profiles.models import get_user_all_favorites
 from deals.models import Deal
 from blurays.models import BluRay, get_blurays
 from user_requests.forms import generate_initialized_request_forms
@@ -19,6 +17,8 @@ class MovieListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(MovieListView, self).get_context_data(**kwargs)
         context.update(get_movies(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,
@@ -39,12 +39,19 @@ class MovieDetailView(DetailView):
             if context_object_name:
                 context[context_object_name] = self.object
         movie_blurays = BluRay.objects.filter(movie=self.object)
-        deals = Deal.objects.filter(blu_ray__in=movie_blurays)
+        deals = Deal.objects.filter(bluray__in=movie_blurays)
         context.update({"movie_blurays": movie_blurays,
                         "deals": deals})
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         context.update(get_user_requests_total(self.request.user,
                                                only_open=True))
+        # Récupère un message à afficher dans la fenêtre modale le cas échéant
+        storage = messages.get_messages(self.request)
+        if storage:
+            context.update({"modal": "modal.html",
+                            "modal_content": storage})
         return super().get_context_data(**context)
 

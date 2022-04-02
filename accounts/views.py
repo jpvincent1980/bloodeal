@@ -2,12 +2,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from accounts.forms import LoginForm, SignupForm
 from deals.models import get_deals, get_user_favorites_deals
-from movies.models import get_movies
-from blurays.models import get_blurays
+from movies.models import get_movies, get_movies_results
+from blurays.models import get_blurays, BluRay, get_blurays_results
+from people.models import get_people_results
 from profiles.models import get_user_all_favorites, get_user_suggested_blurays
 from user_requests.forms import generate_initialized_request_forms
 from user_requests.models import get_user_requests_total, get_user_requests
@@ -60,6 +61,8 @@ def index_view(request):
             # Récupère les données pour le bloc de gauche
             requests_forms = generate_initialized_request_forms(request.user)
             context.update(requests_forms)
+            # Récupère les données pour le bloc central
+            context.update(get_user_all_favorites(request.user))
             # Récupère le nombre de demandes de l'utilisateur
             context.update(get_user_requests_total(request.user,
                                                    only_open=True))
@@ -189,7 +192,7 @@ def dashboard_view(request):
     context.update(get_user_all_favorites(request.user))
     # Récupère les bons plans recommandés selon les favoris de l'utilisateur
     context.update(get_user_favorites_deals(request.user))
-    # Récupère les suggestions de blurays pour l'utilisateur
+    # # Récupère les suggestions de blurays pour l'utilisateur
     context.update(get_user_suggested_blurays(request.user))
     # Récupère les messages le cas échéant et les envoie à la fenêtre modale
     storage = messages.get_messages(request)
@@ -201,3 +204,32 @@ def dashboard_view(request):
     # Récupère le nombre de demandes de l'utilisateur pour la navbar
     context.update(get_user_requests_total(request.user, only_open=True))
     return render(request, "accounts/dashboard.html", context)
+
+
+class SearchResultsView(ListView):
+    template_name = "accounts/search_results.html"
+    queryset = BluRay.objects.filter(movie__title_vf="Dune")
+
+    def get_keyword(self):
+        return self.request.GET.get("Q", "")
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(SearchResultsView, self).get_context_data(**kwargs)
+        # Récupère le mot clé du champ de recherche
+        keyword = self.get_keyword()
+        context.update({"keyword": keyword})
+        # Récupère les données pour le bloc de gauche
+        requests_forms = generate_initialized_request_forms(self.request.user)
+        context.update(requests_forms)
+        # Récupère les données pour le bloc de droite
+        context.update(get_movies(self.request.user))
+        context.update(get_blurays(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
+        # Récupère les données de recherche pour les blu-rays
+        context.update(get_blurays_results(keyword))
+        # Récupère les données de recherche pour les films
+        context.update(get_movies_results(keyword))
+        # Récupère les données de recherche pour les personnalités
+        context.update(get_people_results(keyword))
+        return context

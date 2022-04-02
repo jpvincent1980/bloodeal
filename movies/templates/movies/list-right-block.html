@@ -14,7 +14,7 @@
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
             <div class="favorite-wrapper">
-                <i class="favorite {% if movie in favorite_movies %}press{% endif %}" onclick="favorite('top_movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="top_movie_{{ movie.pk }}"></i>
+                <i class="favorite {% if movie in user_favorite_movies %}press{% endif %}" onclick="favorite('top_movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="top_movie_{{ movie.pk }}"></i>
             </div>
             </div>
             <div class="capsule-text text-align-center">

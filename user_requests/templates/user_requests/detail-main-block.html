@@ -7,7 +7,7 @@
             <h2>VOS FILMS PREFERES ({{ favorite_movies|length }})</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for favorite_movie in favorite_movies %}
+        {% for favorite_movie in user_favorite_movies %}
         <div class="capsule width-25 margin-bottom-1rem">
             {% if favorite_movie.movie_image %}
             <div class="capsule-image" style="background-image: url({{ favorite_movie.movie_image.url }});"></div>
@@ -40,7 +40,7 @@
             <h2>VOS PERSONNALITES PREFEREES ({{ favorite_people|length }})</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for people in favorite_people %}
+        {% for people in user_favorite_people %}
         <div class="capsule width-25 margin-bottom-1rem">
             {% if people.people_image %}
             <div class="capsule-image" style="background-image: url({{ people.people_image.url }});"></div>
@@ -62,10 +62,10 @@
             <h2>VOS BLU-RAYS PREFERES ({{ favorite_blurays|length }})</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for favorite_bluray in favorite_blurays %}
+        {% for favorite_bluray in user_favorite_blurays %}
         <div class="capsule width-25 margin-bottom-1rem">
-            {% if favorite_bluray.blu_ray_image %}
-            <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});"></div>
+            {% if favorite_bluray.bluray_image %}
+            <div class="capsule-image" style="background-image: url({{ favorite_bluray.bluray_image.url }});"></div>
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
             {% endif %}

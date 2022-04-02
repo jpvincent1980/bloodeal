@@ -1,29 +1,37 @@
 {% load static %}
 
 <section class="dashboard-block main-block-min-width">
+
     <div class="dashboard-block-element min-height-30vh">
-        {% if deal_list %}
+        {% if best_deals %}
         <div class="dashboard-block-element-title">
-            <h2>TOUS LES BONS PLANS ({{ deal_list|length }})</h2>
+            <h2>BONS PLANS AUX MEILLEURS PRIX ({{ best_deals|length }})</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
-        {% for deal in deal_list %}
+        {% for best_deal in best_deals %}
         <div class="capsule width-25 margin-bottom-1rem">
-            {% if deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+            {% if best_deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ best_deal.bluray.bluray_image.url }});">
             {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-                <a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">
-                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">
-                    {{ deal.price }}€
+                <a href="{{ best_deal.amazon_aff_link }}" target="_blank">
+                    <p class="deal-price {% if best_deal.status != '1' %}inactif{% endif %}">
+                    {{ best_deal.price }}€
                     </p>
                 </a>
             </div>
             <div class="capsule-text">
-                <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
-                    <h2>{{ deal.blu_ray.movie }}</h2>
+                <a href="{% url 'deals:deals_detail' pk=best_deal.pk %}">
+                    {% if best_deal.bluray.title %}
+                        <h2>{{ best_deal.bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ best_deal.bluray.movie }}</h2>
+                    {% endif %}
                 </a>
+                    {% if best_deal.bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -34,4 +42,87 @@
         </div>
         {% endif %}
     </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        {% if latest_deals %}
+        <div class="dashboard-block-element-title">
+            <h2>LES DERNIERS BONS PLANS ({{ latest_deals|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for latest_deal in latest_deals %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if latest_deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ latest_deal.bluray.bluray_image.url }});">
+            {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <a href="{{ latest_deal.amazon_aff_link }}" target="_blank">
+                    <p class="deal-price {% if latest_deal.status != '1' %}inactif{% endif %}">
+                    {{ latest_deal.price }}€
+                    </p>
+                </a>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'deals:deals_detail' pk=latest_deal.pk %}">
+                    {% if latest_deal.bluray.title %}
+                        <h2>{{ latest_deal.bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ latest_deal.bluray.movie }}</h2>
+                    {% endif %}
+                </a>
+                    {% if latest_deal.bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto">
+            <h2>Nous n'avons aucun bon plan à partager.</h2>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        {% if user_recommended_deals %}
+        <div class="dashboard-block-element-title">
+            <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_recommended_deals|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for user_recommended_deal in user_recommended_deals %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if user_recommended_deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ user_recommended_deal.bluray.bluray_image.url }});">
+            {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <a href="{{ user_recommended_deal.amazon_aff_link }}" target="_blank">
+                    <p class="deal-price {% if user_recommended_deal.status != '1' %}inactif{% endif %}">
+                    {{ user_recommended_deal.price }}€
+                    </p>
+                </a>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'deals:deals_detail' pk=user_recommended_deal.pk %}">
+                    {% if user_recommended_deal.bluray.title %}
+                        <h2>{{ user_recommended_deal.bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ user_recommended_deal.bluray.movie }}</h2>
+                    {% endif %}
+                </a>
+                    {% if user_recommended_deal.bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto">
+            <h2>Nous n'avons aucun bon plan recommandé selon vos favoris.</h2>
+        </div>
+        {% endif %}
+    </div>
+
 </section>

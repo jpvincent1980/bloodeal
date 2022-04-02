@@ -1,13 +1,16 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView
 
 from blurays.models import get_blurays, BluRay
 from movies.models import get_movies, Movie
+from profiles.models import get_user_all_favorites
 from user_requests.forms import generate_initialized_request_forms
 from user_requests.models import get_user_requests_total
-from .models import Deal
+from .mixins import SuperUserRequiredMixin
+from .models import Deal, get_deals, get_user_favorites_deals
 
 
 # Create your views here.
@@ -17,12 +20,16 @@ class DealListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealListView, self).get_context_data(**kwargs)
-        user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
-        context.update({"user_deals": user_deals})
+        context.update(get_deals(user=self.request.user))
+        # Récupère les bons plans recommandés selon les favoris de l'utilisateur
+        context.update(get_user_favorites_deals(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,
                                                only_open=True))
+        print(context)
         return context
 
 
@@ -33,17 +40,19 @@ class DealDetailView(DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealDetailView, self).get_context_data(**kwargs)
         user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
-        bluray = BluRay.objects.filter(deal_blu_ray=self.object)
+        bluray = BluRay.objects.filter(deal_bluray=self.object)
         movie = Movie.objects.filter(bluray_movie__in=bluray)
         movie = movie[0] if movie else movie
         context.update({"user_deals": user_deals,
                         "movie": movie})
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         context.update(get_user_requests_total(self.request.user,
                                                only_open=True))
         return context
 
 
-class DealCreateView(CreateView):
+class DealCreateView(SuperUserRequiredMixin, CreateView):
     model = Deal
     fields = ["amazon_link", "price", "created_by"]
     template_name = "deals/deals_create.html"
@@ -71,6 +80,8 @@ class DealCreateView(CreateView):
         context.update({"user_deals": user_deals})
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,

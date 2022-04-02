@@ -1,8 +1,43 @@
 {% load static %}
 
 <section class="dashboard-block main-block-min-width">
+    <ul>
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}">
+            <li >Toutes vos demandes</li>
+        </a>
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=only_open">
+            <li>Seulement les demandes en-cours</li>
+        </a>
+    </ul>
+    <div class="dashboard-block-element padding-1rem">
+        {% if user_requests_deals %}
+        <div class="dashboard-block-element-title">
+            <h2>VOS DEMANDES D'AJOUTS DE BONS PLANS ({{ user_requests_deals|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content justify-content-center flex-wrap">
+        {% for request in user_requests_deals %}
+        <div class="capsule justify-content-center">
+            <div class="capsule-text width-100">
+                <ul>
+                    <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
+                    <li class="margin-1rem">Ajout du bon plan pour le blu-ray ayant l'identifiant Amazon {{ request.asin }}</li>
+                    <li class="margin-1rem">Le statut de votre demande est :
+                        <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
+                            {{ request.get_status_display }}
+                        </span></li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto">
+            <h2>Vous n'avez aucune demande d'ajout de bons plans en-cours.</h2>
+        </div>
+        {% endif %}
+    </div>
 
-    <div class="dashboard-block-element min-height-30vh">
+    <div class="dashboard-block-element padding-1rem">
         {% if user_requests_blurays %}
         <div class="dashboard-block-element-title">
             <h2>VOS DEMANDES D'AJOUTS DE BLU-RAYS ({{ user_requests_blurays|length }})</h2>
@@ -25,12 +60,12 @@
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez envoyé aucune demande d'ajout de blu-ray.</h2>
+            <h2>Vous n'avez aucune demande d'ajout de blu-rays en-cours.</h2>
         </div>
         {% endif %}
     </div>
 
-    <div class="dashboard-block-element min-height-30vh">
+    <div class="dashboard-block-element padding-1rem">
     {% if user_requests_movies %}
         <div class="dashboard-block-element-title">
             <h2>VOS DEMANDES D'AJOUTS DE FILMS ({{ user_requests_movies|length }})</h2>
@@ -41,7 +76,7 @@
             <div class="capsule-text width-100">
                 <ul>
                     <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
-                    <li class="margin-1rem">Ajout du film ayant l'identifiant IMDB {{ request.imdb }}</li>
+                    <li class="margin-1rem">Ajout du film ayant l'identifiant IMDB {{ request.imdb_id }}</li>
                     <li class="margin-1rem">Le statut de votre demande est :
                         <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                             {{ request.get_status_display }}
@@ -53,12 +88,12 @@
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez envoyé aucune demande d'ajout de film.</h2>
+            <h2>Vous n'avez aucune demande d'ajout de films en-cours.</h2>
         </div>
         {% endif %}
     </div>
 
-    <div class="dashboard-block-element min-height-30vh">
+    <div class="dashboard-block-element padding-1rem">
         {% if user_requests_people %}
         <div class="dashboard-block-element-title">
             <h2>VOS DEMANDES D'AJOUTS DE PERSONNALITES ({{ user_requests_people|length }})</h2>
@@ -69,7 +104,7 @@
             <div class="capsule-text width-100">
                 <ul>
                     <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
-                    <li class="margin-1rem">Ajout de la personnalité ayant l'identifiant IMDB {{ request.imdb }}</li>
+                    <li class="margin-1rem">Ajout de la personnalité ayant l'identifiant IMDB {{ request.imdb_id }}</li>
                     <li class="margin-1rem">Le statut de votre demande est :
                         <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                             {{ request.get_status_display }}
@@ -81,7 +116,7 @@
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez envoyé aucune demande d'ajout de personnalité.</h2>
+            <h2>Vous n'avez aucune demande d'ajout de personnalités en-cours.</h2>
         </div>
         {% endif %}
     </div>

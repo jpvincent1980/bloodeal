@@ -1,0 +1,28 @@
+{% load static %}
+
+<div class="dashboard-block-element">
+    <div class="capsule align-items-center padding-1rem">
+        {% if people.people_image  %}
+        <div class="capsule-image" style="background-image: url({{ people.people_image.url }});">
+        {% else %}
+        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+        <div class="favorite-wrapper">
+            <i class="favorite {% if people in user_favorite_people %}press{% endif %}" onclick="favorite('people_{{ people.pk }}',{{ people.pk }}, 'people')" id="people_{{ people.pk }}"></i>
+        </div>
+        </div>
+        <div class="capsule-text">
+            <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
+                <h3>{{ people }}</h3>
+                {% if people.birth_date %}
+                <h4>Naissance:</h4>
+                <h4>{{ people.birth_date|date:"d F Y"|title }}</h4>
+                {% endif %}
+                {% if people.death_date %}
+                <h4>Décès:</h4>
+                <h4>{{ people.death_date|date:"d F Y"|title }}</h4>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+</div>

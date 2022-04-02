@@ -24,6 +24,19 @@
             <nav>
                 <span><a href="{% url 'accounts:dashboard' %}">BL💿💿DEAL</a></span>
                 <ul class="nav">
+                    <li>
+                        <form action="{% url 'accounts:search_results' %}" method="GET" class="search-wrapper">
+                            <input type="search" name="Q" placeholder="Tapez un mot-clé">
+                                <button style="background: none; border: none;">
+                                   <svg width="44px" height="44px" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                      <g class="search-icon">
+                                        <path class="search" d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"/>
+                                        <path class="search" d="M19.25 19.25L15.2625 15.2625"/>
+                                      </g>
+                                    </svg>
+                              </button>
+                        </form>
+                    </li>
                     <li><a href="{% url 'deals:deals_list' %}">BONS PLANS</a></li>
                     <li><a href="{% url 'blurays:blurays_list' %}">BLU-RAYS</a></li>
                     <li><a href="{% url 'movies:movies_list' %}">FILMS</a></li>

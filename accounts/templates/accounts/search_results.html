@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% load profiles_tags %}
+
+    {% block left-block %}
+        {% include "profiles/left-block.html" %}
+    {% endblock %}
+
+    {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
+    <section class="dashboard-block main-block-min-width">
+
+        <div class="dashboard-block-element min-height-30vh">
+            {% if blurays_results %}
+            <div class="dashboard-block-element-title">
+                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES BLU-RAYS ({{ blurays_results|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap">
+            {% for blurays_result in blurays_results %}
+        <div class="capsule width-25 margin-bottom-1rem">
+                {% if blurays_result.bluray_image %}
+                    <div class="capsule-image" style="background-image: url({{ blurays_result.bluray_image.url }});">
+                    {% else %}
+                    <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if blurays_result in user_favorite_blurays %}press{% endif %}" onclick="favorite('blurays_result_{{ blurays_result.pk }}',{{ blurays_result.pk }}, 'bluray')" id="blurays_result_{{ blurays_result.pk }}"></i>
+                </div>
+                </div>
+                <div class="capsule-text">
+                    <a href="{% url 'blurays:blurays_detail' slug=blurays_result.slug pk=blurays_result.pk %}">
+                    <h2>{{ blurays_result.movie }}</h2>
+                    </a>
+                    <p>Sortie: {{ blurays_result.release_date }}</p>
+                    <p><a href="{{ blurays_result.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
+                </div>
+        </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Nous n'avons trouvé aucun résultat dans les blu-rays pour le mot clé "{{ keyword }}".</h2>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-block-element min-height-30vh">
+            {% if movies_results %}
+            <div class="dashboard-block-element-title">
+                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES FILMS ({{ movies_results|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap">
+            {% for movies_result in movies_results %}
+        <div class="capsule width-25 margin-bottom-1rem">
+                {% if movies_result.movie_image %}
+                    <div class="capsule-image" style="background-image: url({{ movies_result.movie_image.url }});">
+                    {% else %}
+                    <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if movies_result in user_favorite_movies %}press{% endif %}" onclick="favorite('movies_result_{{ movies_result.pk }}',{{ movies_result.pk }}, 'movie')" id="movies_result_{{ movies_result.pk }}"></i>
+                </div>
+                </div>
+                <div class="capsule-text">
+                    <a href="{% url 'movies:movies_detail' slug=movies_result.slug pk=movies_result.pk %}">
+                    <h2>{{ movies_result }}</h2>
+                    </a>
+                    <p>Sorti en {{ umovies_result.release_year }}</p>
+                </div>
+        </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Nous n'avons trouvé aucun résultat dans les films pour le mot clé "{{ keyword }}".</h2>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-block-element min-height-30vh">
+            {% if people_results %}
+            <div class="dashboard-block-element-title">
+                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES PERSONNALITES ({{ people_results|length }})</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap">
+            {% for people_result in people_results %}
+        <div class="capsule width-25 margin-bottom-1rem">
+            {% if people_result.people_image %}
+            <div class="capsule-image" style="background-image: url({{ people_result.people_image.url }});">
+            {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if people_result in user_favorite_people %}press{% endif %}" onclick="favorite('people_result_{{ people_result.pk }}',{{ people_result.pk }}, 'people')" id="people_result_{{ people_result.pk }}"></i>
+                </div>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'people:people_detail' slug=people_result.slug pk=people_result.pk %}">
+                    <h2>{{ people_result }}</h2>
+                </a>
+            </div>
+        </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <div class="capsule justify-content-center text-align-center margin-auto">
+                <h2>Nous n'avons trouvé aucun résultat dans les personnalités pour le mot clé "{{ keyword }}".</h2>
+            </div>
+            {% endif %}
+        </div>
+
+    </section>
+    {% endblock %}
+
+    {% block right-block %}
+        {% include "profiles/right-block.html" %}
+    {% endblock %}
+

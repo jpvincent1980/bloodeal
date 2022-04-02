@@ -1,11 +1,13 @@
 from itertools import chain
 
+from django.contrib import messages
 from django.views.generic import ListView, DetailView
 
 from deals.models import Deal
+from profiles.models import get_user_all_favorites
 from user_requests.forms import generate_initialized_request_forms
 from user_requests.models import get_user_requests_total
-from .models import People
+from .models import People, get_people
 from movies.models import Movie, MovieDirector, MovieActor, get_movies
 from blurays.models import BluRay, get_blurays
 
@@ -44,13 +46,14 @@ class PeopleDetailView(DetailView):
 
     # TODO Supprimer les doublons si réalisateur et acteur du même film
     def get_deals(self):
-        deals = Deal.objects.filter(blu_ray__in=self.get_blurays())
+        deals = Deal.objects.filter(bluray__in=self.get_blurays())
         return deals
 
     def get_context_data(self, **kwargs):
         context = super(PeopleDetailView, self).get_context_data()
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
+        context.update(get_people(self.request.user))
         # Le queryset 'movies' ci-dessous qui ne comporte que les films de
         # l'instance de personnalité écrasera le queryset également appelé 'movies'
         # importés plus haut qui contient tous les films
@@ -59,7 +62,13 @@ class PeopleDetailView(DetailView):
                         "people_deals": self.get_deals()})
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
+        # Récupère les données pour le bloc central
+        context.update(get_user_all_favorites(self.request.user))
         context.update(get_user_requests_total(self.request.user,
                                                only_open=True))
-        print(context)
+        # Récupère un message à afficher dans la fenêtre modale le cas échéant
+        storage = messages.get_messages(self.request)
+        if storage:
+            context.update({"modal": "modal.html",
+                            "modal_content": storage})
         return context

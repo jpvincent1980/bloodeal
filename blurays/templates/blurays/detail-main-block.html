@@ -4,21 +4,32 @@
 
     <div class="dashboard-block-element min-height-30vh">
         <div class="dashboard-block-element-title">
+            {% if bluray.title %}
+            <h2>BLU-RAY : {{ bluray.title|upper }}</h2>
+            {% else %}
             <h2>BLU-RAY : {{ bluray.movie|upper }}</h2>
+            {% endif %}
         </div>
         <div class="dashboard-block-element-content flex-wrap">
         <div class="capsule width-25">
-            {% if bluray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ bluray.blu_ray_image.url }});">
+            {% if bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ bluray.bluray_image.url }});">
             {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if bluray in favorite_blurays %}press{% endif %}" onclick="favorite('bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="bluray_{{ bluray.pk }}"></i>
+                    <i class="favorite {% if bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="bluray_{{ bluray.pk }}"></i>
                 </div>
             </div>
             <div class="capsule-text">
-                <h2>{{ bluray.movie }}</h2>
+                    {% if bluray.title %}
+                        <h2>{{ bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ bluray.movie }}</h2>
+                    {% endif %}
+                    {% if bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
                 <p>Sortie: {{ bluray.release_date }}</p>
                 <p><a href="{{ bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
             </div>
@@ -34,12 +45,12 @@
         <div class="dashboard-block-element-content flex-wrap">
         {% for bluray_deal in bluray_deals %}
         <div class="capsule width-25 margin-bottom-1rem">
-            {% if bluray_deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ bluray_deal.blu_ray.blu_ray_image.url }});">
+            {% if bluray_deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ bluray_deal.bluray.bluray_image.url }});">
             {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-                <a href="{{ bluray_deal.blu_ray.amazon_aff_link }}" target="_blank">
+                <a href="{{ bluray_deal.bluray.amazon_aff_link }}" target="_blank">
                     <p class="deal-price {% if bluray_deal.status != '1' %}inactif{% endif %}">
                     {{ bluray_deal.price }}€
                     </p>
@@ -47,7 +58,7 @@
             </div>
             <div class="capsule-text">
                 <a href="{% url 'deals:deals_detail' pk=bluray_deal.pk %}">
-                <h2>{{ bluray_deal.blu_ray.movie }}</h2>
+                <h2>{{ bluray_deal.bluray.movie }}</h2>
                 </a>
                 <p>Deal du {{ bluray_deal.start_date }}</p>
                 <p>Posté par {{ bluray_deal.created_by }}</p>

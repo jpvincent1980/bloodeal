@@ -75,26 +75,26 @@ class FavoriteBluRay(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='user_bluray')
-    blu_ray = models.ForeignKey(BluRay,
+    bluray = models.ForeignKey(BluRay,
                                 on_delete=models.CASCADE,
                                 related_name='favorite_bluray')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('user', 'blu_ray')
+        unique_together = ('user', 'bluray')
         verbose_name = "Blu-Ray Préféré"
         verbose_name_plural = "Blu-Rays Préférés"
 
     def __str__(self):
         user_name = self.user.pseudo if self.user.pseudo else self.user.email
-        movie_name = self.blu_ray.movie.title_vf
+        movie_name = self.bluray.movie.title_vf
         return user_name + " aime le Blu-Ray de " + movie_name
 
 
 def get_user_all_favorites(user):
     # Get BluRay queryset from favorite blurays
-    bluray_favorites = BluRay.objects.filter(favorite_bluray__user=user)
+    favorite_blurays = BluRay.objects.filter(favorite_bluray__user=user)
     # Get BluRay queryset from favorite movies
     favorite_movies = Movie.objects.filter(favorite_movie__user=user)
     bluray_movies_favorites = BluRay.objects.filter(movie__in=favorite_movies)
@@ -103,15 +103,23 @@ def get_user_all_favorites(user):
     movies_director_favorites = Movie.objects.filter(movie_director__director__in=favorite_people)
     movies_actor_favorites = Movie.objects.filter(movie_actor__actor__in=favorite_people)
     movies_favorites = movies_director_favorites | movies_actor_favorites
+    user_movies_recommended_favorites = movies_favorites.difference(favorite_movies)
     bluray_people_favorites = BluRay.objects.filter(movie__in=movies_favorites)
     # Join all BluRay querysets from previous queries
-    user_favorites = bluray_favorites | bluray_movies_favorites | bluray_people_favorites
-    return {"user_favorites": user_favorites}
+    all_blurays = bluray_movies_favorites | bluray_people_favorites
+    user_recommended_favorites = all_blurays.difference(favorite_blurays)
+    return {"user_favorite_movies": favorite_movies,
+            "user_recommended_movies": user_movies_recommended_favorites,
+            "user_favorite_blurays": favorite_blurays,
+            "user_recommended_blurays": user_recommended_favorites,
+            "user_favorite_people": favorite_people,
+            "user_all_blurays": all_blurays}
 
 
 def get_user_suggested_blurays(user):
     # User all favorites minus already favorites
-    user_all_favorites = get_user_all_favorites(user).get("user_favorites", BluRay.objects.none())
+    user_all_favorites = get_user_all_favorites(user).get("user_favorites",
+                                                          BluRay.objects.none())
     # Get user already favorite blurays
     favorite_blurays = BluRay.objects.filter(favorite_bluray__user=user)
     # Get the difference between both querysets

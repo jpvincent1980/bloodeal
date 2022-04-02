@@ -2,14 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
 :root {
-    --site-bg-color: rgba(70,130,180,1);
+    /*--site-bg-color: rgba(70,130,180,1);*/
+    --site-bg-color: rgba(0,149,213,1);
     --element-bg-color: rgba(255,255,255,1);
     --capsule-bg-color: rgba(255,255,255,1);
     --modal-bg-color: rgba(0,0,0,0.8);
     --capsule-image-width: 45%;
     --capsule-image-margin-width: 2%;
     --capsule-text-width: 73%;
-    --elements-bg-color: steelblue;
+    /*--elements-bg-color: steelblue;*/
+    --elements-bg-color: var(--site-bg-color);
     --btn-delete-bg-color: indianred;
     --btn-validated-bg-color: green;
     --btn-unknown-bg-color: grey;
@@ -120,16 +122,19 @@ p .btn {
 .btn-delete {
     color: #fff;
     background-color: var(--btn-delete-bg-color);
+    border-radius: .25rem;
 }
 
 .btn-validated {
     color: #fff;
     background-color: var(--btn-validated-bg-color);
+    border-radius: .25rem;
 }
 
 .btn-unknown {
     color: #fff;
     background-color: var(--btn-unknown-bg-color);
+    border-radius: .25rem;
 }
 
 .errorlist {
@@ -184,6 +189,17 @@ p .btn {
     margin:0;
     padding: 0.2rem;
     overflow: hidden;
+}
+
+.capsule-text h3 {
+    font-size: 1.4rem;
+    margin: 0.4rem;
+}
+
+.capsule-text h4 {
+    font-size: 0.8rem;
+    font-weight: 100;
+    margin: 0.2rem;
 }
 
 .capsule-text a {
@@ -468,6 +484,29 @@ path {
     stroke-linejoin: round;
     fill: none;
 }
+
+.search-wrapper {
+    display: flex;
+}
+
+.search-wrapper input {
+    width: 15rem;
+    margin: 0 1rem 0 0;
+    max-height: 1.5rem;
+}
+
+.search-wrapper svg {
+    cursor: pointer;
+}
+
+path.search {
+    stroke: white;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+
 
 /* End of backToTop button handling */
 

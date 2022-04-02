@@ -1,12 +1,18 @@
 import datetime
 
 from PIL import Image
+from django.conf import settings
 from django.db import models
-from django.db.models import CASCADE, Count
+from django.db.models import Count, Q
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from movies.models import Movie
-from user_requests.models import BluRayRequest
+
+
+BLURAY_CHOICES = [("1", "Oui"),
+                  ("2", "Non"),
+                  ("3", "Indéterminé")]
 
 
 # Create your models here.
@@ -14,20 +20,39 @@ class BluRay(models.Model):
     """
     A model that represents an actor or director.
     """
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE,
-                              related_name='bluray_movie', blank=False, null=False)
-    slug = models.SlugField(max_length=200, unique=False, blank=True)
-    ean = models.CharField(max_length=13, blank=True, null=True)
-    amazon_asin = models.CharField(max_length=10, blank=True, null=True)
-    amazon_aff_link = models.URLField(max_length=200, blank=True)
-    release_date = models.DateField(blank=True, null=True)
-    blu_ray_image = models.ImageField(null=True,
-                                      blank=True,
-                                      upload_to="blurays/")
-    request = models.ForeignKey(BluRayRequest,
-                                on_delete=CASCADE,
-                                blank=True,
-                                null=True)
+    movie = models.ForeignKey(Movie,
+                              on_delete=models.CASCADE,
+                              related_name='bluray_movie',
+                              blank=True,
+                              null=True)
+    slug = models.SlugField(max_length=200,
+                            unique=False,
+                            blank=True)
+    title = models.CharField(max_length=200,
+                             blank=True,
+                             null=True)
+    uhd = models.BooleanField(blank=True,
+                              null=True)
+    vf = models.SmallIntegerField(choices=BLURAY_CHOICES,
+                                  blank=True,
+                                  null=True)
+    forced_sub = models.SmallIntegerField(choices=BLURAY_CHOICES,
+                                          blank=True,
+                                          null=True)
+    ean = models.CharField(max_length=13,
+                           blank=True,
+                           null=True)
+    amazon_asin = models.CharField(max_length=10,
+                                   blank=True,
+                                   null=True,
+                                   unique=True)
+    amazon_aff_link = models.URLField(max_length=200,
+                                      blank=True)
+    release_date = models.DateField(blank=True,
+                                    null=True)
+    bluray_image = models.ImageField(null=True,
+                                     blank=True,
+                                     upload_to="blurays/")
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -35,33 +60,31 @@ class BluRay(models.Model):
         verbose_name = "Blu-Ray"
 
     def __str__(self):
-        return f"Blu-Ray de {self.movie}"
+        name = self.title if self.title else self.movie
+        return f"{name}"
 
     def save(self, *args, **kwargs):
-        """
-        Overrides the save method to update image size at upload to limit width
-        and height
-
-        Args:
-            force_insert: False
-            force_update: False
-            using: None
-            update_fields: None
-
-        Returns: Nothing
-
-        """
-        if not self.slug:
-            self.slug = slugify(self.movie)
+        if not self.slug or self.slug == "none":
+            self.slug = slugify(self.movie) if not self.title else slugify(self.title)
         if self.amazon_asin:
             self.amazon_aff_link = f"https://www.amazon.fr/dp/{self.amazon_asin}?m=A1X6FK5RDHNB96&tag=laureatis-21"
-        if self.blu_ray_image:
-            updated_image = Image.open(self.blu_ray_image)
-            if updated_image.width > 100 or updated_image.height > 150:
-                output_size = (100, 150)
-                updated_image.thumbnail(output_size)
-                updated_image.save(self.blu_ray_image)
+        if self.bluray_image:
+            try:
+                with Image.open(self.bluray_image) as updated_image:
+                    if updated_image.width > 100 or updated_image.height > 150:
+                        print(f"Width -> {updated_image.width}")
+                        print(f"Height -> {updated_image.height}")
+                        output_size = (100, 150)
+                        updated_image.thumbnail(output_size)
+                        updated_image.save(self.bluray_image)
+            except (OSError, ):
+                print("L'image n'a pas pu être réduite.")
         return super(BluRay, self).save(*args, **kwargs)
+
+    def image_tag(self):
+        if self.bluray_image != '':
+            return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
+                                                     self.bluray_image))
 
 
 def get_blurays(user):
@@ -73,3 +96,9 @@ def get_blurays(user):
             "favorite_blurays": favorite_blurays,
             "latest_blurays": blurays.filter(release_date__lte=datetime.date.today()).order_by("release_date"),
             "next_blurays": blurays.filter(release_date__gte=datetime.date.today()).order_by("release_date")}
+
+
+def get_blurays_results(keyword):
+    blurays_results = BluRay.objects.filter(Q(movie__title_vf__icontains=keyword) |
+                                            Q(movie__title_vo__icontains=keyword))
+    return {"blurays_results": blurays_results}

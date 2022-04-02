@@ -13,23 +13,32 @@
     <section class="dashboard-block main-block-min-width">
 
         <div class="dashboard-block-element min-height-30vh">
-            {% if user_favorite_deals %}
+            {% if user_recommended_deals %}
             <div class="dashboard-block-element-title">
-                <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_favorite_deals|length }})</h2>
+                <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_recommended_deals|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for deal in user_favorite_deals %}
+            {% for deal in user_recommended_deals %}
             <div class="capsule width-25 margin-bottom-1rem">
-                {% if deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ deal.blu_ray.blu_ray_image.url }});">
+                {% if deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ deal.bluray.bluray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                     <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
                 </div>
                 <div class="capsule-text">
-                    <a href="{% url 'deals:deals_detail' pk=deal.pk %}"><h2>{{ deal.blu_ray.movie }}</h2></a>
-                    <p><a href="{{ deal.blu_ray.amazon_aff_link }}" target="_blank">Acheter</a></p>
+                    <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
+                    {% if deal.bluray.title %}
+                        <h2>{{ deal.bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ deal.bluray.movie }}</h2>
+                    {% endif %}
+                    </a>
+                    {% if deal.bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
+                    <p><a href="{{ deal.bluray.amazon_aff_link }}" target="_blank">Acheter</a></p>
                 </div>
             </div>
             {% endfor %}
@@ -43,24 +52,33 @@
         </div>
 
         <div class="dashboard-block-element min-height-30vh">
-            {% if user_suggested_blurays %}
+            {% if user_recommended_blurays %}
             <div class="dashboard-block-element-title">
-                <h2>SUGGESTIONS DE BLU-RAYS POUR VOUS ({{ user_suggested_blurays|length }})</h2>
+                <h2>SUGGESTIONS DE BLU-RAYS POUR VOUS ({{ user_recommended_blurays|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for user_suggested_bluray in user_suggested_blurays %}
+            {% for user_recommended_bluray in user_recommended_blurays %}
             <div class="capsule width-25 margin-bottom-1rem">
-                {% if user_suggested_bluray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ user_suggested_bluray.blu_ray_image.url }});">
+                {% if user_recommended_bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ user_recommended_bluray.bluray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if user_suggested_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('user_suggested_bluray_{{ user_suggested_bluray.pk }}',{{ user_suggested_bluray.pk }}, 'bluray')" id="user_suggested_bluray_{{ user_suggested_bluray.pk }}"></i>
+                    <i class="favorite {% if user_recommended_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('user_recommended_bluray_{{ user_recommended_bluray.pk }}',{{ user_recommended_bluray.pk }}, 'bluray')" id="user_recommended_bluray_{{ user_recommended_bluray.pk }}"></i>
                 </div>
                 </div>
                 <div class="capsule-text">
-                    <a href="{% url 'blurays:blurays_detail' slug=user_suggested_bluray.slug pk=user_suggested_bluray.pk %}"><h2>{{ user_suggested_bluray.movie }}</h2></a>
+                    <a href="{% url 'blurays:blurays_detail' slug=user_recommended_bluray.slug pk=user_recommended_bluray.pk %}">
+                    {% if user_recommended_bluray.title %}
+                        <h2>{{ user_recommended_bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ user_recommended_bluray.movie }}</h2>
+                    {% endif %}
+                    </a>
+                    {% if user_recommended_bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -79,19 +97,28 @@
                 <h2>VOS BLU-RAYS FAVORIS ({{ favorite_blurays|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
-            {% for favorite_bluray in favorite_blurays %}
+            {% for favorite_bluray in user_favorite_blurays %}
             <div class="capsule width-25 margin-bottom-1rem">
-                {% if favorite_bluray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ favorite_bluray.blu_ray_image.url }});">
+                {% if favorite_bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ favorite_bluray.bluray_image.url }});">
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if favorite_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ favorite_bluray.pk }}',{{ favorite_bluray.pk }}, 'bluray')" id="favorite_bluray_{{ favorite_bluray.pk }}"></i>
+                    <i class="favorite {% if favorite_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ favorite_bluray.pk }}',{{ favorite_bluray.pk }}, 'bluray')" id="favorite_bluray_{{ favorite_bluray.pk }}"></i>
                 </div>
                 </div>
                 <div class="capsule-text">
-                    <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}"><h2>{{ favorite_bluray.movie }}</h2></a>
+                    <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}">
+                    {% if favorite_bluray.title %}
+                        <h2>{{ favorite_bluray.title }}</h2>
+                    {% else %}
+                        <h2>{{ favorite_bluray.movie }}</h2>
+                    {% endif %}
+                    </a>
+                    {% if favorite_bluray.uhd %}
+                        <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

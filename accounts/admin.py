@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+
 from .models import CustomUser
 
 
@@ -14,3 +16,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_editable = ("email", "pseudo")
     search_fields = ("email", "pseudo", "first_name", "last_name")
     ordering = ('email',)
+
+
+# Remove Groups from admin page
+admin.site.unregister(Group)

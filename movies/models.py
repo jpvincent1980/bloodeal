@@ -1,10 +1,11 @@
 from PIL import Image
+from django.conf import settings
 from django.db import models
-from django.db.models import CASCADE, Count
+from django.db.models import CASCADE, Count, Q
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 from people.models import People
-from user_requests.models import MovieRequest
 
 
 # Create your models here.
@@ -12,16 +13,24 @@ class Movie(models.Model):
     """
     A model that represents an actor or director.
     """
-    title_vf = models.CharField(max_length=256, blank=False, null=False)
-    title_vo = models.CharField(max_length=256, blank=True, null=True)
-    slug = models.SlugField(max_length=200, unique=False, blank=True)
-    release_year = models.IntegerField(blank=True, null=True)
-    imdb_id = models.CharField(max_length=9, blank=True, null=True)
-    movie_image = models.ImageField(null=True, blank=True, upload_to="movies/")
-    request = models.ForeignKey(MovieRequest,
-                                on_delete=CASCADE,
+    title_vf = models.CharField(max_length=200,
                                 blank=True,
                                 null=True)
+    title_vo = models.CharField(max_length=200,
+                                blank=True,
+                                null=True)
+    slug = models.SlugField(max_length=200,
+                            unique=False,
+                            blank=True)
+    release_year = models.IntegerField(blank=True,
+                                       null=True)
+    imdb_id = models.CharField(max_length=9,
+                               blank=True,
+                               null=True,
+                               unique=True)
+    movie_image = models.ImageField(null=True,
+                                    blank=True,
+                                    upload_to="movies/")
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -42,19 +51,6 @@ class Movie(models.Model):
         return actors
 
     def save(self, **kwargs):
-        """
-        Overrides the save method to update image size at upload to limit width
-        and height
-
-        Args:
-            force_insert: False
-            force_update: False
-            using: None
-            update_fields: None
-
-        Returns: Nothing
-
-        """
         if not self.slug:
             self.slug = slugify(self.title_vf)
         try:
@@ -67,6 +63,11 @@ class Movie(models.Model):
         except (OSError,) as error:
             print(error)
         return super(Movie, self).save(**kwargs)
+
+    def image_tag(self):
+        if self.movie_image != '':
+            return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
+                                                     self.movie_image))
 
 
 class MovieDirector(models.Model):
@@ -109,3 +110,9 @@ def get_movies(user):
             "top_movies": top_movies,
             "favorite_movies": favorite_movies,
             "latest_movies": movies.order_by("-date_created")}
+
+
+def get_movies_results(keyword):
+    movies_results = Movie.objects.filter(Q(title_vf__icontains=keyword) |
+                                          Q(title_vo__icontains=keyword))
+    return {"movies_results": movies_results}

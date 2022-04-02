@@ -11,19 +11,22 @@ class DealAdmin(admin.ModelAdmin):
     interface.
     """
     list_display = ("id",
-                    "blu_ray",
+                    "request",
+                    "bluray",
+                    "amazon_aff_link",
                     "start_date",
                     "end_date",
                     "created_by",
                     "status",
                     "price")
-    list_editable = ("blu_ray",
+    list_editable = ("bluray",
+                     "amazon_aff_link",
                      "start_date",
                      "end_date",
                      "created_by",
                      "status",
                      "price")
-    search_fields = ("blu_ray",
+    search_fields = ("bluray",
                      "start_date",
                      "end_date")
-    ordering = ("blu_ray",)
+    ordering = ("bluray",)

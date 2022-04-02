@@ -10,12 +10,12 @@
         <div class="dashboard-block-element-content flex-wrap">
         {% for people_deal in people_deals %}
         <div class="capsule width-25">
-            {% if people_deal.blu_ray.blu_ray_image %}
-                <div class="capsule-image" style="background-image: url({{ people_deal.blu_ray.blu_ray_image.url }});">
+            {% if people_deal.bluray.bluray_image %}
+                <div class="capsule-image" style="background-image: url({{ people_deal.bluray.bluray_image.url }});">
             {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-                <a href="{{ people_deal.blu_ray.amazon_aff_link }}" target="_blank">
+                <a href="{{ people_deal.bluray.amazon_aff_link }}" target="_blank">
                     <p class="deal-price {% if people_deal.status != '1' %}inactif{% endif %}">
                     {{ people_deal.price }}€
                     </p>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'deals:deals_detail' pk=people_deal.pk %}">
-                        <h2>{{ people_deal.blu_ray.movie }}</h2>
+                        <h2>{{ people_deal.bluray.movie }}</h2>
                     </a>
                 </div>
         </div>
@@ -52,7 +52,7 @@
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
             <div class="favorite-wrapper">
-                <i class="favorite {% if people_movie in favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
+                <i class="favorite {% if people_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
             </div>
             </div>
             <div class="capsule-text">
@@ -70,13 +70,13 @@
         <div class="dashboard-block-element-content flex-wrap">
         {% for people_bluray in people_blurays %}
         <div class="capsule width-25 margin-bottom-1rem">
-            {% if people_bluray.blu_ray_image %}
-            <div class="capsule-image" style="background-image: url({{ people_bluray.blu_ray_image.url }});">
+            {% if people_bluray.bluray_image %}
+            <div class="capsule-image" style="background-image: url({{ people_bluray.bluray_image.url }});">
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
             <div class="favorite-wrapper">
-                <i class="favorite {% if people_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
+                <i class="favorite {% if people_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
             </div>
             </div>
             <div class="capsule-text">

@@ -1,6 +1,75 @@
 {% load static %}
 
 <section class="dashboard-block main-block-min-width">
+
+    <div class="dashboard-block-element min-height-30vh">
+        {% if user_recommended_movies %}
+        <div class="dashboard-block-element-title">
+            <h2>NOS RECOMMANDATIONS DE FILMS ({{ user_recommended_movies|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for user_recommended_movie in user_recommended_movies %}
+        <div class="capsule width-25 margin-bottom-1rem">
+                {% if user_recommended_movie.movie_image %}
+                    <div class="capsule-image" style="background-image: url({{ user_recommended_movie.movie_image.url }});">
+                    {% else %}
+                    <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if user_recommended_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_recommended_movie_{{ user_recommended_movie.pk }}',{{ user_recommended_movie.pk }}, 'movie')" id="user_recommended_movie_{{ user_recommended_movie.pk }}"></i>
+                </div>
+                </div>
+                <div class="capsule-text">
+                    <a href="{% url 'movies:movies_detail' slug=user_recommended_movie.slug pk=user_recommended_movie.pk %}">
+                    <h2>{{ user_recommended_movie }}</h2>
+                    </a>
+                    <p>Sorti en {{ user_recommended_movie.release_year }}</p>
+                </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto flex-wrap">
+            <h2 class="margin-1rem width-100 text-align-center">Nous n'avons aucune recommandation de films pour vous. </h2>
+            <br>
+            <h2 class="margin-1rem width-100 text-align-center">Pensez à ajouter des personnalités à vos favoris.</h2>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="dashboard-block-element min-height-30vh">
+        {% if user_favorite_movies %}
+        <div class="dashboard-block-element-title">
+            <h2>VOS FILMS PREFERES ({{ user_favorite_movies|length }})</h2>
+        </div>
+        <div class="dashboard-block-element-content flex-wrap">
+        {% for user_favorite_movie in user_favorite_movies %}
+        <div class="capsule width-25 margin-bottom-1rem">
+                {% if user_favorite_movie.movie_image %}
+                    <div class="capsule-image" style="background-image: url({{ user_favorite_movie.movie_image.url }});">
+                    {% else %}
+                    <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                {% endif %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if user_favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_favorite_movie_{{ user_favorite_movie.pk }}',{{ user_favorite_movie.pk }}, 'movie')" id="user_favorite_movie_{{ user_favorite_movie.pk }}"></i>
+                </div>
+                </div>
+                <div class="capsule-text">
+                    <a href="{% url 'movies:movies_detail' slug=user_favorite_movie.slug pk=user_favorite_movie.pk %}">
+                    <h2>{{ user_favorite_movie }}</h2>
+                    </a>
+                    <p>Sorti en {{ user_favorite_movie.release_year }}</p>
+                </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% else %}
+        <div class="capsule justify-content-center margin-auto">
+            <h2 class="margin-1rem width-100 text-align-center">Vous n'avez aucun film dans vos favoris.</h2>
+        </div>
+        {% endif %}
+    </div>
+
     <div class="dashboard-block-element min-height-30vh">
         {% if movie_list %}
         <div class="dashboard-block-element-title">
@@ -15,7 +84,7 @@
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if movie in favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="movie_{{ movie.pk }}"></i>
+                    <i class="favorite {% if movie in user_favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="movie_{{ movie.pk }}"></i>
                 </div>
             </div>
             <div class="capsule-text">
@@ -37,40 +106,7 @@
         </div>
         {% else %}
           <div class="capsule justify-content-center margin-auto">
-            <h2>Aucun film n'est enregistré dans notre base de données.</h2>
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="dashboard-block-element min-height-30vh">
-        {% if favorite_movies %}
-        <div class="dashboard-block-element-title">
-            <h2>VOS FILMS PREFERES ({{ favorite_movies|length }})</h2>
-        </div>
-        <div class="dashboard-block-element-content flex-wrap">
-        {% for favorite_movie in favorite_movies %}
-        <div class="capsule width-25 margin-bottom-1rem">
-                {% if favorite_movie.movie_image %}
-                    <div class="capsule-image" style="background-image: url({{ favorite_movie.movie_image.url }});">
-                    {% else %}
-                    <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
-                {% endif %}
-                <div class="favorite-wrapper">
-                    <i class="favorite {% if favorite_movie in favorite_movies %}press{% endif %}" onclick="favorite('favorite_movie_{{ favorite_movie.pk }}',{{ favorite_movie.pk }}, 'movie')" id="favorite_movie_{{ favorite_movie.pk }}"></i>
-                </div>
-                </div>
-                <div class="capsule-text">
-                    <a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">
-                    <h2>{{ favorite_movie }}</h2>
-                    </a>
-                    <p>Sorti en {{ favorite_movie.release_year }}</p>
-                </div>
-        </div>
-        {% endfor %}
-        </div>
-        {% else %}
-        <div class="capsule justify-content-center margin-auto">
-            <h2>Vous n'avez aucun film dans vos favoris.</h2>
+            <h2 class="margin-1rem width-100 text-align-center">Aucun film n'est enregistré dans notre base de données.</h2>
         </div>
         {% endif %}
     </div>
