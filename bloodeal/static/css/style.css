@@ -78,14 +78,15 @@ h1 {
 
 .nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
 .nav li {
-    line-height: 4rem;
-    font-size: 1rem;
+    line-height: 2rem;
+    font-size: 0.8rem;
     color: var(--main-txt-color);
-    padding: 0 1.5rem;
+    padding: 0 1rem;
 }
 
 form {
@@ -244,6 +245,7 @@ p .btn {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     background: var(--element-bg-color);
 }
 
@@ -271,8 +273,8 @@ p .btn {
 
 .notification {
     position: absolute;
-    top: 0.7rem;
-    right:0.7rem;
+    top: 0;
+    right:0;
     background: red;
     border-radius: 50%;
     line-height: 0.8rem;
