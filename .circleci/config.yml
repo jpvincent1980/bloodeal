@@ -32,10 +32,7 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: |
-          psql
-          ALTER ROLE circleci CREATEDB;
-          python -m pytest
+          command: psql && ALTER ROLE circleci CREATEDB; && python -m pytest
           environment:
             DJANGO_SETTINGS_MODULE: bloodeal.settings
 #            POSTGRES_USER: postgres
