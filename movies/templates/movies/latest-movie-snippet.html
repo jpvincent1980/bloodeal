@@ -22,9 +22,25 @@
                         {% endif %}
                     </p>
                     <p>Un film de {% for director in latest_movie.directors %}
-                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+                        {% if director.slug %}
+                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">
+                            {{ director }}
+                        </a>
+                        {% else %}
+                            {{ director }}
+                        {% endif %}
+                        {% endfor %}
+                    </p>
                     <p>Avec {% for actor in latest_movie.actors %}
-                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+                        {% if actor.slug %}
+                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">
+                            {{ actor }}
+                        </a>
+                        {% else %}
+                            {{ actor }}
+                        {% endif %}
+                        {% endfor %}
+                    </p>
                 </div>{% endwith %}
             </div>
 </div>

@@ -11,6 +11,7 @@
                 {% endif %}
                 </div>
                 <div class="capsule-text">
+                    {% if latest_bluray.slug %}
                     <a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}">
                     {% if latest_bluray.title %}
                         <h2>{{ latest_bluray.title }}</h2>
@@ -18,13 +19,36 @@
                         <h2>{{ latest_bluray.movie }}</h2>
                     {% endif %}
                     </a>
+                    {% else %}
+                        {% if latest_bluray.title %}
+                            <h2>{{ latest_bluray.title }}</h2>
+                        {% else %}
+                            <h2>{{ latest_bluray.movie }}</h2>
+                        {% endif %}
+                    {% endif %}
                     {% if latest_bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
                     <p>Un film de {% for director in latest_bluray.movie.directors %}
-                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+                        {% if director.slug %}
+                        <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">
+                            {{ director }}
+                        </a>
+                        {% else %}
+                            {{ director }}
+                        {% endif %}
+                        {% endfor %}
+                    </p>
                     <p>Avec {% for actor in latest_bluray.movie.actors %}
-                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+                        {% if actor.slug %}
+                        <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">
+                            {{ actor }}
+                        </a>
+                        {% else %}
+                            {{ actor }}
+                        {% endif %}
+                        {% endfor %}
+                    </p>
                 </div>{% endwith %}
             </div>
 </div>
