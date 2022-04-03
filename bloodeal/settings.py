@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'bloodeal.wsgi.application'
 
 DATABASES = {
     'default': {'ENGINE': 'django.db.backends.postgresql',
-                'NAME': 'bloodeal',
+                'NAME': env('POSTGRESQL_DBNAME'),
                 'USER': env('POSTGRESQL_USERNAME'),
                 'PASSWORD': env('POSTGRESQL_PASSWORD'),
-                'HOST': 'localhost',
-                "PORT": '5432'}
+                'HOST': env('POSTGRESQL_HOST'),
+                "PORT": env('POSTGRESQL_PORT')}
 }
 
 # Password validation
