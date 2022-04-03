@@ -15,13 +15,11 @@ jobs:
     executor: python/default
     environment:
       TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
-    - image: cimg/postgres:14.0
-      environment:
-        PGHOST: localhost
-        PGUSER: circleci
-        POSTGRES_USER: circleci
-        POSTGRES_DB: circle_test
-        POSTGRES_HOST_AUTH_METHOD: trust
+      PGHOST: localhost
+      PGUSER: circleci
+      POSTGRES_USER: circleci
+      POSTGRES_DB: circle_test
+      POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - python/load-cache
