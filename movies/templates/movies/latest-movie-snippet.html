@@ -12,7 +12,15 @@
                 {% endif %}
                 </div>
                 <div class="capsule-text">
-                    <p><a href="{% url 'movies:movies_detail' slug=latest_movie.slug pk=latest_movie.pk %}"><h2>{{ latest_movie }}</h2></a></p>
+                    <p>
+                        {% if latest_movie.slug %}
+                        <a href="{% url 'movies:movies_detail' slug=latest_movie.slug pk=latest_movie.pk %}">
+                            <h2>{{ latest_movie }}</h2>
+                        </a>
+                        {% else %}
+                            <h2>{{ latest_movie }}</h2>
+                        {% endif %}
+                    </p>
                     <p>Un film de {% for director in latest_movie.directors %}
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
                     <p>Avec {% for actor in latest_movie.actors %}
