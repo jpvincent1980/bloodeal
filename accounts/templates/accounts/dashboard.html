@@ -25,7 +25,9 @@
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
-                    <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
+                    <a href="{{ deal.bluray.amazon_aff_link }}" target="_blank">
+                        <p class="deal-price {% if deal.status != '1' %}inactif{% endif %}">{{ deal.price }}€</p>
+                    </a>
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
@@ -38,7 +40,7 @@
                     {% if deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
-                    <p><a href="{{ deal.bluray.amazon_aff_link }}" target="_blank">Acheter</a></p>
+                    <p>Posté le {{ deal.date_created|date:"d F Y" }}</p>
                 </div>
             </div>
             {% endfor %}

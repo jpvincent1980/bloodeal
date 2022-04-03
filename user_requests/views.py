@@ -6,10 +6,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
-from blurays.models import get_blurays, BluRay
+from blurays.models import get_blurays, BluRay, get_user_requested_blurays
 from deals.models import get_deals
-from movies.models import get_movies, Movie
-from people.models import People
+from movies.models import get_movies, Movie, get_user_requested_movies
+from people.models import People, get_user_requested_people
 from profiles.models import get_user_all_favorites
 from .models import MovieRequest, BluRayRequest, PeopleRequest, \
     get_user_requests_blurays, get_user_requests_movies, \
@@ -211,10 +211,19 @@ class UserRequestListView(ListView):
             context.update(get_movies(self.request.user))
             context.update(get_blurays(self.request.user))
             # Récupère toutes les demandes de l'utilisateurs
-            context.update(get_user_requests_blurays(self.request.user, only_open))
-            context.update(get_user_requests_movies(self.request.user, only_open))
-            context.update(get_user_requests_people(self.request.user, only_open))
-            context.update(get_user_requests_deals(self.request.user, only_open))
+            context.update(get_user_requests_blurays(self.request.user,
+                                                     only_open))
+            context.update(get_user_requests_movies(self.request.user,
+                                                    only_open))
+            context.update(get_user_requests_people(self.request.user,
+                                                    only_open))
+            context.update(get_user_requests_deals(self.request.user,
+                                                   only_open))
+            # Récupère toutes les instances créées suite à une demande de
+            # l'utilisateur
+            context.update(get_user_requested_blurays(self.request.user))
+            context.update(get_user_requested_movies(self.request.user))
+            context.update(get_user_requested_people(self.request.user))
             # Récupère les données pour le bloc de gauche
             requests_forms = generate_initialized_request_forms(self.request.user)
             context.update(requests_forms)

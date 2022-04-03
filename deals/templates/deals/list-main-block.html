@@ -32,6 +32,7 @@
                     {% if best_deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
+                    <p>Posté le {{ best_deal.date_created|date:"d F Y" }}</p>
             </div>
         </div>
         {% endfor %}
@@ -73,6 +74,7 @@
                     {% if latest_deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
+                    <p>Posté le {{ latest_deal.date_created|date:"d F Y" }}</p>
             </div>
         </div>
         {% endfor %}
@@ -114,6 +116,7 @@
                     {% if user_recommended_deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
+                    <p>Posté le {{ user_recommended_deal.date_created|date:"d F Y" }}</p>
             </div>
         </div>
         {% endfor %}

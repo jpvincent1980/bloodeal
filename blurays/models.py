@@ -10,11 +10,6 @@ from django.utils.text import slugify
 from movies.models import Movie
 
 
-BLURAY_CHOICES = [("1", "Oui"),
-                  ("2", "Non"),
-                  ("3", "Indéterminé")]
-
-
 # Create your models here.
 class BluRay(models.Model):
     """
@@ -33,12 +28,10 @@ class BluRay(models.Model):
                              null=True)
     uhd = models.BooleanField(blank=True,
                               null=True)
-    vf = models.SmallIntegerField(choices=BLURAY_CHOICES,
-                                  blank=True,
-                                  null=True)
-    forced_sub = models.SmallIntegerField(choices=BLURAY_CHOICES,
-                                          blank=True,
-                                          null=True)
+    vf = models.BooleanField(blank=True,
+                             null=True)
+    forced_sub = models.BooleanField(blank=True,
+                                     null=True)
     ean = models.CharField(max_length=13,
                            blank=True,
                            null=True)
@@ -53,6 +46,11 @@ class BluRay(models.Model):
     bluray_image = models.ImageField(null=True,
                                      blank=True,
                                      upload_to="blurays/")
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                     on_delete=models.CASCADE,
+                                     related_name='bluray_requested_by',
+                                     blank=True,
+                                     null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -101,3 +99,8 @@ def get_blurays(user):
 def get_blurays_results(keyword):
     blurays_results = BluRay.objects.filter(Q(movie__title_vf__icontains=keyword) | Q(movie__title_vo__icontains=keyword))
     return {"blurays_results": blurays_results}
+
+
+def get_user_requested_blurays(user):
+    blurays = BluRay.objects.filter(requested_by=user)
+    return {"user_requested_blurays": blurays}

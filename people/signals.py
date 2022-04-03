@@ -9,5 +9,7 @@ from user_requests.models import PeopleRequest
 def create_deal(sender, instance, **kwargs):
     if instance.status == "2":
         imdb_id = instance.imdb_id
+        requested_by = instance.user
         if not People.objects.filter(imdb_id=imdb_id):
-            People.objects.create(imdb_id=imdb_id)
+            People.objects.create(imdb_id=imdb_id,
+                                  requested_by=requested_by)

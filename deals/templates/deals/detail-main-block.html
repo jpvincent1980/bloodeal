@@ -3,7 +3,7 @@
 <section class="dashboard-block main-block-min-width">
     <div class="dashboard-block-element min-height-30vh">
         <div class="dashboard-block-element-title">
-            <h2>BON PLAN</h2>
+            <h2>BON PLAN PARTAGE PAR {{ deal.created_by|upper }}</h2>
         </div>
         <div class="dashboard-block-element-content flex-wrap">
         <div class="capsule width-25 margin-bottom-1rem">
@@ -29,7 +29,6 @@
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
                     <p>Posté le {{ deal.date_created|date:"d F Y" }}</p>
-                    <p>par {{ deal.created_by }}</p>
                 </a>
             </div>
         </div>

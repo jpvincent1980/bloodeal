@@ -57,6 +57,21 @@
             </div>
         </div>
         {% endfor %}
+        {% for bluray in user_requested_blurays %}
+        <div class="capsule justify-content-center">
+            <div class="capsule-text width-100">
+                <ul>
+                    <li class="margin-1rem">
+                        {% if bluray.slug %}
+                        <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
+                        {% endif %}
+                            <h2>{{ bluray }}</h2>
+                        </a> a bien été enregistré suite à votre demande.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
@@ -85,6 +100,21 @@
             </div>
         </div>
         {% endfor %}
+        {% for movie in user_requested_movies %}
+        <div class="capsule justify-content-center">
+            <div class="capsule-text width-100">
+                <ul>
+                    <li class="margin-1rem">
+                        {% if movie.slug %}
+                        <a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
+                        {% endif %}
+                            <h2>{{ movie }}</h2>
+                        </a> a bien été enregistré suite à votre demande.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
@@ -109,6 +139,21 @@
                         <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                             {{ request.get_status_display }}
                         </span></li>
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+        {% for people in user_requested_people %}
+        <div class="capsule justify-content-center">
+            <div class="capsule-text width-100">
+                <ul>
+                    <li class="margin-1rem">
+                        {% if people.slug %}
+                        <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
+                        {% endif %}
+                            <h2>{{ people }}</h2>
+                        </a> a bien été enregistré suite à votre demande.
+                    </li>
                 </ul>
             </div>
         </div>

@@ -33,6 +33,11 @@ class People(models.Model):
     people_image = models.ImageField(null=True,
                                      blank=True,
                                      upload_to="people/")
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                     on_delete=models.CASCADE,
+                                     related_name='people_requested_by',
+                                     blank=True,
+                                     null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -76,3 +81,8 @@ def get_people(user):
 def get_people_results(keyword):
     people_results = People.objects.filter(Q(first_name__icontains=keyword) | Q(last_name__icontains=keyword))
     return {"people_results": people_results}
+
+
+def get_user_requested_people(user):
+    people = People.objects.filter(requested_by=user)
+    return {"user_requested_people": people}

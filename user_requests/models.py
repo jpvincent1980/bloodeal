@@ -5,8 +5,6 @@ from django.db import models
 import re
 
 from django.db.models import Value
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
 
 from blurays.models import BluRay
 
@@ -36,7 +34,7 @@ class PeopleRequest(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Suggestion de personnalité N° {self.pk}"
+        return f"Demande de personnalité N° {self.pk}"
 
     def get_imdb_id(self):
         imdb_id = re.search(r"nm[0-9].[^(?:/|?)]+", str(self.imdb_link))
@@ -52,8 +50,8 @@ class PeopleRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Ajout - Personnalité"
-        verbose_name_plural = "Ajouts - Personnalités"
+        verbose_name = "Demande - Personnalité"
+        verbose_name_plural = "Demandes - Personnalités"
 
 
 class MovieRequest(models.Model):
@@ -75,7 +73,7 @@ class MovieRequest(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Suggestion de films N° {self.pk}"
+        return f"Demande de films N° {self.pk}"
 
     def get_imdb_id(self):
         imdb_id = re.search(r"tt[0-9].[^(?:/|?)]+", str(self.imdb_link))
@@ -91,8 +89,8 @@ class MovieRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Ajout - Film"
-        verbose_name_plural = "Ajouts - Films"
+        verbose_name = "Demande - Film"
+        verbose_name_plural = "Demandes - Films"
 
 
 class BluRayRequest(models.Model):
@@ -114,7 +112,7 @@ class BluRayRequest(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Suggestion de Blu-Ray N° {self.pk}"
+        return f"Demande de Blu-Ray N° {self.pk}"
 
     def get_asin(self):
         asin = re.search(r"B0[.]*[^(?:/|?)]+", str(self.amazon_link))
@@ -130,8 +128,8 @@ class BluRayRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Ajout - Blu-Ray"
-        verbose_name_plural = "Ajouts - Blu-Rays"
+        verbose_name = "Demande - Blu-Ray"
+        verbose_name_plural = "Demandes - Blu-Rays"
 
 
 class DealRequest(models.Model):
@@ -158,7 +156,7 @@ class DealRequest(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Suggestion de bon plan N° {self.pk}"
+        return f"Demande de bon plan N° {self.pk}"
 
     def get_asin(self):
         asin = re.search(r"B0[.]*[^(?:/|?)]+", str(self.amazon_link))
@@ -178,8 +176,8 @@ class DealRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Ajout - Bon Plan"
-        verbose_name_plural = "Ajouts - Bons Plans"
+        verbose_name = "Demande - Bon Plan"
+        verbose_name_plural = "Demande - Bons Plans"
 
 
 def get_user_requests_blurays(user, only_open=False):

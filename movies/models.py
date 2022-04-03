@@ -31,6 +31,11 @@ class Movie(models.Model):
     movie_image = models.ImageField(null=True,
                                     blank=True,
                                     upload_to="movies/")
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                     on_delete=models.CASCADE,
+                                     related_name='movie_requested_by',
+                                     blank=True,
+                                     null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -115,3 +120,8 @@ def get_movies(user):
 def get_movies_results(keyword):
     movies_results = Movie.objects.filter(Q(title_vf__icontains=keyword) | Q(title_vo__icontains=keyword))
     return {"movies_results": movies_results}
+
+
+def get_user_requested_movies(user):
+    movies = Movie.objects.filter(requested_by=user)
+    return {"user_requested_movies": movies}
