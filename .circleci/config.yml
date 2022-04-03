@@ -13,13 +13,6 @@ orbs:
 jobs:
   build:
     executor: python/default
-    environment:
-      TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
-      PGHOST: localhost
-      PGUSER: circleci
-      POSTGRES_USER: circleci
-      POSTGRES_DB: circle_test
-      POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - python/load-cache
@@ -32,13 +25,15 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: psql && ALTER ROLE circleci CREATEDB; && python -m pytest
+          command: python -m pytest
           environment:
             DJANGO_SETTINGS_MODULE: bloodeal.settings
-#            POSTGRES_USER: postgres
-#          auth:
-#            username: jpvincent1980
-#            password: $DOCKER_PASSWORD
+            TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
+            PGHOST: localhost
+            PGUSER: circleci
+            POSTGRES_USER: circleci
+            POSTGRES_DB: circle_test
+            POSTGRES_HOST_AUTH_METHOD: trust
 
   lint:
     executor: python/default
