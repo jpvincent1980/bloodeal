@@ -75,7 +75,7 @@ def get_deals(bluray=None, movie=None, people=None, user=None):
         context.update({"bluray_deals": bluray_deals})
     if movie:
         movie_deals = Deal.objects.filter(bluray__movie=movie)
-        context.update({"movie_deals":movie_deals})
+        context.update({"movie_deals": movie_deals})
     if people:
         people_actor_deals = Deal.objects.filter(bluray__movie__actor=people)
         people_director_deals = Deal.objects.filter(bluray__movie__director=people)

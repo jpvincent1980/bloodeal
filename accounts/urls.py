@@ -19,4 +19,4 @@ urlpatterns = [
     path('login/', login_view, name="login"),
     path('dashboard/', dashboard_view, name="dashboard"),
     path('logout/', logout_view, name="logout"),
-    path('search/', SearchResultsView.as_view(), name="search_results"),]
+    path('search/', SearchResultsView.as_view(), name="search_results")]

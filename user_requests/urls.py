@@ -24,5 +24,4 @@ urlpatterns = [path('<int:pk>/',
                     name="people_request_create"),
                path('add-a-deal/',
                     DealRequestCreateView.as_view(),
-                    name="deal_request_create"),
-]
+                    name="deal_request_create")]

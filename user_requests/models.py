@@ -211,9 +211,12 @@ def get_user_requests_deals(user, only_open=False):
 
 
 def get_user_requests(user, only_open=False):
-    blurays_requests = get_user_requests_blurays(user, only_open=only_open).get("user_requests_blurays", BluRayRequest.objects.none())
-    movies_requests = get_user_requests_movies(user, only_open=only_open).get("user_requests_movies", MovieRequest.objects.none())
-    people_requests = get_user_requests_people(user, only_open=only_open).get("user_requests_people", PeopleRequest.objects.none())
+    blurays_requests = get_user_requests_blurays(user, only_open=only_open).get("user_requests_blurays",
+                                                                                BluRayRequest.objects.none())
+    movies_requests = get_user_requests_movies(user, only_open=only_open).get("user_requests_movies",
+                                                                              MovieRequest.objects.none())
+    people_requests = get_user_requests_people(user, only_open=only_open).get("user_requests_people",
+                                                                              PeopleRequest.objects.none())
     deals_requests = get_user_requests_deals(user, only_open=only_open).get(
         "user_requests_deal", DealRequest.objects.none())
     requests = list(chain(blurays_requests,

@@ -6,5 +6,4 @@ from blurays.views import BluRayListView, BluRayDetailView
 app_name = 'blurays'
 
 urlpatterns = [path('list/', BluRayListView.as_view(), name="blurays_list"),
-               path('<str:slug>/<int:pk>/', BluRayDetailView.as_view(), name="blurays_detail"),
-]
+               path('<str:slug>/<int:pk>/', BluRayDetailView.as_view(), name="blurays_detail")]

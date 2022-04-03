@@ -76,8 +76,8 @@ class FavoriteBluRay(models.Model):
                              on_delete=models.CASCADE,
                              related_name='user_bluray')
     bluray = models.ForeignKey(BluRay,
-                                on_delete=models.CASCADE,
-                                related_name='favorite_bluray')
+                               on_delete=models.CASCADE,
+                               related_name='favorite_bluray')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 

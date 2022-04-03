@@ -1,7 +1,7 @@
 from PIL import Image
 from django.conf import settings
 from django.db import models
-from django.db.models import CASCADE, Count, Q
+from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
@@ -60,7 +60,7 @@ class People(models.Model):
     def image_tag(self):
         if self.people_image != '':
             return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                     self.people_image))
+                                                                    self.people_image))
 
 
 def get_people(user):
@@ -74,6 +74,5 @@ def get_people(user):
 
 
 def get_people_results(keyword):
-    people_results = People.objects.filter(Q(first_name__icontains=keyword) |
-                                            Q(last_name__icontains=keyword))
+    people_results = People.objects.filter(Q(first_name__icontains=keyword) | Q(last_name__icontains=keyword))
     return {"people_results": people_results}

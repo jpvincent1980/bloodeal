@@ -84,7 +84,7 @@ class BluRay(models.Model):
     def image_tag(self):
         if self.bluray_image != '':
             return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                     self.bluray_image))
+                                                                    self.bluray_image))
 
 
 def get_blurays(user):
@@ -99,6 +99,5 @@ def get_blurays(user):
 
 
 def get_blurays_results(keyword):
-    blurays_results = BluRay.objects.filter(Q(movie__title_vf__icontains=keyword) |
-                                            Q(movie__title_vo__icontains=keyword))
+    blurays_results = BluRay.objects.filter(Q(movie__title_vf__icontains=keyword) | Q(movie__title_vo__icontains=keyword))
     return {"blurays_results": blurays_results}

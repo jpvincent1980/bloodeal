@@ -7,5 +7,4 @@ from .views import PeopleListView, PeopleDetailView
 app_name = 'people'
 
 urlpatterns = [path('list/', PeopleListView.as_view(), name='people_list'),
-               path('<str:slug>/<int:pk>/', PeopleDetailView.as_view(), name='people_detail'),
-]
+               path('<str:slug>/<int:pk>/', PeopleDetailView.as_view(), name='people_detail')]

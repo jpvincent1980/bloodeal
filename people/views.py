@@ -35,9 +35,9 @@ class PeopleDetailView(DetailView):
     # TODO Supprimer les doublons si réalisateur et acteur du même film
     def get_movies(self):
         movies = sorted(chain(self.get_movies_as_director(),
-                     self.get_movies_as_actor()),
-                      key=lambda movie: movie.release_year,
-                      reverse=True)
+                              self.get_movies_as_actor()),
+                        key=lambda movie: movie.release_year,
+                        reverse=True)
         return movies
 
     def get_blurays(self):

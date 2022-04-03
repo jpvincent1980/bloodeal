@@ -37,7 +37,7 @@ def index_view(request):
         else:
             login_form = LoginForm(auto_id="login_%s")
             signup_form = SignupForm(auto_id="signup_%s")
-            login_message = f"Adresse email et/ou mot de passe non  valide."
+            login_message = "Adresse email et/ou mot de passe non  valide."
             context = {"login_form": login_form,
                        "signup_form": signup_form,
                        "login_message": login_message,

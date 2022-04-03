@@ -17,7 +17,6 @@ from user_requests.models import get_user_requests_total
 from .models import (FavoriteMovie,
                      FavoritePeople,
                      FavoriteBluRay,
-                     FavoriteUser,
                      get_user_all_favorites,
                      get_user_suggested_blurays)
 
@@ -157,7 +156,7 @@ def add_to_favorite_view(request):
             people = People.objects.filter(pk=pk)
             if people:
                 duplicate = FavoritePeople.objects.filter(user=user,
-                                                         people=people[0])
+                                                          people=people[0])
                 if duplicate:
                     duplicate.delete()
                 else:

@@ -54,4 +54,3 @@ class MovieDetailView(DetailView):
             context.update({"modal": "modal.html",
                             "modal_content": storage})
         return super().get_context_data(**context)
-

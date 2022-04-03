@@ -7,5 +7,4 @@ from movies.views import MovieListView, MovieDetailView
 app_name = 'movies'
 
 urlpatterns = [path("list/", MovieListView.as_view(), name="movies_list"),
-               path("<str:slug>/<int:pk>/", MovieDetailView.as_view(), name="movies_detail"),
-]
+               path("<str:slug>/<int:pk>/", MovieDetailView.as_view(), name="movies_detail")]

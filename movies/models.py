@@ -67,7 +67,7 @@ class Movie(models.Model):
     def image_tag(self):
         if self.movie_image != '':
             return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                     self.movie_image))
+                                                                    self.movie_image))
 
 
 class MovieDirector(models.Model):
@@ -113,6 +113,5 @@ def get_movies(user):
 
 
 def get_movies_results(keyword):
-    movies_results = Movie.objects.filter(Q(title_vf__icontains=keyword) |
-                                          Q(title_vo__icontains=keyword))
+    movies_results = Movie.objects.filter(Q(title_vf__icontains=keyword) | Q(title_vo__icontains=keyword))
     return {"movies_results": movies_results}
