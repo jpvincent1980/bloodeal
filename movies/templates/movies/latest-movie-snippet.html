@@ -1,7 +1,7 @@
 {% load static %}
 
-<div class="dashboard-block-element min-height-20vh padding-1rem"
-     xmlns="http://www.w3.org/1999/html">
+<div class="dashboard-block-element min-height-20vh padding-1rem justify-content-center">
+    {% if latest_movies %}
     <h2>A l'affiche</h2>
     <p>Publié le {% with latest_movies|first as latest_movie %}{{ latest_movie.date_created|date:"d F Y"|title }}</p>
     <div class="capsule">
@@ -43,4 +43,7 @@
                     </p>
                 </div>{% endwith %}
             </div>
+    {% else %}
+        <p>Il n'y a actuellement aucun film dans notre base de données.</p>
+    {% endif %}
 </div>

@@ -1,6 +1,7 @@
 {% load static %}
 
 <div class="dashboard-block-element min-height-20vh padding-1rem">
+    {% if next_blurays %}
     <h2>Prochaine sortie</h2>
     <p>{% with next_blurays|first as next_bluray %}{{ next_bluray.release_date|date:"d F Y"|title }}</p>
     <div class="capsule">
@@ -51,4 +52,7 @@
                     </p>
                 </div>{% endwith %}
             </div>
+    {% else %}
+        <p>Aucune prochaine sortie de blu-ray n'est enregistrée dans notre base de données.</p>
+    {% endif %}
 </div>

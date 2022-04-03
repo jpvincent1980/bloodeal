@@ -1,6 +1,7 @@
 {% load static %}
 
 <div class="dashboard-block-element min-height-20vh padding-1rem">
+    {% if latest_blurays %}
     <h2>Dernière sortie</h2>
     <p>{% with latest_blurays|first as latest_bluray %}{{ latest_bluray.release_date|date:"d F Y"|title }}</p>
     <div class="capsule">
@@ -51,4 +52,7 @@
                     </p>
                 </div>{% endwith %}
             </div>
+    {% else %}
+        <p>Il n'y a actuellement aucun blu-ray dans notre base de données.</p>
+    {% endif %}
 </div>
