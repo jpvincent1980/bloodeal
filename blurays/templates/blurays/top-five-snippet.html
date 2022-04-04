@@ -1,5 +1,6 @@
 {% load static %}
 
+{% if top_blurays %}
 <div class="dashboard-block-element min-height-20vh justify-content-center">
     <div class="dashboard-block-element-title">
         <h2>TOP 5</h2>
@@ -35,3 +36,5 @@
     {% endfor %}
     </div>
 </div>
+{% else %}
+{% endif %}
