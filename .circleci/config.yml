@@ -35,8 +35,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            sudo -u postgres psql
-            ALTER USER postgres CREATEDB;
+            sudo -u circleci psql
+            ALTER USER circleci CREATEDB;
             \q
             python -m pytest
 
