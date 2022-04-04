@@ -35,7 +35,6 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            whoami
             python -m pytest --co
 
   lint:
