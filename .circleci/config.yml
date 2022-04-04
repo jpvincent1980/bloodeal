@@ -22,14 +22,14 @@ jobs:
   test:
     executor: python/default
     docker:
-      - image: cimg/python:3.8.0
+      - image: circleci/python:3.8.0
         environment:
           ENV: circle
           DATABASE_URL: postgresql://circleci@localhost/circle_test
         auth:
           username: jpvincent1980
           password: $DOCKER_PASSWORD
-      - image: cimg/postgres:14.2.0
+      - image: circleci/postgres:14.2.0
         environment:
           PGHOST: localhost
           PGUSER: circleci
