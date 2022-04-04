@@ -35,7 +35,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            sudo -U postgres psql
+            sudo -u postgres psql
             ALTER USER postgres CREATEDB;
             \q
             python -m pytest
