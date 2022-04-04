@@ -20,6 +20,7 @@ jobs:
       - python/save-cache
 
   test:
+    executor: python/default
     docker:
       - image: cimg/postgres:14.0
         environment:
