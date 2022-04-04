@@ -36,7 +36,7 @@
                     {% csrf_token %}
                     {% for field in form %}
                             <p>{{ field.label_tag }}</p>
-                            <p>{{ field }}
+                            <p class="display-flex">{{ field }}
                                 {% if forloop.counter >= 3 %}
                                     <span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span>
                                 {% endif %}

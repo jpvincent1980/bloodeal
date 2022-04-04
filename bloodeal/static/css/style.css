@@ -183,6 +183,7 @@ p .btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: left;
     /*width: var(--capsule-text-width);*/
     width: fit-content;
 }
@@ -335,6 +336,10 @@ p .btn {
     width: 100%;
 }
 
+.width-fit-content {
+    width: fit-content;
+}
+
 .flex-column {
     flex-direction: column;
 }
@@ -378,6 +383,10 @@ p .btn {
 
 .cursor-default {
  cursor: default;
+}
+
+.display-flex {
+    display: flex;
 }
 
 a .color-black {

@@ -15,24 +15,24 @@
         <div class="dashboard-block-element-title">
             <h2>VOTRE PROFIL</h2>
         </div>
-        <div class="dashboard-block-element-content flex-wrap padding-1rem">
+        <div class="dashboard-block-element-content flex-wrap padding-1rem width-fit-content">
             <form method="post" >
                 {% csrf_token %}
                     {% for field in form %}
                         <p>{{ field.label_tag }}</p>
-                        <p>{{ field }}</p>
+                        <p >{{ field }}</p>
                         <p>{{ field.errors }}</p>
                         <br>
                     {% endfor %}
                 <button type="submit" name="form" class="btn btn-submit">METTRE A JOUR</button>
             </form>
         </div>
-        <div class="dashboard-block-element-content flex-wrap padding-1rem">
-        <form method="post" >
+        <div class="dashboard-block-element-content flex-wrap padding-1rem width-fit-content">
+        <form method="post">
             {% csrf_token %}
                 {% for field in form2 %}
                     <p>{{ field.label_tag }}</p>
-                    <p>{{ field }}<span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span></p>
+                    <p class="display-flex">{{ field }}<span class="show-password" onclick="showPassword('{{ field.auto_id }}')">👁</span></p>
                     <p>{{ field.errors }}</p>
                     <br>
                 {% endfor %}
