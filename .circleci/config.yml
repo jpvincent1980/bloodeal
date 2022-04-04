@@ -44,10 +44,10 @@ jobs:
 
   containerize:
     executor: docker/publish
-    tag: $CIRCLE_SHA1
-    - image: jpvincent1980/bloodeal
     steps:
       - checkout
+      - tag: $CIRCLE_SHA1
+      - image: jpvincent1980/bloodeal
 
   deploy:
     executor: heroku/default
