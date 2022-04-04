@@ -70,7 +70,7 @@ class PeopleRequest(models.Model):
                     self.birth_date = birth_date if birth_date else None
                     death_date = people.imdb_get_death_date
                     self.death_date = death_date if death_date else None
-                except:
+                except (ConnectionError, ):
                     print(f"Impossible de scraper le site IMDB pour {imdb_id}")
         return super().save(**kwargs)
 
@@ -89,7 +89,7 @@ class MovieRequest(models.Model):
                                 null=False,
                                 verbose_name="Lien IMDB")
     imdb_id = models.CharField(max_length=9, blank=True, null=True)
-    title_vf = models.CharField(max_length=201,
+    title_vf = models.CharField(max_length=200,
                                 blank=True,
                                 null=True)
     title_vo = models.CharField(max_length=200,
@@ -126,7 +126,7 @@ class MovieRequest(models.Model):
                     self.title_vo = title_vf
                     release_year = movie.imdb_get_release_year
                     self.release_year = int(release_year) if release_year else None
-                except:
+                except (ConnectionError, ):
                     print(f"Impossible de scraper le site IMDB pour {imdb_id}")
 
         return super().save(**kwargs)
@@ -258,13 +258,13 @@ def get_user_requests_deals(user, requests_filter=[choice[0] for choice in STATU
 def get_user_requests(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
     blurays_requests = get_user_requests_blurays(user,
                                                  requests_filter=requests_filter).get("user_requests_blurays",
-                                                                                BluRayRequest.objects.none())
+                                                                                      BluRayRequest.objects.none())
     movies_requests = get_user_requests_movies(user,
                                                requests_filter=requests_filter).get("user_requests_movies",
-                                                                              MovieRequest.objects.none())
+                                                                                    MovieRequest.objects.none())
     people_requests = get_user_requests_people(user,
                                                requests_filter=requests_filter).get("user_requests_people",
-                                                                              PeopleRequest.objects.none())
+                                                                                    PeopleRequest.objects.none())
     deals_requests = get_user_requests_deals(user,
                                              requests_filter=requests_filter).get("user_requests_deal",
                                                                                   DealRequest.objects.none())
@@ -278,8 +278,16 @@ def get_user_requests(user, requests_filter=[choice[0] for choice in STATUS_CHOI
 
 def get_user_requests_total(user, requests_filter=["1"]):
     total = 0
-    total += len(get_user_requests_blurays(user, requests_filter=requests_filter).get("user_requests_blurays", BluRayRequest.objects.none()))
-    total += len(get_user_requests_movies(user, requests_filter=requests_filter).get("user_requests_movies", MovieRequest.objects.none()))
-    total += len(get_user_requests_people(user, requests_filter=requests_filter).get("user_requests_people", PeopleRequest.objects.none()))
-    total += len(get_user_requests_deals(user, requests_filter=requests_filter).get("user_requests_deals", DealRequest.objects.none()))
+    total += len(get_user_requests_blurays(user,
+                                           requests_filter=requests_filter).get("user_requests_blurays",
+                                                                                BluRayRequest.objects.none()))
+    total += len(get_user_requests_movies(user,
+                                          requests_filter=requests_filter).get("user_requests_movies",
+                                                                               MovieRequest.objects.none()))
+    total += len(get_user_requests_people(user,
+                                          requests_filter=requests_filter).get("user_requests_people",
+                                                                               PeopleRequest.objects.none()))
+    total += len(get_user_requests_deals(user,
+                                         requests_filter=requests_filter).get("user_requests_deals",
+                                                                              DealRequest.objects.none()))
     return {"user_requests_total": total}

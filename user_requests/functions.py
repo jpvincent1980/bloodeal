@@ -32,8 +32,8 @@ class IMDBMovieData:
             directors_list.append(director_imdb_id)
         directors_set = set()
         directors_set_add = directors_set.add
-        directors_list = [director for director in directors_list if not (
-                    director in directors_set or directors_set_add(director))]
+        directors_list = \
+            [director for director in directors_list if not (director in directors_set or directors_set_add(director))]
         print(directors_list)
         return directors_list
 

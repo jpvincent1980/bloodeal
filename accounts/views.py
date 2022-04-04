@@ -234,4 +234,4 @@ class SearchResultsView(ListView):
 
 
 def sentry_error(request):
-    return 1/0
+    return 1 / 0
