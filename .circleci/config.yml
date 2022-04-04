@@ -42,6 +42,13 @@ jobs:
       - run:
           command: python -m flake8
 
+  containerize:
+    executor: docker/default
+      - image: jpvincent1980/bloodeal
+      tag: $CIRCLE_SHA1
+    steps:
+      - checkout
+
   deploy:
     executor: heroku/default
     steps:
@@ -63,10 +70,7 @@ workflows:
       - lint:
           requires:
             - build
-      - docker/publish:
-          name: containerize
-          image: jpvincent1980/bloodeal
-          tag: $CIRCLE_SHA1
+      - containerize:
           requires:
             - build
 #            - test
