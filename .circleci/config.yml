@@ -44,9 +44,10 @@ jobs:
 
   containerize:
     executor: docker/publish
+    environment:
+      tag: $CIRCLE_SHA1
     steps:
       - checkout
-      - tag: $CIRCLE_SHA1
       - image: jpvincent1980/bloodeal
 
   deploy:
