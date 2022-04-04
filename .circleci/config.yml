@@ -33,6 +33,8 @@ jobs:
             POSTGRES_DB: circle_test
             POSTGRES_HOST_AUTH_METHOD: trust
           command: |
+            sudo apt-get update
+            sudo apt-get install postgresql-client
             psql -U circleci
             python -m pytest
 
