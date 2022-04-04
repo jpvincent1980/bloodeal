@@ -20,22 +20,18 @@ jobs:
       - python/save-cache
 
   test:
-    executor: python/default
+    docker:
+      - image: cimg/postgres:14.0
+        environment:
+          POSTGRES_USER: postgres
     steps:
       - checkout
       - python/load-cache
       - run:
-#          environment:
-#            DJANGO_SETTINGS_MODULE: bloodeal.settings
-#            PGHOST: localhost
-#            PGUSER: circleci
-#            POSTGRES_USER: circleci
-#            POSTGRES_DB: postgres
-#            POSTGRES_HOST_AUTH_METHOD: trust
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            python -m pytest --co
+            python -m pytest
 
   lint:
     executor: python/default
