@@ -35,7 +35,6 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            psql -U circleci
             python -m pytest
 
   lint:
