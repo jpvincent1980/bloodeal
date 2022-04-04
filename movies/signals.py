@@ -10,6 +10,12 @@ def create_deal(sender, instance, **kwargs):
     if instance.status == "2":
         imdb_id = instance.imdb_id
         requested_by = instance.user
+        title_vf = instance.title_vf
+        title_vo = instance.title_vo
+        release_year = instance.release_year
         if not Movie.objects.filter(imdb_id=imdb_id):
             Movie.objects.create(imdb_id=imdb_id,
-                                 requested_by=requested_by)
+                                 requested_by=requested_by,
+                                 title_vf=title_vf,
+                                 title_vo=title_vo,
+                                 release_year=release_year)

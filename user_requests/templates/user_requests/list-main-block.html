@@ -2,11 +2,17 @@
 
 <section class="dashboard-block main-block-min-width">
     <ul>
-        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}">
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=1+2+3+4">
             <li >Toutes vos demandes</li>
         </a>
-        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=only_open">
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=1">
             <li>Seulement les demandes en-cours</li>
+        </a>
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=2">
+            <li>Seulement les demandes acceptées</li>
+        </a>
+        <a class="margin-1rem" href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=3">
+            <li>Seulement les demandes refusées</li>
         </a>
     </ul>
     <div class="dashboard-block-element padding-1rem">
@@ -43,35 +49,38 @@
             <h2>VOS DEMANDES D'AJOUTS DE BLU-RAYS ({{ user_requests_blurays|length }})</h2>
         </div>
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
-        {% for request in user_requests_blurays %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
-                    <li class="margin-1rem">Ajout du blu-ray ayant l'identifiant Amazon {{ request.asin }}</li>
-                    <li class="margin-1rem">Le statut de votre demande est :
-                        <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
-                            {{ request.get_status_display }}
-                        </span></li>
-                </ul>
+        {% if "2" in filter %}
+            {% for bluray in user_requested_blurays %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">
+                            {% if bluray.slug %}
+                            <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
+                            {% endif %}
+                                <h2>{{ bluray }}</h2>
+                            </a> a bien été enregistré suite à votre demande.
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-        {% for bluray in user_requested_blurays %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">
-                        {% if bluray.slug %}
-                        <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
-                        {% endif %}
-                            <h2>{{ bluray }}</h2>
-                        </a> a bien été enregistré suite à votre demande.
-                    </li>
-                </ul>
+            {% endfor %}
+        {% else %}
+            {% for request in user_requests_blurays %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
+                        <li class="margin-1rem">Ajout du blu-ray ayant l'identifiant Amazon {{ request.asin }}</li>
+                        <li class="margin-1rem">Le statut de votre demande est :
+                            <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
+                                {{ request.get_status_display }}
+                            </span></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
@@ -86,35 +95,38 @@
             <h2>VOS DEMANDES D'AJOUTS DE FILMS ({{ user_requests_movies|length }})</h2>
         </div>
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
-        {% for request in user_requests_movies %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
-                    <li class="margin-1rem">Ajout du film ayant l'identifiant IMDB {{ request.imdb_id }}</li>
-                    <li class="margin-1rem">Le statut de votre demande est :
-                        <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
-                            {{ request.get_status_display }}
-                        </span></li>
-                </ul>
+        {% if "2" in filter %}
+            {% for movie in user_requested_movies %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">
+                            {% if movie.slug %}
+                            <a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
+                            {% endif %}
+                                <h2>{{ movie }}</h2>
+                            </a> a bien été enregistré suite à votre demande.
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-        {% for movie in user_requested_movies %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">
-                        {% if movie.slug %}
-                        <a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
-                        {% endif %}
-                            <h2>{{ movie }}</h2>
-                        </a> a bien été enregistré suite à votre demande.
-                    </li>
-                </ul>
+            {% endfor %}
+        {% else %}
+            {% for request in user_requests_movies %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
+                        <li class="margin-1rem">Ajout du film ayant l'identifiant IMDB {{ request.imdb_id }}</li>
+                        <li class="margin-1rem">Le statut de votre demande est :
+                            <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
+                                {{ request.get_status_display }}
+                            </span></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">
@@ -129,35 +141,38 @@
             <h2>VOS DEMANDES D'AJOUTS DE PERSONNALITES ({{ user_requests_people|length }})</h2>
         </div>
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
-        {% for request in user_requests_people %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
-                    <li class="margin-1rem">Ajout de la personnalité ayant l'identifiant IMDB {{ request.imdb_id }}</li>
-                    <li class="margin-1rem">Le statut de votre demande est :
-                        <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
-                            {{ request.get_status_display }}
-                        </span></li>
-                </ul>
+        {% if "2" in filter %}
+            {% for people in user_requested_people %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">
+                            {% if people.slug %}
+                            <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
+                            {% endif %}
+                                <h2>{{ people }}</h2>
+                            </a> a bien été enregistré suite à votre demande.
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
-        {% for people in user_requested_people %}
-        <div class="capsule justify-content-center">
-            <div class="capsule-text width-100">
-                <ul>
-                    <li class="margin-1rem">
-                        {% if people.slug %}
-                        <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
-                        {% endif %}
-                            <h2>{{ people }}</h2>
-                        </a> a bien été enregistré suite à votre demande.
-                    </li>
-                </ul>
+            {% endfor %}
+        {% else %}
+            {% for request in user_requests_people %}
+            <div class="capsule justify-content-center">
+                <div class="capsule-text width-100">
+                    <ul>
+                        <li class="margin-1rem">Demande du {{ request.date_created|date:"d F Y" }}</li>
+                        <li class="margin-1rem">Ajout de la personnalité ayant l'identifiant IMDB {{ request.imdb_id }}</li>
+                        <li class="margin-1rem">Le statut de votre demande est :
+                            <span class="cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
+                                {{ request.get_status_display }}
+                            </span></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
         </div>
         {% else %}
         <div class="capsule justify-content-center margin-auto">

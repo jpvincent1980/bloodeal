@@ -64,8 +64,7 @@ def index_view(request):
             # Récupère les données pour le bloc central
             context.update(get_user_all_favorites(request.user))
             # Récupère le nombre de demandes de l'utilisateur
-            context.update(get_user_requests_total(request.user,
-                                                   only_open=True))
+            context.update(get_user_requests_total(request.user))
             return render(request, "accounts/dashboard.html", context)
         else:
             login_form = LoginForm(auto_id="login_%s")
@@ -139,8 +138,7 @@ class SignupView(CreateView):
         context = {"modal": "modal.html",
                    "modal_content": storage}
         # Récupère le nombre de demandes de l'utilisateur
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return render(self.request, "accounts/dashboard.html", context)
 
 
@@ -200,9 +198,9 @@ def dashboard_view(request):
         context.update({"modal": "modal.html",
                         "modal_content": storage})
     # Récupère le nombre de demandes de l'utilisateur
-    context.update(get_user_requests(request.user, only_open=True))
+    context.update(get_user_requests(request.user))
     # Récupère le nombre de demandes de l'utilisateur pour la navbar
-    context.update(get_user_requests_total(request.user, only_open=True))
+    context.update(get_user_requests_total(request.user))
     return render(request, "accounts/dashboard.html", context)
 
 

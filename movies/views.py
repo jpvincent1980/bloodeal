@@ -21,8 +21,7 @@ class MovieListView(ListView):
         context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -46,8 +45,7 @@ class MovieDetailView(DetailView):
         context.update(get_blurays(self.request.user))
         # Récupère les données pour le bloc central
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         # Récupère un message à afficher dans la fenêtre modale le cas échéant
         storage = messages.get_messages(self.request)
         if storage:

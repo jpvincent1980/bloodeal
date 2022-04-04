@@ -57,8 +57,7 @@ class MovieRequestCreateView(CreateView):
         context["movie_request_form"] = context["form"]
         # Récupère les données pour le bloc central
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -104,8 +103,7 @@ class BluRayRequestCreateView(CreateView):
         context["bluray_request_form"] = context["form"]
         # Récupère les données pour le bloc central
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -151,8 +149,7 @@ class PeopleRequestCreateView(CreateView):
         context["people_request_form"] = context["form"]
         # Récupère les données pour le bloc central
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -188,8 +185,7 @@ class DealRequestCreateView(CreateView):
         context.update(requests_forms)
         # Récupère les données pour le bloc central
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -198,7 +194,7 @@ class UserRequestListView(ListView):
 
     def get(self, request, *args, **kwargs):
         filter = request.GET.get("filter")
-        only_open = True if filter == "only_open" else False
+        print(filter)
         if kwargs["pk"] != self.request.user.pk:
             message = "Vous ne pouvez pas avoir accès aux demandes d'un autre utilisateur."
             messages.add_message(self.request,
@@ -212,13 +208,13 @@ class UserRequestListView(ListView):
             context.update(get_blurays(self.request.user))
             # Récupère toutes les demandes de l'utilisateurs
             context.update(get_user_requests_blurays(self.request.user,
-                                                     only_open))
+                                                     filter))
             context.update(get_user_requests_movies(self.request.user,
-                                                    only_open))
+                                                    filter))
             context.update(get_user_requests_people(self.request.user,
-                                                    only_open))
+                                                    filter))
             context.update(get_user_requests_deals(self.request.user,
-                                                   only_open))
+                                                   filter))
             # Récupère toutes les instances créées suite à une demande de
             # l'utilisateur
             context.update(get_user_requested_blurays(self.request.user))
@@ -229,8 +225,7 @@ class UserRequestListView(ListView):
             context.update(requests_forms)
             # Récupère les données pour le bloc central
             context.update(get_user_all_favorites(self.request.user))
-            context.update(get_user_requests_total(self.request.user,
-                                                   only_open=True))
+            context.update(get_user_requests_total(self.request.user))
             return render(request, "user_requests/user-requests.html", context)
 
 

@@ -21,8 +21,7 @@ class BluRayListView(ListView):
         context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -40,7 +39,6 @@ class BluRayDetailView(DetailView):
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))
         context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         context.update(get_deals(self.object))
         return context

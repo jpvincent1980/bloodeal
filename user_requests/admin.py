@@ -13,9 +13,23 @@ class PeopleRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_display = ("id", "user", "imdb_link", "imdb_id", "status")
-    list_editable = ("user", "imdb_link", "status")
-    search_fields = ("user__pseudo", "imdb_id", "status")
+    list_display = ("id",
+                    "user",
+                    "first_name",
+                    "last_name",
+                    "imdb_link",
+                    "imdb_id",
+                    "status")
+    list_editable = ("user",
+                     "first_name",
+                     "last_name",
+                     "imdb_link",
+                     "status")
+    search_fields = ("user__pseudo",
+                     "first_name",
+                     "last_name",
+                     "imdb_id",
+                     "status")
     ordering = ("user", )
 
 
@@ -25,9 +39,23 @@ class MovieRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_display = ("id", "user", "imdb_link", "imdb_id", "status")
-    list_editable = ("user", "imdb_link", "status")
-    search_fields = ("user__pseudo", "imdb_id", "status")
+    list_display = ("id",
+                    "user",
+                    "title_vf",
+                    "title_vo",
+                    "release_year",
+                    "imdb_link",
+                    "imdb_id",
+                    "status")
+    list_editable = ("user",
+                     "title_vf",
+                     "title_vo",
+                     "release_year",
+                     "imdb_link",
+                     "status")
+    search_fields = ("user__pseudo",
+                     "imdb_id",
+                     "status")
     ordering = ("user", )
 
 
@@ -37,9 +65,17 @@ class BluRayRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_display = ("id", "user", "amazon_link", "asin", "status")
-    list_editable = ("user", "amazon_link", "status")
-    search_fields = ("user__pseudo", "asin", "status")
+    list_display = ("id",
+                    "user",
+                    "amazon_link",
+                    "asin",
+                    "status")
+    list_editable = ("user",
+                     "amazon_link",
+                     "status")
+    search_fields = ("user__pseudo",
+                     "asin",
+                     "status")
     ordering = ("user", )
 
 
@@ -49,9 +85,20 @@ class DealRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_display = ("id", "link_to_user", "link_to_bluray", "bluray", "link_to_amazon", "asin", "price", "status")
-    list_editable = ("bluray", "price", "status")
-    search_fields = ("user__pseudo", "asin", "status")
+    list_display = ("id",
+                    "link_to_user",
+                    "link_to_bluray",
+                    "bluray",
+                    "link_to_amazon",
+                    "asin",
+                    "price",
+                    "status")
+    list_editable = ("bluray",
+                     "price",
+                     "status")
+    search_fields = ("user__pseudo",
+                     "asin",
+                     "status")
     ordering = ("user", )
 
     def link_to_user(self, obj):

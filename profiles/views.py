@@ -36,8 +36,7 @@ class FavoriteView(ListView):
         context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
 
@@ -81,8 +80,7 @@ class ProfileUpdate(UpdateView):
         context.update(get_user_all_favorites(self.request.user))
         requests_forms = generate_initialized_request_forms(self.request.user)
         context.update(requests_forms)
-        context.update(get_user_requests_total(self.request.user,
-                                               only_open=True))
+        context.update(get_user_requests_total(self.request.user))
         return context
 
     def form_valid(self, form):

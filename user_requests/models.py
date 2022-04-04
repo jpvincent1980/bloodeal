@@ -7,6 +7,7 @@ import re
 from django.db.models import Value
 
 from blurays.models import BluRay
+from .functions import IMDBMovieData, IMDBPeopleData
 
 STATUS_CHOICES = [("1", "En-cours"),
                   ("2", "Acceptée"),
@@ -25,6 +26,18 @@ class PeopleRequest(models.Model):
                                 null=False,
                                 verbose_name="Lien IMDB")
     imdb_id = models.CharField(max_length=9, blank=True, null=True)
+    first_name = models.CharField(max_length=256,
+                                  blank=True,
+                                  null=True)
+    last_name = models.CharField(max_length=256,
+                                 blank=True,
+                                 null=True)
+    birth_date = models.DateField("Date de naissance",
+                                  blank=True,
+                                  null=True)
+    death_date = models.DateField("Date de décès",
+                                  blank=True,
+                                  null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,
@@ -47,6 +60,18 @@ class PeopleRequest(models.Model):
             imdb_id = self.get_imdb_id()
             if imdb_id:
                 self.imdb_id = imdb_id
+                try:
+                    people = IMDBPeopleData(imdb_id)
+                    first_name = people.imdb_get_first_name
+                    self.first_name = first_name if first_name else None
+                    last_name = people.imdb_get_last_name
+                    self.last_name = last_name if last_name else None
+                    birth_date = people.imdb_get_birth_date
+                    self.birth_date = birth_date if birth_date else None
+                    death_date = people.imdb_get_death_date
+                    self.death_date = death_date if death_date else None
+                except:
+                    print(f"Impossible de scraper le site IMDB pour {imdb_id}")
         return super().save(**kwargs)
 
     class Meta:
@@ -64,6 +89,14 @@ class MovieRequest(models.Model):
                                 null=False,
                                 verbose_name="Lien IMDB")
     imdb_id = models.CharField(max_length=9, blank=True, null=True)
+    title_vf = models.CharField(max_length=200,
+                                blank=True,
+                                null=True)
+    title_vo = models.CharField(max_length=200,
+                                blank=True,
+                                null=True)
+    release_year = models.IntegerField(blank=True,
+                                       null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,
@@ -86,6 +119,16 @@ class MovieRequest(models.Model):
             imdb_id = self.get_imdb_id()
             if imdb_id:
                 self.imdb_id = imdb_id
+                try:
+                    movie = IMDBMovieData(imdb_id)
+                    title_vf = movie.imdb_get_title
+                    self.title_vf = title_vf if title_vf else None
+                    self.title_vo = title_vf
+                    release_year = movie.imdb_get_release_year
+                    self.release_year = int(release_year) if release_year else None
+                except:
+                    print(f"Impossible de scraper le site IMDB pour {imdb_id}")
+
         return super().save(**kwargs)
 
     class Meta:
@@ -180,54 +223,63 @@ class DealRequest(models.Model):
         verbose_name_plural = "Demande - Bons Plans"
 
 
-def get_user_requests_blurays(user, only_open=False):
+def get_user_requests_blurays(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
     requests = BluRayRequest.objects.filter(user=user).annotate(type=Value("blu-ray"))
-    requests = requests.filter(status=1) if only_open else requests
+    requests = requests.filter(status__in=requests_filter) if requests_filter else requests
     requests = requests.order_by("-date_created")
-    return {"user_requests_blurays": requests}
+    return {"user_requests_blurays": requests,
+            "filter": requests_filter}
 
 
-def get_user_requests_movies(user, only_open=False):
+def get_user_requests_movies(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
     requests = MovieRequest.objects.filter(user=user).annotate(type=Value("film"))
-    requests = requests.filter(status=1) if only_open else requests
+    requests = requests.filter(status__in=requests_filter) if requests_filter else requests
     requests = requests.order_by("-date_created")
-    return {"user_requests_movies": requests}
+    return {"user_requests_movies": requests,
+            "filter": requests_filter}
 
 
-def get_user_requests_people(user, only_open=False):
+def get_user_requests_people(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
     requests = PeopleRequest.objects.filter(user=user).annotate(type=Value("personnalité"))
-    requests = requests.filter(status=1) if only_open else requests
+    requests = requests.filter(status__in=requests_filter) if requests_filter else requests
     requests = requests.order_by("-date_created")
-    return {"user_requests_people": requests}
+    return {"user_requests_people": requests,
+            "filter": requests_filter}
 
 
-def get_user_requests_deals(user, only_open=False):
+def get_user_requests_deals(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
     requests = DealRequest.objects.filter(user=user).annotate(type=Value("deal"))
-    requests = requests.filter(status=1) if only_open else requests
+    requests = requests.filter(status__in=requests_filter) if requests_filter else requests
     requests = requests.order_by("-date_created")
-    return {"user_requests_deals": requests}
+    return {"user_requests_deals": requests,
+            "filter": requests_filter}
 
 
-def get_user_requests(user, only_open=False):
-    blurays_requests = get_user_requests_blurays(user, only_open=only_open).get("user_requests_blurays",
+def get_user_requests(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
+    blurays_requests = get_user_requests_blurays(user,
+                                                 requests_filter=requests_filter).get("user_requests_blurays",
                                                                                 BluRayRequest.objects.none())
-    movies_requests = get_user_requests_movies(user, only_open=only_open).get("user_requests_movies",
+    movies_requests = get_user_requests_movies(user,
+                                               requests_filter=requests_filter).get("user_requests_movies",
                                                                               MovieRequest.objects.none())
-    people_requests = get_user_requests_people(user, only_open=only_open).get("user_requests_people",
+    people_requests = get_user_requests_people(user,
+                                               requests_filter=requests_filter).get("user_requests_people",
                                                                               PeopleRequest.objects.none())
-    deals_requests = get_user_requests_deals(user, only_open=only_open).get(
-        "user_requests_deal", DealRequest.objects.none())
+    deals_requests = get_user_requests_deals(user,
+                                             requests_filter=requests_filter).get("user_requests_deal",
+                                                                                  DealRequest.objects.none())
     requests = list(chain(blurays_requests,
                           movies_requests,
                           people_requests,
                           deals_requests))
-    return {"user_requests": requests}
+    return {"user_requests": requests,
+            "filter": requests_filter}
 
 
-def get_user_requests_total(user, only_open=False):
+def get_user_requests_total(user, requests_filter=["1"]):
     total = 0
-    total += len(get_user_requests_blurays(user, only_open=only_open).get("user_requests_blurays", BluRayRequest.objects.none()))
-    total += len(get_user_requests_movies(user, only_open=only_open).get("user_requests_movies", MovieRequest.objects.none()))
-    total += len(get_user_requests_people(user, only_open=only_open).get("user_requests_people", PeopleRequest.objects.none()))
-    total += len(get_user_requests_deals(user, only_open=only_open).get("user_requests_deals", DealRequest.objects.none()))
+    total += len(get_user_requests_blurays(user, requests_filter=requests_filter).get("user_requests_blurays", BluRayRequest.objects.none()))
+    total += len(get_user_requests_movies(user, requests_filter=requests_filter).get("user_requests_movies", MovieRequest.objects.none()))
+    total += len(get_user_requests_people(user, requests_filter=requests_filter).get("user_requests_people", PeopleRequest.objects.none()))
+    total += len(get_user_requests_deals(user, requests_filter=requests_filter).get("user_requests_deals", DealRequest.objects.none()))
     return {"user_requests_total": total}
