@@ -25,13 +25,13 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-#          environment:
-#            DJANGO_SETTINGS_MODULE: bloodeal.settings
-#            PGHOST: localhost
-#            PGUSER: circleci
-#            POSTGRES_USER: circleci
-#            POSTGRES_DB: circle_test
-#            POSTGRES_HOST_AUTH_METHOD: trust
+          environment:
+            DJANGO_SETTINGS_MODULE: bloodeal.settings
+            PGHOST: localhost
+            PGUSER: circleci
+            POSTGRES_USER: circleci
+            POSTGRES_DB: circle_test
+            POSTGRES_HOST_AUTH_METHOD: trust
           command: sudo python -m pytest
 
   lint:
