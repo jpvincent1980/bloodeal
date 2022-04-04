@@ -26,7 +26,7 @@ jobs:
         environment:
           ENV: circle
           DATABASE_URL: postgresql://circleci@localhost/circle_test
-      - image: circleci/postgres:9.6
+      - image: circleci/postgres:14.2.0
         environment:
           PGHOST: localhost
           PGUSER: circleci
@@ -40,7 +40,7 @@ jobs:
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
           command: |
-            python -m pytest
+            python -m pytest --co
 
   lint:
     executor: python/default
