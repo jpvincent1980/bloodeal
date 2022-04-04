@@ -1,0 +1,37 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-20vh justify-content-center">
+    <div class="dashboard-block-element-title">
+        <h2>TOP 5</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-column">
+    {% for bluray in top_blurays %}
+    <div class="capsule align-items-center flex-column width-100">
+        {% if bluray.bluray_image %}
+        <div class="capsule-image" style="background-image: url({{ bluray.bluray_image.url }});">
+        {% else %}
+        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('top_bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="top_bluray_{{ bluray.pk }}"></i>
+            </div>
+        </div>
+        <div class="capsule-text text-align-center">
+            <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
+                {% if bluray.title %}
+                    <h2 class="justify-content-center">{{ bluray.title }}</h2>
+                {% else %}
+                    <h2 class="justify-content-center">{{ bluray.movie }}</h2>
+                {% endif %}
+            </a>
+            {% if bluray.uhd %}
+                <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+            {% endif %}
+            {% with total=bluray.num_favorites %}
+                ♥ par {{ total }} membre{{total|pluralize}}
+            {% endwith %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>

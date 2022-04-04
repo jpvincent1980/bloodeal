@@ -1,18 +1,22 @@
 {% load static %}
 
 <div class="dashboard-block-element min-height-20vh padding-1rem">
-        <p><h2>{{ movie }}</h2></p>
-        {% if movie.imdb_id %}
-        <span class="imdbRatingPlugin" data-user="ur113694504" data-title="{{ movie.imdb_id }}" data-style="p4">
-            <a href="https://www.imdb.com/title/{{ movie.imdb_id }}/?ref_=plg_rt_1">
-                <img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_37x18.png" alt="{{ movie }}" />
-            </a>
-        </span>
-        <script id="imdb"></script>
-        {% endif %}
-        <p>{{ movie.release_year }}</p>
-        <p>Un film de {% for director in movie.directors %}
-            <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
-        <p>Avec {% for actor in movie.actors %}
-            <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+    <div class="dashboard-block-element-content flex-wrap">
+        <div class="capsule-text">
+            <p><h2>{{ movie }}</h2></p>
+            {% if movie.imdb_id %}
+                <span class="imdbRatingPlugin" data-user="ur113694504" data-title="{{ movie.imdb_id }}" data-style="p4">
+                    <a href="https://www.imdb.com/title/{{ movie.imdb_id }}/?ref_=plg_rt_1">
+                        <img src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/images/imdb_37x18.png" alt="{{ movie }}" />
+                    </a>
+                </span>
+            <script id="imdb"></script>
+            {% endif %}
+            <p>{{ movie.release_year }}</p>
+            <p>Un film de {% for director in movie.directors %}
+                <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+            <p>Avec {% for actor in movie.actors %}
+                <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+        </div>
+    </div>
 </div>

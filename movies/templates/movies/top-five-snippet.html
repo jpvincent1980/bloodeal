@@ -1,0 +1,28 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-20vh justify-content-center">
+    <div class="dashboard-block-element-title">
+        <h2>TOP 5</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-column">
+    {% for movie in top_movies %}
+    <div class="capsule align-items-center flex-column width-100">
+        {% if movie.movie_image %}
+        <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});">
+        {% else %}
+        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+        <div class="favorite-wrapper">
+            <i class="favorite {% if movie in user_favorite_movies %}press{% endif %}" onclick="favorite('top_movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="top_movie_{{ movie.pk }}"></i>
+        </div>
+        </div>
+        <div class="capsule-text text-align-center">
+            <h2 class="justify-content-center"><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie }}</a></h2>
+            {% with total=movie.num_favorites %}
+                ♥ par {{ total }} membre{{total|pluralize}}
+            {% endwith %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>

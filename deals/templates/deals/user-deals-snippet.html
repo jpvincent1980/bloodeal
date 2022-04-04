@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-20vh justify-content-center">
+    <div class="dashboard-block-element-title">
+        <h2>VOS BONS PLANS</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-column">
+    {% for deal in user_deals %}
+    <div class="capsule align-items-center flex-column width-100">
+        {% if deal.bluray.bluray_image %}
+        <div class="capsule-image" style="background-image: url({{ deal.bluray.bluray_image.url }});"></div>
+        {% else %}
+        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+        {% endif %}
+        <div class="capsule-text text-align-center">
+            <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
+                {% if deal.bluray.title %}
+                    <h2 class="justify-content-center">{{ deal.bluray.title }}</h2>
+                {% else %}
+                    <h2 class="justify-content-center">{{ deal.bluray.movie }}</h2>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+    {% empty %}
+        <p class="text-align-center">Vous n'avez posté aucun bon plan.</p>
+    {% endfor %}
+    </div>
+</div>

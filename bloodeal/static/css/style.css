@@ -64,6 +64,7 @@ input {
     padding: .5rem;
     margin: auto;
     font-family: 'Josefin Sans';
+    width: -webkit-fill-available;
 }
 
 main {
@@ -182,10 +183,12 @@ p .btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: var(--capsule-text-width);
+    /*width: var(--capsule-text-width);*/
+    width: fit-content;
 }
 
-.capsule-text h2,p {
+.capsule-text h2 {
+    display: flex;
     color: black;
     margin:0;
     padding: 0.2rem;
@@ -205,6 +208,10 @@ p .btn {
 
 .capsule-text a {
     color: black !important;
+}
+
+.capsule-text p {
+    margin: 0.2rem;
 }
 
 .dashboard-wrapper {
