@@ -12,6 +12,26 @@ stags.parentNode.insertBefore(js,stags);
 
 imdb(document,"script","imdb-rating-api")
 
+// Handles the dynamic counter
+const counters = document.querySelectorAll('.counter');
+const speed = 200;
+
+counters.forEach( counter => {
+   const animate = () => {
+      const value = +counter.getAttribute('total');
+      const data = +counter.innerText;
+
+      const time = value / speed;
+     if(data < value) {
+          counter.innerText = Math.ceil(data + time);
+          setTimeout(animate, 1);
+        }else{
+          counter.innerText = value;
+        }
+   }
+   animate();
+});
+
 // Handles the appearance/disappearance of the password
 function showPassword(pass) {
 var password = document.getElementById(pass);
