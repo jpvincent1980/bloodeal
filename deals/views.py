@@ -29,7 +29,6 @@ class DealListView(ListView):
         context.update(requests_forms)
         context.update(get_user_requests_total(self.request.user,
                                                only_open=True))
-        print(context)
         return context
 
 

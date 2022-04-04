@@ -233,3 +233,7 @@ class SearchResultsView(ListView):
         # Récupère les données de recherche pour les personnalités
         context.update(get_people_results(keyword))
         return context
+
+
+def sentry_error(request):
+    return 1/0
