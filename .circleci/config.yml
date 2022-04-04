@@ -43,7 +43,7 @@ jobs:
           command: python -m flake8
 
   containerize:
-    executor: docker/default
+    docker:
       - image: jpvincent1980/bloodeal
       tag: $CIRCLE_SHA1
     steps:
