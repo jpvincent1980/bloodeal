@@ -26,6 +26,9 @@ jobs:
         environment:
           ENV: circle
           DATABASE_URL: postgresql://circleci@localhost/circle_test
+        auth:
+          - username: jpvincent1980
+          - password: $DOCKER_PASSWORD
       - image: cimg/postgres:14.2.0
         environment:
           PGHOST: localhost
