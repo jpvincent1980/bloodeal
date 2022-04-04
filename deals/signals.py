@@ -8,7 +8,7 @@ from user_requests.models import DealRequest
 
 @receiver(post_save, sender=DealRequest)
 def create_deal(sender, instance, **kwargs):
-    if instance.status == "2":
+    if instance.status == "2" and not instance.deal:
         if not instance.asin:
             amazon_aff_link = instance.amazon_link
         else:
@@ -18,8 +18,10 @@ def create_deal(sender, instance, **kwargs):
         created_by = instance.user
         status = "1"
         price = instance.price
-        Deal.objects.create(bluray=bluray,
-                            amazon_aff_link=amazon_aff_link,
-                            created_by=created_by,
-                            status=status,
-                            price=price)
+        deal = Deal.objects.create(bluray=bluray,
+                                   amazon_aff_link=amazon_aff_link,
+                                   created_by=created_by,
+                                   status=status,
+                                   price=price)
+        instance.deal = deal
+        instance.save()

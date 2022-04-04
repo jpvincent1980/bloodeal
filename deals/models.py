@@ -7,7 +7,6 @@ from django.utils.timezone import now
 
 from blurays.models import BluRay
 from profiles.models import get_user_all_favorites
-from user_requests.models import DealRequest
 
 CHOICES = [("1", "Actif"),
            ("2", "Expiré"),
@@ -39,11 +38,6 @@ class Deal(models.Model):
                               null=True)
     price = models.FloatField(blank=False,
                               null=False)
-    request = models.ForeignKey(DealRequest,
-                                on_delete=models.CASCADE,
-                                related_name='deal_request',
-                                blank=True,
-                                null=True)
     start_date = models.DateField(default=now, blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)

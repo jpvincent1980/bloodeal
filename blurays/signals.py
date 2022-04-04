@@ -15,6 +15,8 @@ def create_deal(sender, instance, **kwargs):
             amazon_asin = instance.asin
         requested_by = instance.user
         if not BluRay.objects.filter(amazon_asin=amazon_asin):
-            BluRay.objects.create(amazon_asin=amazon_asin,
-                                  amazon_aff_link=amazon_link,
-                                  requested_by=requested_by)
+            bluray = BluRay.objects.create(amazon_asin=amazon_asin,
+                                           amazon_aff_link=amazon_link,
+                                           requested_by=requested_by)
+            instance.bluray = bluray
+            instance.save()

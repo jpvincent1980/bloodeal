@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-20vh padding-1rem text-align-center justify-content-center">
     {% if next_blurays %}
     <h2>Prochaine sortie</h2>
-    <p>{% with next_blurays|first as next_bluray %}{{ next_bluray.release_date|date:"d F Y"|title }}</p>
+    <p>{% with next_blurays|first as next_bluray %}{{ next_bluray.release_date|date:"d/m/Y"|title }}</p>
     <div class="capsule">
                 {% if next_bluray.bluray_image %}
                 <div class="capsule-image" style="background-image: url({{ next_bluray.bluray_image.url }});">

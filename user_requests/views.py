@@ -194,7 +194,6 @@ class UserRequestListView(ListView):
 
     def get(self, request, *args, **kwargs):
         filter = request.GET.get("filter")
-        print(filter)
         if kwargs["pk"] != self.request.user.pk:
             message = "Vous ne pouvez pas avoir accès aux demandes d'un autre utilisateur."
             messages.add_message(self.request,

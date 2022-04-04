@@ -40,7 +40,7 @@
                     {% if deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
-                    <p>Posté le {{ deal.date_created|date:"d F Y" }}</p>
+                    <p>Posté le {{ deal.date_created|date:"d/m/Y" }}</p>
                 </div>
             </div>
             {% endfor %}

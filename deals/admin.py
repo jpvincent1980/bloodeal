@@ -11,7 +11,6 @@ class DealAdmin(admin.ModelAdmin):
     interface.
     """
     list_display = ("id",
-                    "request",
                     "bluray",
                     "amazon_aff_link",
                     "start_date",

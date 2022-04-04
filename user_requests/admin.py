@@ -15,6 +15,7 @@ class PeopleRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id",
                     "user",
+                    "link_to_people",
                     "first_name",
                     "last_name",
                     "imdb_link",
@@ -32,6 +33,13 @@ class PeopleRequestAdmin(admin.ModelAdmin):
                      "status")
     ordering = ("user", )
 
+    def link_to_people(self, obj):
+        if obj.people:
+            link = reverse("admin:people_people_change", args=[obj.people.pk])
+            return format_html('<a href="{}">{}</a>', link, obj.people)
+        return ""
+    link_to_people.short_description = 'People'
+
 
 @admin.register(MovieRequest)
 class MovieRequestAdmin(admin.ModelAdmin):
@@ -41,6 +49,7 @@ class MovieRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id",
                     "user",
+                    "link_to_movie",
                     "title_vf",
                     "title_vo",
                     "release_year",
@@ -58,6 +67,13 @@ class MovieRequestAdmin(admin.ModelAdmin):
                      "status")
     ordering = ("user", )
 
+    def link_to_movie(self, obj):
+        if obj.movie:
+            link = reverse("admin:movies_movie_change", args=[obj.movie.pk])
+            return format_html('<a href="{}">{}</a>', link, obj.movie)
+        return ""
+    link_to_movie.short_description = 'Movie'
+
 
 @admin.register(BluRayRequest)
 class BluRayRequestAdmin(admin.ModelAdmin):
@@ -67,6 +83,7 @@ class BluRayRequestAdmin(admin.ModelAdmin):
     """
     list_display = ("id",
                     "user",
+                    "link_to_bluray",
                     "amazon_link",
                     "asin",
                     "status")
@@ -78,6 +95,13 @@ class BluRayRequestAdmin(admin.ModelAdmin):
                      "status")
     ordering = ("user", )
 
+    def link_to_bluray(self, obj):
+        if obj.bluray:
+            link = reverse("admin:blurays_bluray_change", args=[obj.bluray.pk])
+            return format_html('<a href="{}">{}</a>', link, obj.bluray)
+        return ""
+    link_to_bluray.short_description = 'Blu-Ray'
+
 
 @admin.register(DealRequest)
 class DealRequestAdmin(admin.ModelAdmin):
@@ -86,6 +110,7 @@ class DealRequestAdmin(admin.ModelAdmin):
     interface.
     """
     list_display = ("id",
+                    "link_to_deal",
                     "link_to_user",
                     "link_to_bluray",
                     "bluray",
@@ -100,6 +125,12 @@ class DealRequestAdmin(admin.ModelAdmin):
                      "asin",
                      "status")
     ordering = ("user", )
+
+    def link_to_deal(self, obj):
+        if obj.deal:
+            link = reverse("admin:deals_deal_change", args=[obj.deal.pk])
+            return format_html('<a href="{}">{}</a>', link, obj.deal)
+    link_to_deal.short_description = 'Deal'
 
     def link_to_user(self, obj):
         link = reverse("admin:accounts_customuser_change", args=[obj.user.pk])

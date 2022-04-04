@@ -4,9 +4,12 @@ from django.conf import settings
 from django.db import models
 import re
 
-from django.db.models import Value
+from django.db.models import Value, CASCADE
 
 from blurays.models import BluRay
+from deals.models import Deal
+from movies.models import Movie
+from people.models import People
 from .functions import IMDBMovieData, IMDBPeopleData
 
 STATUS_CHOICES = [("1", "En-cours"),
@@ -18,7 +21,7 @@ STATUS_CHOICES = [("1", "En-cours"),
 # Create your models here.
 class PeopleRequest(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,
+                             on_delete=CASCADE,
                              related_name='people_user_request',
                              blank=False,
                              null=False)
@@ -38,6 +41,10 @@ class PeopleRequest(models.Model):
     death_date = models.DateField("Date de décès",
                                   blank=True,
                                   null=True)
+    people = models.ForeignKey(People,
+                               on_delete=CASCADE,
+                               blank=True,
+                               null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,
@@ -81,7 +88,7 @@ class PeopleRequest(models.Model):
 
 class MovieRequest(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,
+                             on_delete=CASCADE,
                              related_name='movie_user_request',
                              blank=False,
                              null=False)
@@ -97,6 +104,10 @@ class MovieRequest(models.Model):
                                 null=True)
     release_year = models.IntegerField(blank=True,
                                        null=True)
+    movie = models.ForeignKey(Movie,
+                              on_delete=CASCADE,
+                              blank=True,
+                              null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,
@@ -138,14 +149,21 @@ class MovieRequest(models.Model):
 
 class BluRayRequest(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,
+                             on_delete=CASCADE,
                              related_name='bluray_user_request',
                              blank=False,
                              null=False)
     amazon_link = models.URLField(blank=False,
                                   null=False,
                                   verbose_name="Lien Amazon")
-    asin = models.CharField(max_length=10, blank=True, null=True)
+    asin = models.CharField(max_length=10,
+                            blank=True,
+                            null=True)
+    bluray = models.ForeignKey(BluRay,
+                               on_delete=CASCADE,
+                               related_name='created_bluray',
+                               blank=True,
+                               null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,
@@ -177,12 +195,12 @@ class BluRayRequest(models.Model):
 
 class DealRequest(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE,
+                             on_delete=CASCADE,
                              related_name='deal_user_request',
                              blank=False,
                              null=False)
     bluray = models.ForeignKey(BluRay,
-                               on_delete=models.CASCADE,
+                               on_delete=CASCADE,
                                blank=True,
                                null=True)
     amazon_link = models.URLField(blank=False,
@@ -190,6 +208,10 @@ class DealRequest(models.Model):
                                   verbose_name="Lien Amazon")
     asin = models.CharField(max_length=10, blank=True, null=True)
     price = models.FloatField()
+    deal = models.ForeignKey(Deal,
+                             on_delete=CASCADE,
+                             blank=True,
+                             null=True)
     status = models.CharField(max_length=56,
                               choices=STATUS_CHOICES,
                               blank=False,

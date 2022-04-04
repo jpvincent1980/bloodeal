@@ -304,6 +304,21 @@ p .btn {
     background: grey;
 }
 
+.requests-list {
+    display: flex;
+    align-items: center;
+}
+
+.requests-list h2,span {
+    margin: 1rem;
+    padding: 0;
+}
+
+.requests-list a {
+    margin: 0;
+    padding: 0;
+}
+
 .side-block-min-width {
     min-width: 15%;
 }

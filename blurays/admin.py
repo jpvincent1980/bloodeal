@@ -28,7 +28,7 @@ class BluRayAdmin(admin.ModelAdmin):
             return format_html('<a href="{}">{}</a>', link, obj.movie)
         else:
             return ""
-    link_to_movie.short_description = 'Edit movie'
+    link_to_movie.short_description = 'Movie'
 
     def link_to_amazon(self, obj):
         if obj.amazon_aff_link:

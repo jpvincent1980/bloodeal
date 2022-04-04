@@ -16,11 +16,11 @@
                 <h3>{{ people }}</h3>
                 {% if people.birth_date %}
                 <h4>Naissance:</h4>
-                <h4>{{ people.birth_date|date:"d F Y"|title }}</h4>
+                <h4>{{ people.birth_date|date:"d/m/Y"|title }}</h4>
                 {% endif %}
                 {% if people.death_date %}
                 <h4>Décès:</h4>
-                <h4>{{ people.death_date|date:"d F Y"|title }}</h4>
+                <h4>{{ people.death_date|date:"d/m/Y"|title }}</h4>
                 {% endif %}
             </a>
         </div>
