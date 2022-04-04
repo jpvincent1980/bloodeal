@@ -32,7 +32,7 @@ jobs:
 #            POSTGRES_USER: circleci
 #            POSTGRES_DB: circle_test
 #            POSTGRES_HOST_AUTH_METHOD: trust
-          command: python -m pytest
+          command: sudo python -m pytest
 
   lint:
     executor: python/default
@@ -41,14 +41,6 @@ jobs:
       - python/load-cache
       - run:
           command: python -m flake8
-
-  containerize:
-    executor: docker/default
-    environment:
-      tag: $CIRCLE_SHA1
-      image: jpvincent1980/bloodeal
-    steps:
-      - checkout
 
   deploy:
     executor: heroku/default
@@ -71,10 +63,13 @@ workflows:
       - lint:
           requires:
             - build
-      - containerize:
+      - docker/publish:
+          name: containerize
+          image: jpvincent1980/bloodeal
+          tag: $CIRCLE_SHA1
           requires:
             - build
-#            - test
+            - test
             - lint
           filters:
             branches:
