@@ -22,6 +22,10 @@ jobs:
   test:
     executor: python/default
     docker:
+      - image: cimg/python:3.10
+          environment:
+            ENV: circle
+            DATABASE_URL: postgresql://circleci@localhost/circle_test
       - image: cimg/postgres:14.0
         environment:
           PGHOST: localhost
@@ -29,10 +33,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: circle_test
           POSTGRES_HOST_AUTH_METHOD: trust
-      - image: cimg/python:3.10
-        environment:
-          ENV: circle
-          DATABASE_URL: postgresql://circleci@localhost/circle_test
     steps:
       - checkout
       - python/load-cache
