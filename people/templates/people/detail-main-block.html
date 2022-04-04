@@ -2,7 +2,7 @@
 
 <section class="dashboard-block main-block-min-width">
 
-    {% if people_deals|length > 0 %}
+    {% if people_deals %}
         <div class="dashboard-block-element min-height-30vh">
             <div class="dashboard-block-element-title">
                     <h2>BONS PLANS AVEC {{ people|upper }} ({{ people_deals|length }})</h2>
@@ -38,7 +38,7 @@
         </div>
         {% endif %}
 
-
+    {% if people_movies %}
     <div class="dashboard-block-element min-height-30vh">
         <div class="dashboard-block-element-title">
             <h2>FILMS AVEC {{ people|upper }} ({{ people_movies|length }})</h2>
@@ -62,7 +62,15 @@
         {% endfor %}
         </div>
     </div>
+    {% else %}
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="capsule text-align-center margin-auto">
+            <h2>Aucun film avec {{ people }}.</h2>
+        </div>
+    </div>
+    {% endif %}
 
+    {% if people_blurays %}
     <div class="dashboard-block-element min-height-30vh">
         <div class="dashboard-block-element-title">
             <h2>BLU-RAYS AVEC {{ people|upper }} ({{ people_blurays|length }})</h2>
@@ -88,4 +96,11 @@
         {% endfor %}
         </div>
     </div>
+    {% else %}
+    <div class="dashboard-block-element min-height-30vh">
+        <div class="capsule text-align-center margin-auto">
+            <h2>Aucun blu-ray avec {{ people }}.</h2>
+        </div>
+    </div>
+    {% endif %}
 </section>
