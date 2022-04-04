@@ -89,7 +89,7 @@ class MovieRequest(models.Model):
                                 null=False,
                                 verbose_name="Lien IMDB")
     imdb_id = models.CharField(max_length=9, blank=True, null=True)
-    title_vf = models.CharField(max_length=200,
+    title_vf = models.CharField(max_length=201,
                                 blank=True,
                                 null=True)
     title_vo = models.CharField(max_length=200,
