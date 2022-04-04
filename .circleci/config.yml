@@ -21,31 +21,20 @@ jobs:
 
   test:
     executor: python/default
-    docker:
-      - image: circleci/python:3.8.0
-        environment:
-          ENV: circle
-          DATABASE_URL: postgresql://circleci@localhost/circle_test
-        auth:
-          username: jpvincent1980
-          password: $DOCKER_PASSWORD
-      - image: circleci/postgres:14.2.0
-        environment:
-          PGHOST: localhost
-          PGUSER: circleci
-          POSTGRES_USER: circleci
-          POSTGRES_DB: circle_test
-          POSTGRES_HOST_AUTH_METHOD: trust
-        auth:
-          username: jpvincent1980
-          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - python/load-cache
       - run:
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-      - run:
+#          environment:
+#            DJANGO_SETTINGS_MODULE: bloodeal.settings
+#            PGHOST: localhost
+#            PGUSER: circleci
+#            POSTGRES_USER: circleci
+#            POSTGRES_DB: postgres
+#            POSTGRES_HOST_AUTH_METHOD: trust
           command: |
+            sudo apt-get update
+            sudo apt-get install postgresql-client
             python -m pytest --co
 
   lint:
