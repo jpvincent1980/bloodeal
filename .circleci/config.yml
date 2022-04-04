@@ -30,13 +30,13 @@ jobs:
             PGHOST: localhost
             PGUSER: circleci
             POSTGRES_USER: circleci
-            POSTGRES_DB: circle_test
+            POSTGRES_DB: postgres
             POSTGRES_HOST_AUTH_METHOD: trust
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
             whoami
-            python -m pytest
+            python -m pytest -u circleci
 
   lint:
     executor: python/default
