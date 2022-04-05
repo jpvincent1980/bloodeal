@@ -178,6 +178,7 @@ def logout_view(request):
     return redirect("accounts:index")
 
 
+@login_required
 def dashboard_view(request):
     # Récupère les données pour le bloc de droite
     context = get_deals()

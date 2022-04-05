@@ -1,7 +1,6 @@
-from PIL import Image
 from django.conf import settings
 from django.db import models
-from django.db.models import CASCADE, Count, Q
+from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
@@ -56,17 +55,8 @@ class Movie(models.Model):
         return actors
 
     def save(self, **kwargs):
-        if not self.slug:
+        if not self.slug or self.slug == "none":
             self.slug = slugify(self.title_vf)
-        try:
-            if self.movie_image:
-                updated_image = Image.open(self.movie_image)
-                if updated_image.width > 100 or updated_image.height > 150:
-                    output_size = (100, 150)
-                    updated_image.thumbnail(output_size)
-                    updated_image.save(self.movie_image)
-        except (OSError,) as error:
-            print(error)
         return super(Movie, self).save(**kwargs)
 
     def image_tag(self):
