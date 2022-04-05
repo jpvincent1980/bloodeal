@@ -84,7 +84,8 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon {{ request.asin }} a le statut
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
+                                    <a href="{{ request.amazon_link }}" target="_blank"><span>{{ request.asin }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
                                     </span>
@@ -127,7 +128,8 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB {{ request.imdb_id }} a le statut
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
+                                    <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
                                     </span>
@@ -170,7 +172,8 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB {{ request.imdb_id }} a le statut
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB
+                                    <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
                                     </span>
