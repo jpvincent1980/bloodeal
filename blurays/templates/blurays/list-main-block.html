@@ -30,7 +30,7 @@
                     {% if user_recommended_bluray.uhd %}
                     <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
-                    <p>Sortie: {{ user_recommended_bluray.release_date }}</p>
+                    <p>Sortie: {{ user_recommended_bluray.release_date|date:"d/m/Y" }}</p>
                     <p><a href="{{ user_recommended_bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
                 </div>
         </div>
@@ -73,7 +73,7 @@
                     {% if favorite_bluray.uhd %}
                     <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
-                    <p>Sortie: {{ favorite_bluray.release_date }}</p>
+                    <p>Sortie: {{ favorite_bluray.release_date|date:"d/m/Y" }}</p>
                     <p><a href="{{ favorite_bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
                 </div>
         </div>
@@ -114,7 +114,7 @@
                 {% if bluray.uhd %}
                     <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                 {% endif %}
-                <p>Sortie: {{ bluray.release_date }}</p>
+                <p>Sortie: {{ bluray.release_date|date:"d/m/Y" }}</p>
                 <p><a href="{{ bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
                 </div>
         </div>

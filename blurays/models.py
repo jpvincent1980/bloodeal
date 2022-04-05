@@ -92,8 +92,8 @@ def get_blurays(user):
     return {"blurays": blurays,
             "top_blurays": top_blurays,
             "favorite_blurays": favorite_blurays,
-            "latest_blurays": blurays.filter(release_date__lte=datetime.date.today()).order_by("release_date"),
-            "next_blurays": blurays.filter(release_date__gte=datetime.date.today()).order_by("release_date")}
+            "latest_blurays": blurays.filter(release_date__lte=datetime.date.today()).exclude(bluray_image="").order_by("release_date"),
+            "next_blurays": blurays.filter(release_date__gte=datetime.date.today()).exclude(bluray_image="").order_by("release_date")}
 
 
 def get_blurays_results(keyword):

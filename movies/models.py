@@ -114,7 +114,7 @@ def get_movies(user):
     return {"movies": movies,
             "top_movies": top_movies,
             "favorite_movies": favorite_movies,
-            "latest_movies": movies.order_by("-date_created")}
+            "latest_movies": movies.exclude(movie_image="").order_by("-date_created")}
 
 
 def get_movies_results(keyword):

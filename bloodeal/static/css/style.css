@@ -62,7 +62,7 @@ a:visited {
 input {
     background-color: var(--autofill-input-color);
     padding: .5rem;
-    margin: auto;
+    margin: 0.5rem auto;
     font-family: 'Josefin Sans';
     width: -webkit-fill-available;
 }
@@ -407,6 +407,7 @@ p .btn {
 
 .display-flex {
     display: flex;
+    align-items: center;
 }
 
 a .color-black {
@@ -425,6 +426,20 @@ footer {
     background: var(--site-bg-color);
     color: var(--main-txt-color);
 }
+
+/* Beginning of IMDB handling */
+
+.rating {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.ofTen {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* End of IMDB handling */
 
 /* Beginning of favorite handling */
 

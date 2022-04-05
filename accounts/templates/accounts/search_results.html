@@ -33,7 +33,7 @@
                     <a href="{% url 'blurays:blurays_detail' slug=blurays_result.slug pk=blurays_result.pk %}">
                     <h2>{{ blurays_result.movie }}</h2>
                     </a>
-                    <p>Sortie: {{ blurays_result.release_date }}</p>
+                    <p>Sortie: {{ blurays_result.release_date|date:"d/m/Y" }}</p>
                     <p><a href="{{ blurays_result.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
                 </div>
         </div>

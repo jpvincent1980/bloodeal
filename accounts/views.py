@@ -182,6 +182,7 @@ def dashboard_view(request):
     # Récupère les données pour le bloc de droite
     context = get_deals()
     context.update(get_movies(request.user))
+    print(context)
     context.update(get_blurays(request.user))
     # Récupère les données pour le bloc de gauche
     requests_forms = generate_initialized_request_forms(request.user)
