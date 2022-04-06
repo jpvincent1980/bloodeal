@@ -26,7 +26,7 @@ class BluRayAdmin(admin.ModelAdmin):
     def link_to_movie(self, obj):
         if obj.movie:
             link = reverse("admin:movies_movie_change", args=[obj.movie.pk])
-            return format_html('<a href="{}">{}</a>', link, obj.movie)
+            return format_html('<a href="{}" target="_blank">{}</a>', link, obj.movie)
         else:
             return ""
     link_to_movie.short_description = 'Movie'
@@ -34,6 +34,6 @@ class BluRayAdmin(admin.ModelAdmin):
     def link_to_amazon(self, obj):
         if obj.amazon_aff_link:
             link = obj.amazon_aff_link
-            return format_html('<a href="{}">{}</a>', link, obj.amazon_aff_link)
+            return format_html('<a href="{}" target="_blank">{}</a>', link, obj.amazon_aff_link)
         return ""
     link_to_amazon.short_description = 'Amazon'
