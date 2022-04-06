@@ -26,7 +26,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">
+                                <li class="requests-list width-100">
                                     {% if request.deal.pk %}
                                     Votre bon plan pour
                                     <a href="{% url 'deals:deals_detail' pk=request.deal.pk %}">
@@ -41,7 +41,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre proposition de bon plan du {{ request.date_created|date:"d/m/Y" }} a le statut
+                                <li class="requests-list width-100">Votre proposition de bon plan du {{ request.date_created|date:"d/m/Y" }} a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
                                     </span>
@@ -70,7 +70,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">
+                                <li class="requests-list width-100">
                                     {% if request.bluray.slug %}
                                     <a href="{% url 'blurays:blurays_detail' slug=request.bluray.slug pk=request.bluray.pk %}">
                                     {% endif %}
@@ -84,7 +84,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
+                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
                                     <a href="{{ request.amazon_link }}" target="_blank"><span>{{ request.asin }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
@@ -114,7 +114,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">
+                                <li class="requests-list width-100">
                                     {% if request.movie.slug %}
                                     <a href="{% url 'movies:movies_detail' slug=request.movie.slug pk=request.movie.pk %}">
                                     {% endif %}
@@ -128,7 +128,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
+                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
                                     <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
@@ -158,7 +158,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">
+                                <li class="requests-list width-100">
                                     {% if request.people.slug %}
                                     <a href="{% url 'people:people_detail' slug=request.people.slug pk=request.people.pk %}">
                                     {% endif %}
@@ -172,7 +172,7 @@
                     <div class="capsule justify-content-center">
                         <div class="capsule-text width-100">
                             <ul>
-                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB
+                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB
                                     <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
