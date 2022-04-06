@@ -70,8 +70,7 @@ class BluRay(models.Model):
 
     def image_tag(self):
         if self.bluray_image != '':
-            return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                                    self.bluray_image))
+            return mark_safe('<img src="%s" height="100px" />' % self.bluray_image)
 
 
 def get_blurays(user):
