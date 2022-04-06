@@ -57,10 +57,12 @@ class CustomUserChangeForm(UserChangeForm):
         self.label_suffix = ""
         self.fields["email"].label = "EMAIL"
         self.fields["pseudo"].label = "PSEUDO"
+        self.fields["first_name"].label = "PRENOM"
+        self.fields["last_name"].label = "NOM"
 
     class Meta:
         model = CustomUser
-        fields = ["email", "pseudo"]
+        fields = ["email", "first_name", "last_name", "pseudo"]
         error_messages = {
             "email": {
                 "unique": "Un compte avec cette adresse email existe déjà."}

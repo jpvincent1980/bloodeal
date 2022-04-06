@@ -48,6 +48,12 @@ class CustomUser(AbstractUser):
     A model that represents a user
     """
     username = None
+    first_name = models.CharField(max_length=200,
+                                  blank=True,
+                                  null=True)
+    last_name = models.CharField(max_length=200,
+                                 blank=True,
+                                 null=True)
     email = models.EmailField(unique=True)
     pseudo = models.CharField(max_length=24,
                               blank=True,
