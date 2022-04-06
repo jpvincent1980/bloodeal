@@ -2,8 +2,8 @@
 
 <div class="dashboard-block-element min-height-20vh padding-1rem text-align-center justify-content-center">
     {% if latest_movies %}
-    <h2>A l'affiche</h2>
-    <p>Publié le {% with latest_movies|first as latest_movie %}{{ latest_movie.date_created|date:"d/m/Y"|title }}</p>
+    <h2>Gros plan sur ...</h2>
+    {% with latest_movies|first as latest_movie %}
     <div class="capsule">
                 {% if latest_movie.movie_image %}
                 <div class="capsule-image" style="background-image: url({{ latest_movie.movie_image.url }});">
