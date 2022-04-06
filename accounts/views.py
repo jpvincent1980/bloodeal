@@ -303,7 +303,7 @@ def send_message_view(request):
             try:
                 message = EmailMultiAlternatives(f"[BLOODEAL] Message de {formulaire_nom}",
                                                  formulaire_message,
-                                                 to=["jpvincent@hotmail.fr"],
+                                                 to=["bloodeal@hotmail.com"],
                                                  from_email=EMAIL_HOST_USER,
                                                  reply_to=[formulaire_email])
                 message.send()
