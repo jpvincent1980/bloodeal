@@ -11,7 +11,7 @@ class MovieAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage Movie instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id", "image_tag", "link_to_imdb", "title_vf", "title_vo",
                     "slug", "release_year", "movie_image")
     list_editable = ("title_vf", "title_vo", "release_year", "movie_image")
@@ -34,7 +34,7 @@ class MovieActorAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage Movie instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id", "movie", "actor")
     list_editable = ("movie", "actor")
     search_fields = ("movie", "actor")
@@ -47,7 +47,7 @@ class MovieDirectorAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage Movie instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id", "movie", "director")
     list_editable = ("movie", "director")
     search_fields = ("movie", "director")

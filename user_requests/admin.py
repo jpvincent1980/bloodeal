@@ -13,7 +13,7 @@ class PeopleRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id",
                     "user",
                     "link_to_people",
@@ -48,7 +48,7 @@ class MovieRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id",
                     "user",
                     "link_to_movie",
@@ -83,7 +83,7 @@ class BluRayRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id",
                     "user",
                     "link_to_bluray",
@@ -112,7 +112,7 @@ class DealRequestAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id",
                     "link_to_deal",
                     "link_to_user",

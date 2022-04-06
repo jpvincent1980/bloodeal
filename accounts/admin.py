@@ -11,7 +11,7 @@ class CustomUserAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage Users instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id", "email", "pseudo", "first_name", "last_name",
                     "is_staff")
     list_editable = ("email", "pseudo")

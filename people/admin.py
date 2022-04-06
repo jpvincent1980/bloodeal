@@ -11,7 +11,7 @@ class PeopleAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage People instances in the Admin
     interface.
     """
-    list_per_page = 10
+    list_per_page = 5
     list_display = ("id", "image_tag", "link_to_imdb", "first_name",
                     "last_name", "slug", "birth_date", "death_date",
                     "people_image")

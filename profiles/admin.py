@@ -9,7 +9,7 @@ class FavoriteUserAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage FavoriteUser instances in the
     Admin interface.
     """
-    list_per_page = 10
+    list_per_page = 5
 
 
 @admin.register(FavoriteMovie)
@@ -18,7 +18,7 @@ class FavoriteMovieAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage FavoriteUser instances in the
     Admin interface.
     """
-    list_per_page = 10
+    list_per_page = 5
 
 
 @admin.register(FavoritePeople)
@@ -27,7 +27,7 @@ class FavoritePeopleAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage FavoriteUser instances in the
     Admin interface.
     """
-    list_per_page = 10
+    list_per_page = 5
 
 
 @admin.register(FavoriteBluRay)
@@ -36,4 +36,4 @@ class FavoriteBluRayAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage FavoriteUser instances in the
     Admin interface.
     """
-    list_per_page = 10
+    list_per_page = 5
