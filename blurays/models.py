@@ -66,17 +66,6 @@ class BluRay(models.Model):
             self.slug = slugify(self.movie) if not self.title else slugify(self.title)
         if self.amazon_asin:
             self.amazon_aff_link = f"https://www.amazon.fr/dp/{self.amazon_asin}?m=A1X6FK5RDHNB96&tag=laureatis-21"
-        if self.bluray_image:
-            try:
-                with Image.open(self.bluray_image) as updated_image:
-                    if updated_image.width > 100 or updated_image.height > 150:
-                        print(f"Width -> {updated_image.width}")
-                        print(f"Height -> {updated_image.height}")
-                        output_size = (100, 150)
-                        updated_image.thumbnail(output_size)
-                        updated_image.save(self.bluray_image)
-            except (OSError, ):
-                print("L'image n'a pas pu être réduite.")
         return super(BluRay, self).save(*args, **kwargs)
 
     def image_tag(self):
