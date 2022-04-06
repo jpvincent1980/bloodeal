@@ -10,6 +10,7 @@ class DealAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage BluRay instances in the Admin
     interface.
     """
+    list_per_page = 10
     list_display = ("id",
                     "bluray",
                     "amazon_aff_link",
