@@ -1,9 +1,13 @@
+import smtplib
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, ListView
 
+from bloodeal.settings import EMAIL_HOST_USER
 from accounts.forms import LoginForm, SignupForm
 from deals.models import get_deals, get_user_favorites_deals
 from movies.models import get_movies, get_movies_results
@@ -232,6 +236,88 @@ class SearchResultsView(ListView):
         # Récupère les données de recherche pour les personnalités
         context.update(get_people_results(keyword))
         return context
+
+
+def help_view(request):
+    """
+    A function-based view to display help message.
+
+    Context:
+        None
+
+    Template:
+        :template:"accounts/help.html"
+    """
+    # Récupère les données pour le bloc de droite
+    context = get_movies(request.user)
+    context.update(get_blurays(request.user))
+    # Récupère les données pour le bloc de gauche
+    requests_forms = generate_initialized_request_forms(request.user)
+    context.update(requests_forms)
+    # Récupère le nombre de demandes de l'utilisateur
+    context.update(get_user_requests_total(request.user))
+    return render(request, "accounts/help.html", context)
+
+
+def contact_view(request):
+    """
+    A function-based view to display a contact form.
+
+    Context:
+        None
+
+    Template:
+        :template:"accounts/help.html"
+    """
+    # Récupère les données pour le bloc de droite
+    context = get_movies(request.user)
+    context.update(get_blurays(request.user))
+    # Récupère les données pour le bloc de gauche
+    requests_forms = generate_initialized_request_forms(request.user)
+    context.update(requests_forms)
+    # Récupère le nombre de demandes de l'utilisateur
+    context.update(get_user_requests_total(request.user))
+    return render(request, "accounts/contact.html", context)
+
+
+@login_required
+def send_message_view(request):
+    if request.method == "POST":
+        # Récupère les données pour le bloc de droite
+        context = get_movies(request.user)
+        context.update(get_blurays(request.user))
+        # Récupère les données pour le bloc de gauche
+        requests_forms = generate_initialized_request_forms(request.user)
+        context.update(requests_forms)
+        # Récupère le nombre de demandes de l'utilisateur
+        context.update(get_user_requests_total(request.user))
+        if not request.POST.get("formulaire_bloodeal") == "BLOODEAL":
+            message = "Seriez-vous un robot ? ... "
+            storage = [message]
+            context.update({"modal": "modal.html", "modal_content": storage})
+            return render(request, "accounts/contact.html", context)
+        else:
+            formulaire_nom = request.POST.get("formulaire_nom")
+            formulaire_email = request.POST.get("formulaire_email")
+            formulaire_message = request.POST.get("formulaire_message")
+            try:
+                message = EmailMultiAlternatives(f"[BLOODEAL] Message de {formulaire_nom}",
+                                                 formulaire_message,
+                                                 to=["jpvincent@hotmail.fr"],
+                                                 from_email=EMAIL_HOST_USER,
+                                                 reply_to=[formulaire_email])
+                message.send()
+                message = "Merci de votre message."
+            except (smtplib.SMTPServerDisconnected,
+                    smtplib.SMTPDataError,
+                    ConnectionRefusedError) as error:
+                print("L'email n'a pas pu être envoyé.\n", error)
+                message = "Désolé, votre message n'a pas pu être envoyé ..."
+            storage = [message]
+            context.update({"modal": "modal.html", "modal_content": storage})
+            return render(request, "accounts/dashboard.html", context)
+    else:
+        return redirect("accounts:index")
 
 
 def sentry_error(request):
