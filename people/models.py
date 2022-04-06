@@ -54,12 +54,6 @@ class People(models.Model):
         """
         if not self.slug and self.first_name and self.last_name:
             self.slug = slugify(f"{self.first_name} {self.last_name}")
-        if self.people_image:
-            updated_image = Image.open(self.people_image)
-            if updated_image.width > 100 or updated_image.height > 150:
-                output_size = (100, 150)
-                updated_image.thumbnail(output_size)
-                updated_image.save(self.people_image)
         return super(People, self).save()
 
     def image_tag(self):
