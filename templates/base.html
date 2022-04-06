@@ -85,7 +85,11 @@
     </main>
 
     <footer>
-        &copy; {% now "Y" %} Bloodeal
+        <ul class="nav">
+            <li>&copy; {% now "Y" %} BLOODEAL</li>
+            <li><a href="{% url 'accounts:help' %}">AIDE</a></li>
+            <li><a href="{% url 'accounts:contact' %}">CONTACT</a></li>
+        </ul>
         <button onclick="backToTopFunction()" id="backToTop" title="Go back to top">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38">
         <path d="m 4 30 l 16 -20 l 16 20" />

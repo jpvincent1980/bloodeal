@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block left-block %}
+        {% include "profiles/left-block.html" %}
+    {% endblock %}
+
+    {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
+    <section class="dashboard-block main-block-min-width">
+
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>CONTACT</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap width-25">
+                <form method="post" action="{% url 'accounts:send_message' %}">
+                    {% csrf_token %}
+                    <label for="formulaire_nom">Prénom + Nom</label>
+                    <input id="formulaire_nom" type="text" name="formulaire_nom" placeholder="Entrez votre nom complet" />
+                    <br>
+                    <label for="formulaire_email">Adresse email</label>
+                    <input id="formulaire_email" type="email" name="formulaire_email" placeholder="Entrez votre adresse email" />
+                    <br>
+                    <label for="formulaire_message">Message</label>
+                    <textarea id="formulaire_message" name="formulaire_message" cols="30" rows="10" placeholder="Entrez votre message ici"></textarea>
+                    <br>
+                    <label id="formulaire_label" for="formulaire_bloodeal">Si vous n'êtes pas un 🤖, écrivez BLOODEAL dans le champ ci-dessous:
+                    <input id="formulaire_bloodeal" type="text" name="formulaire_bloodeal" placeholder="Ecrivez BLOODEAL dans ce champ" required /></label>
+                    <br>
+                    <button class="padding-1rem margin-1rem" type="submit" name="formulaire_envoyer">📪 Envoyer</button>
+                </form>
+            </div>
+        </div>
+
+    </section>
+    {% endblock %}
+
+    {% block right-block %}
+        {% include "profiles/right-block.html" %}
+    {% endblock %}
+

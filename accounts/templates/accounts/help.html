@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block left-block %}
+        {% include "profiles/left-block.html" %}
+    {% endblock %}
+
+    {% block content %}
+    {% if modal %}
+        {% include modal %}
+    {% endif %}
+    <section class="dashboard-block main-block-min-width">
+
+        <div class="dashboard-block-element min-height-30vh">
+            <div class="dashboard-block-element-title">
+                <h2>AIDE</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap">
+                <p class="margin-1rem width-100">Bloodeal est une plateforme de partage de bons plans pour cinéphiles.</p>
+                <p class="margin-1rem width-100">Les bons plans partagés sur cette plateforme sont disponibles sur Amazon.fr. Les liens présents sur Bloodeal sont affiliés.</p>
+                <p class="margin-1rem width-100">Afin de bénéficier de recommandations de bons plans personnalisées, les membres de Bloodeal sont invités à sélectionner leurs favoris parmi les personnalités, les films ou les blu-rays présents sur le site.</p>
+                <p class="margin-1rem width-100">Lorsque vous sélectionnez un blu-ray parmi vos favoris, tous les bons plans liés à ce blu-ray apparaitront dans vos bons plans recommandés.</p>
+                <p class="margin-1rem width-100">Lorsque vous sélectionnez un film parmi vos favoris, tous les bons plans liés aux différentes versions de blu-rays de ce film apparaitront dans vos bons plans recommandés.</p>
+                <p class="margin-1rem width-100">Lorsque vous sélectionnez une personnalité parmi vos favoris, tous les bons plans liés aux différentes versions de blu-rays de tous les films liés à cette personnalité, que ce soit à la réalisation ou au casting, apparaitront dans vos bons plans recommandés.</p>
+                <p class="margin-1rem width-100">Tous les membres Bloodeal sont invités à partager leurs bons plans en cliquant sur le bouton prévu à cet effet. Un partage de bon plan se fait simplement en renseignant le lien Amazon vers le bon plan ainsi que le prix du blu-ray au moment du bon plan.</p>
+                <p class="margin-1rem width-100">Les membres Bloodeal peuvent également suggérer d'ajouter un blu-ray, un film ou encore une personnalité au site en utilisant chaque formulaire prévu à cet effet.</p>
+                <p class="margin-1rem width-100">La demande d'ajout est très simple: il suffit de renseigner le lien vers la page Amazon des blu-rays et le lien vers la page IMDB des films et des personnalités.</p>
+                <p class="margin-1rem width-100">Si vous avez la moindre question, le formulaire de contact est disponible pour nous la faire parvenir.</p>
+                <p class="margin-1rem width-100">Bon partage de bons plans sur Bloodeal !</p>
+            </div>
+        </div>
+
+    </section>
+    {% endblock %}
+
+    {% block right-block %}
+        {% include "profiles/right-block.html" %}
+    {% endblock %}
+
