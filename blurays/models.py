@@ -1,8 +1,5 @@
 import datetime
-import os.path
 
-from PIL import Image
-from cloudinary import CloudinaryImage
 from django.conf import settings
 from django.db import models
 from django.db.models import Count, Q

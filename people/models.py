@@ -45,18 +45,20 @@ class People(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+
         verbose_name = "Personnalité"
         verbose_name_plural = "Personnalités"
 
     def __str__(self):
+
         return f"{self.first_name} {self.last_name}"
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        """
-        """
+
         if not self.slug and self.first_name and self.last_name:
             self.slug = slugify(f"{self.first_name} {self.last_name}")
+
         return super(People, self).save()
 
     def image_tag(self):
@@ -69,9 +71,11 @@ class People(models.Model):
 
 
 def get_people(user):
+
     people = People.objects.all()
     top_people = people.annotate(num_favorites=Count("favorite_people")).order_by("-num_favorites")[:5]
     favorite_people = people.filter(favorite_people__user=user)
+
     return {"movies": people,
             "top_people": top_people,
             "favorite_people": favorite_people,
@@ -79,10 +83,14 @@ def get_people(user):
 
 
 def get_people_results(keyword):
+
     people_results = People.objects.filter(Q(first_name__icontains=keyword) | Q(last_name__icontains=keyword))
+
     return {"people_results": people_results}
 
 
 def get_user_requested_people(user):
+
     people = People.objects.filter(requested_by=user)
+
     return {"user_requested_people": people}

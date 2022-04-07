@@ -459,7 +459,6 @@ footer {
   border-radius:50%;
   display:inline-block;
   margin:0 0 15px;
-  color:#aaa;
   transition:.2s;
 }
 
@@ -468,8 +467,9 @@ footer {
 }
 
 .favorite:before {
-  content:'❤';
-  font-style:normal;
+    content:'❤';
+    color:#aaa;
+    font-style:normal;
 }
 
 .press {
