@@ -2,12 +2,15 @@
 
 <div class="dashboard-block-element min-height-20vh padding-1rem">
     <div class="dashboard-block-element-content flex-wrap">
+<!--        <div class="capsule-image">-->
+<!--            <img src="{{ movie.movie_image.url }}" alt="{{ movie }}">-->
+<!--        </div>-->
         <div class="capsule-text">
-            <p>
-                <a style="padding: 0;" href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
-                    <h2>{{ movie }}</h2>
-                </a>
+            <p><a style="padding: 0;" href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
+            <h2>{{ movie }}</h2>
+                </a><img src="{{ movie.movie_image.url }}" alt="{{ movie }}" width="75px">
             </p>
+
             {% if movie.imdb_id %}
                 <span class="imdbRatingPlugin" data-user="ur113694504" data-title="{{ movie.imdb_id }}" data-style="p4">
                     <a href="https://www.imdb.com/title/{{ movie.imdb_id }}/?ref_=plg_rt_1">

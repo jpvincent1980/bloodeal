@@ -23,10 +23,10 @@
          <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_deals %}
                 {% if request.deal %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">
+                                <li class="requests-list">
                                     {% if request.deal.pk %}
                                     Votre bon plan pour
                                     <a href="{% url 'deals:deals_detail' pk=request.deal.pk %}">
@@ -38,10 +38,10 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">Votre proposition de bon plan du {{ request.date_created|date:"d/m/Y" }} a le statut
+                                <li class="requests-list">Votre proposition de bon plan du {{ request.date_created|date:"d/m/Y" }} a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
                                     </span>
@@ -67,10 +67,10 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_blurays %}
                 {% if request.bluray %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">
+                                <li class="requests-list">
                                     {% if request.bluray.slug %}
                                     <a href="{% url 'blurays:blurays_detail' slug=request.bluray.slug pk=request.bluray.pk %}">
                                     {% endif %}
@@ -81,10 +81,10 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
                                     <a href="{{ request.amazon_link }}" target="_blank"><span>{{ request.asin }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
@@ -111,10 +111,10 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_movies %}
                 {% if request.movie %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">
+                                <li class="requests-list">
                                     {% if request.movie.slug %}
                                     <a href="{% url 'movies:movies_detail' slug=request.movie.slug pk=request.movie.pk %}">
                                     {% endif %}
@@ -125,10 +125,10 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
                                     <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}
@@ -155,10 +155,10 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_people %}
                 {% if request.people %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">
+                                <li class="requests-list">
                                     {% if request.people.slug %}
                                     <a href="{% url 'people:people_detail' slug=request.people.slug pk=request.people.pk %}">
                                     {% endif %}
@@ -169,10 +169,10 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center">
-                        <div class="capsule-text width-100">
+                    <div class="capsule justify-content-center width-100">
+                        <div class="capsule-text">
                             <ul>
-                                <li class="requests-list width-100">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB
+                                <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB
                                     <a href="{{ request.imdb_link }}" target="_blank"><span>{{ request.imdb_id }}</span></a>a le statut
                                     <span class="margin-1rem cursor-default btn {% if request.status == '1' %}btn-submit{% endif %}{% if request.status == '2' %}btn-validated{% endif %}{% if request.status == '3' %}btn-delete{% endif %}{% if request.status == '4' %}btn-unknown{% endif %}">
                                         {{ request.get_status_display }}

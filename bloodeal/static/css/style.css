@@ -171,7 +171,7 @@ p .btn {
 
 .capsule-image {
     position: relative;
-    width: var(--capsule-image-width);
+    min-width: var(--capsule-image-width);
     margin-right: var(--capsule-image-margin-width);
     height: 150px;
     background-position: center;
