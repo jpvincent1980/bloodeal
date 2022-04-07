@@ -89,7 +89,11 @@
             </div>
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=people_bluray.slug pk=people_bluray.pk %}">
-                <h2>{{ people_bluray.movie.title_vf }}</h2>
+                    {% if people_bluray.title %}
+                        <h2>{{ people_bluray }}</h2>
+                    {% else %}
+                        <h2>{{ people_bluray.movie }}</h2>
+                    {% endif %}
                 </a>
             </div>
         </div>

@@ -401,6 +401,10 @@ p .btn {
     margin-bottom: 1rem;
 }
 
+.background-grey {
+    background: lightgrey;
+}
+
 .cursor-default {
  cursor: default;
 }

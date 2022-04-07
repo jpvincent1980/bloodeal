@@ -6,9 +6,13 @@
 <!--            <img src="{{ movie.movie_image.url }}" alt="{{ movie }}">-->
 <!--        </div>-->
         <div class="capsule-text">
-            <p><a style="padding: 0;" href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
-            <h2>{{ movie }}</h2>
-                </a><img src="{{ movie.movie_image.url }}" alt="{{ movie }}" width="75px">
+            <p>
+                <a style="padding: 0;" href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">
+                    <h2>{{ movie }}</h2>
+                </a>
+            {% if movie.movie_image %}
+            <img src="{{ movie.movie_image.url }}" alt="{{ movie }}" width="75px">
+            {% endif %}
             </p>
 
             {% if movie.imdb_id %}

@@ -23,7 +23,7 @@
          <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_deals %}
                 {% if request.deal %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">Votre proposition de bon plan du {{ request.date_created|date:"d/m/Y" }} a le statut
@@ -67,7 +67,7 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_blurays %}
                 {% if request.bluray %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le blu-ray ayant l'identifiant Amazon
@@ -111,7 +111,7 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_movies %}
                 {% if request.movie %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour le film ayant l'identifiant IMDB
@@ -155,7 +155,7 @@
         <div class="dashboard-block-element-content justify-content-center flex-wrap">
             {% for request in user_requests_people %}
                 {% if request.people %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="capsule justify-content-center width-100">
+                    <div class="capsule justify-content-center width-100 {% cycle '' 'background-grey' %}">
                         <div class="capsule-text">
                             <ul>
                                 <li class="requests-list">Votre demande d'ajout du {{ request.date_created|date:"d/m/Y" }} pour la personnalité ayant l'identifiant IMDB

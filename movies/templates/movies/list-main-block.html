@@ -21,7 +21,7 @@
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'movies:movies_detail' slug=user_recommended_movie.slug pk=user_recommended_movie.pk %}">
-                    <h2>{{ user_recommended_movie }}</h2>
+                    <h2>{{ user_recommended_movie|truncatechars:18 }}</h2>
                     </a>
                     <p>Sorti en {{ user_recommended_movie.release_year }}</p>
                 </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'movies:movies_detail' slug=user_favorite_movie.slug pk=user_favorite_movie.pk %}">
-                    <h2>{{ user_favorite_movie }}</h2>
+                    <h2>{{ user_favorite_movie|truncatechars:18 }}</h2>
                     </a>
                     <p>Sorti en {{ user_favorite_movie.release_year }}</p>
                 </div>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="capsule-text">
-                <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie }}</a></h2>
+                <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie|truncatechars:18 }}</a></h2>
                 <p>{{ movie.release_year }}</p>
                 {% if movie.directors %}
                     <p>De
