@@ -1,12 +1,15 @@
 import datetime
+import os.path
 
 from PIL import Image
+from cloudinary import CloudinaryImage
 from django.conf import settings
 from django.db import models
 from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
+from bloodeal.settings import CLOUDINARY_PREFIX_URL
 from movies.models import Movie
 
 
@@ -58,25 +61,36 @@ class BluRay(models.Model):
         verbose_name = "Blu-Ray"
 
     def __str__(self):
+
         name = self.title if self.title else self.movie
+
         return f"{name}"
 
     def save(self, *args, **kwargs):
+
         if not self.slug or self.slug == "none":
             self.slug = slugify(self.movie) if not self.title else slugify(self.title)
+
         if self.amazon_asin:
             self.amazon_aff_link = f"https://www.amazon.fr/dp/{self.amazon_asin}?m=A1X6FK5RDHNB96&tag=laureatis-21"
+
         return super(BluRay, self).save(*args, **kwargs)
 
     def image_tag(self):
+
         if self.bluray_image != '':
-            return mark_safe('<img src="%s" height="100px" />' % self.bluray_image)
+
+            cloudinary_url = CLOUDINARY_PREFIX_URL + self.bluray_image.name
+
+            return mark_safe('<img src="%s" height="100px" />' % cloudinary_url)
 
 
 def get_blurays(user):
+
     blurays = BluRay.objects.all()
     top_blurays = blurays.annotate(num_favorites=Count("favorite_bluray")).order_by("-num_favorites")[:5]
     favorite_blurays = blurays.filter(favorite_bluray__user=user)
+
     return {"blurays": blurays,
             "top_blurays": top_blurays,
             "favorite_blurays": favorite_blurays,
@@ -85,10 +99,14 @@ def get_blurays(user):
 
 
 def get_blurays_results(keyword):
+
     blurays_results = BluRay.objects.filter(Q(movie__title_vf__icontains=keyword) | Q(movie__title_vo__icontains=keyword))
+
     return {"blurays_results": blurays_results}
 
 
 def get_user_requested_blurays(user):
+
     blurays = BluRay.objects.filter(requested_by=user)
+
     return {"user_requested_blurays": blurays}

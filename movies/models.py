@@ -4,6 +4,7 @@ from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
+from bloodeal.settings import CLOUDINARY_PREFIX_URL
 from people.models import People
 
 
@@ -60,9 +61,12 @@ class Movie(models.Model):
         return super(Movie, self).save(**kwargs)
 
     def image_tag(self):
+
         if self.movie_image != '':
-            return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                                    self.movie_image))
+
+            cloudinary_url = CLOUDINARY_PREFIX_URL + self.movie_image.name
+
+            return mark_safe('<img src="%s" height="100px" />' % cloudinary_url)
 
 
 class MovieDirector(models.Model):

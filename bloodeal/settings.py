@@ -146,12 +146,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = "accounts:login"
 
+# Email settings
 EMAIL_HOST = "smtp.office365.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-
 DEFAULT_FROM_EMAIL = "bloodeal@hotmail.com"
 
 # Default primary key field type
@@ -165,9 +165,10 @@ CLOUDINARY_STORAGE = {
     'API_KEY': env('API_KEY'),
     'API_SECRET': env('API_SECRET'),
 }
-
+CLOUDINARY_PREFIX_URL = "https://res.cloudinary.com/jpvincent/image/upload/"
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+# Sentry settings
 sentry_sdk.init(dsn="https://83f768fde889496c973c11773f2c5113@o1140568.ingest.sentry.io/6308675",
                 integrations=[DjangoIntegration()],
                 # Set traces_sample_rate to 1.0 to capture 100%

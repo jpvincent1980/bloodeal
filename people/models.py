@@ -7,6 +7,9 @@ from django.utils.text import slugify
 
 
 # Create your models here.
+from bloodeal.settings import CLOUDINARY_PREFIX_URL
+
+
 class People(models.Model):
     """
     A model that represents an actor or director.
@@ -57,9 +60,12 @@ class People(models.Model):
         return super(People, self).save()
 
     def image_tag(self):
+
         if self.people_image != '':
-            return mark_safe('<img src="%s%s" height="100px" />' % (f'{settings.MEDIA_URL}',
-                                                                    self.people_image))
+
+            cloudinary_url = CLOUDINARY_PREFIX_URL + self.people_image.name
+
+            return mark_safe('<img src="%s" height="100px" />' % cloudinary_url)
 
 
 def get_people(user):
