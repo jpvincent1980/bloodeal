@@ -24,9 +24,9 @@
             <div class="capsule-text">
                 <a href="{% url 'deals:deals_detail' pk=best_deal.pk %}">
                     {% if best_deal.bluray.title %}
-                        <h2>{{ best_deal.bluray.title }}</h2>
+                        <h2>{{ best_deal.bluray.title|truncatechars:18 }}</h2>
                     {% else %}
-                        <h2>{{ best_deal.bluray.movie }}</h2>
+                        <h2>{{ best_deal.bluray.movie|truncatechars:18 }}</h2>
                     {% endif %}
                 </a>
                     {% if best_deal.bluray.uhd %}
@@ -66,9 +66,9 @@
             <div class="capsule-text">
                 <a href="{% url 'deals:deals_detail' pk=latest_deal.pk %}">
                     {% if latest_deal.bluray.title %}
-                        <h2>{{ latest_deal.bluray.title }}</h2>
+                        <h2>{{ latest_deal.bluray.title|truncatechars:18 }}</h2>
                     {% else %}
-                        <h2>{{ latest_deal.bluray.movie }}</h2>
+                        <h2>{{ latest_deal.bluray.movie|truncatechars:18 }}</h2>
                     {% endif %}
                 </a>
                     {% if latest_deal.bluray.uhd %}
@@ -108,9 +108,9 @@
             <div class="capsule-text">
                 <a href="{% url 'deals:deals_detail' pk=user_recommended_deal.pk %}">
                     {% if user_recommended_deal.bluray.title %}
-                        <h2>{{ user_recommended_deal.bluray.title }}</h2>
+                        <h2>{{ user_recommended_deal.bluray.title|truncatechars:18 }}</h2>
                     {% else %}
-                        <h2>{{ user_recommended_deal.bluray.movie }}</h2>
+                        <h2>{{ user_recommended_deal.bluray.movie|truncatechars:18 }}</h2>
                     {% endif %}
                 </a>
                     {% if user_recommended_deal.bluray.uhd %}

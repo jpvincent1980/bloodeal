@@ -21,9 +21,9 @@
             <div class="capsule-text">
                 <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
                     {% if deal.bluray.title %}
-                        <h2>{{ deal.bluray.title }}</h2>
+                        <h2>{{ deal.bluray.title|truncatechars:18 }}</h2>
                     {% else %}
-                        <h2>{{ deal.bluray.movie }}</h2>
+                        <h2>{{ deal.bluray.movie|truncatechars:18 }}</h2>
                     {% endif %}
                     {% if deal.bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
