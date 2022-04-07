@@ -454,12 +454,13 @@ footer {
 
 .favorite {
   cursor:pointer;
-  padding:10px 12px 8px;
+  padding:1px 10px 5px 10px;
   background:#fff;
   border-radius:50%;
-  display:inline-block;
+  display:flex;
   margin:0 0 15px;
   transition:.2s;
+  transform: rotate(90deg);
 }
 
 .favorite:hover {
@@ -467,8 +468,11 @@ footer {
 }
 
 .favorite:before {
-    content:'❤';
+    content:'❥';
     color:#aaa;
+    margin: auto;
+    text-align: center;
+    font-size: 1.5rem;
     font-style:normal;
 }
 
