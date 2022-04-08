@@ -1,7 +1,8 @@
 from PIL import Image
 from django.conf import settings
 from django.db import models
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Value
+from django.db.models.functions import Concat
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
@@ -14,6 +15,7 @@ class People(models.Model):
     """
     A model that represents an actor or director.
     """
+
     first_name = models.CharField(max_length=256,
                                   blank=True,
                                   null=True)
@@ -84,7 +86,10 @@ def get_people(user):
 
 def get_people_results(keyword):
 
-    people_results = People.objects.filter(Q(first_name__icontains=keyword) | Q(last_name__icontains=keyword))
+    people_full_name = People.objects.annotate(full_name=Concat("first_name",
+                                                                Value(" "),
+                                                                "last_name"))
+    people_results = people_full_name.filter(full_name__icontains=keyword)
 
     return {"people_results": people_results}
 

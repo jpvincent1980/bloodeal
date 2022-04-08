@@ -291,7 +291,7 @@ def dashboard_view(request):
 
 class SearchResultsView(ListView):
     template_name = "accounts/search_results.html"
-    queryset = BluRay.objects.filter(movie__title_vf="Dune")
+    queryset = BluRay.objects.none()
 
     def get_keyword(self):
 
@@ -316,6 +316,7 @@ class SearchResultsView(ListView):
         context.update(get_movies_results(keyword))
         # Récupère les données de recherche pour les personnalités
         context.update(get_people_results(keyword))
+        # print(context)
 
         return context
 

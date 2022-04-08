@@ -616,3 +616,16 @@ path.search {
 }
 
 /* End of the modal handling */
+
+/* Start of responsive handling */
+
+@media (max-width: 1520px) {
+
+    nav span {
+        font-size: 2rem;
+    }
+
+    nav li {
+        padding: 0 0.2rem;
+    }
+}
