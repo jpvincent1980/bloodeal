@@ -21,11 +21,17 @@
                 </span>
             <script id="imdb"></script>
             {% endif %}
+            {% if movie.release_year %}
             <p>{{ movie.release_year }}</p>
+            {% endif %}
+            {% if movie.directors %}
             <p>Un film de {% for director in movie.directors %}
                 <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a> {% endfor %}</p>
+            {% endif %}
+            {% if movie.actors %}
             <p>Avec {% for actor in movie.actors %}
                 <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">{{ actor }}</a> {% endfor %}</p>
+            {% endif %}
         </div>
     </div>
 </div>

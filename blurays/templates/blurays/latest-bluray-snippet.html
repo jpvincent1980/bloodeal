@@ -30,6 +30,7 @@
                     {% if latest_bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
+                    {% if latest_bluray.movie.directors %}
                     <p>Un film de {% for director in latest_bluray.movie.directors %}
                         {% if director.slug %}
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">
@@ -40,6 +41,8 @@
                         {% endif %}
                         {% endfor %}
                     </p>
+                    {% endif %}
+                    {% if latest_bluray.movie.actors %}
                     <p>Avec {% for actor in latest_bluray.movie.actors %}
                         {% if actor.slug %}
                         <a href="{% url 'people:people_detail' slug=actor.slug pk=actor.pk %}">
@@ -50,6 +53,7 @@
                         {% endif %}
                         {% endfor %}
                     </p>
+                    {% endif %}
                 </div>{% endwith %}
             </div>
     {% else %}
