@@ -92,6 +92,7 @@ class MovieDirector(models.Model):
 
         verbose_name = "Réalisateur par film"
         verbose_name_plural = "Réalisateurs par film"
+        unique_together = ("movie", "director")
 
 
 class MovieActor(models.Model):
@@ -110,6 +111,7 @@ class MovieActor(models.Model):
 
         verbose_name = "Acteur par film"
         verbose_name_plural = "Acteurs par film"
+        unique_together = ("movie", "actor")
 
 
 def get_movies(user):
