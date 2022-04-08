@@ -21,7 +21,7 @@
                             <h2>{{ latest_movie }}</h2>
                         {% endif %}
                     </p>
-                    {% if latest_mvoie.directors %}
+                    {% if latest_movie.directors %}
                     <p>Un film de {% for director in latest_movie.directors %}
                         {% if director.slug %}
                         <a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">
