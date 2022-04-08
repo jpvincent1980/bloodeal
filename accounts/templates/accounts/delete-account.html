@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block left-block %}
+{% endblock %}
+
+{% block content %}
+{% if modal %}
+    {% include modal %}
+{% endif %}
+<div class="flex-column height-fit-content">
+    <section class="dashboard-block main-block-min-width">
+
+        <div class="dashboard-block-element margin-1rem height-fit-content">
+            <div class="dashboard-block-element-title">
+                <h2>CONFIRMEZ LA SUPPRESSION DE VOTRE COMPTE</h2>
+            </div>
+            <div class="dashboard-block-element-content flex-wrap padding-1rem text-align-center">
+                <form method="POST">
+                    {% csrf_token %}
+                        <p>
+                            <input class="btn btn-delete" name="button" type="submit" value="JE ME DESINSCRIS">
+                        </p>
+                </form>
+            </div>
+        </div>
+
+    </section>
+</div>
+{% endblock %}
+
+{% block right-block %}
+{% endblock %}

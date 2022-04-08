@@ -39,6 +39,11 @@
             <button type="submit" name="form2" class="btn btn-submit">CHANGER VOTRE MOT DE PASSE</button>
         </form>
         </div>
+        <div class="dashboard-block-element-content flex-wrap padding-1rem width-fit-content">
+            <a href="{% url 'accounts:delete_account' pk=request.user.pk %}">
+                <button class="btn btn-delete">SUPPRIMER VOTRE COMPTE</button>
+            </a>
+        </div>
     </div>
 
 </section>

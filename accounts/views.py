@@ -3,10 +3,13 @@ import smtplib
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DeleteView
 
+from accounts.models import CustomUser
 from bloodeal.settings import EMAIL_HOST_USER
 from accounts.forms import LoginForm, SignupForm
 from deals.models import get_deals, get_user_favorites_deals
@@ -29,15 +32,21 @@ def index_view(request):
         None
     """
     next_url = request.GET.get("next", "accounts:dashboard")
+
     if request.user.is_authenticated:
+
         return redirect("accounts:dashboard")
+
     elif request.method == "POST" and request.POST["button"] == "Je me connecte":
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+
         if user:
             login(request, user)
+
             return redirect(next_url)
+
         else:
             login_form = LoginForm(auto_id="login_%s")
             signup_form = SignupForm(auto_id="signup_%s")
@@ -46,9 +55,12 @@ def index_view(request):
                        "signup_form": signup_form,
                        "login_message": login_message,
                        "next": next_url}
+
             return render(request, "accounts/index.html", context)
+
     elif request.method == "POST" and request.POST["button"] == "Je m'inscris":
         signup_form = SignupForm(request.POST)
+
         if signup_form.is_valid():
             signup_form.save()
             username = request.POST["email"]
@@ -69,17 +81,33 @@ def index_view(request):
             context.update(get_user_all_favorites(request.user))
             # Récupère le nombre de demandes de l'utilisateur
             context.update(get_user_requests_total(request.user))
+
             return render(request, "accounts/dashboard.html", context)
+
         else:
             login_form = LoginForm(auto_id="login_%s")
             context = {"login_form": login_form,
                        "signup_form": signup_form}
+            storage = messages.get_messages(request)
+            if storage:
+                context.update({"modal": "modal.html",
+                                "modal_content": storage})
+
             return render(request, "accounts/index.html", context)
+
     else:
         login_form = LoginForm(auto_id="login_%s")
         signup_form = SignupForm(auto_id="signup_%s")
         context = {"login_form": login_form,
                    "signup_form": signup_form}
+        # Récupère les messages le cas échéant et les envoie à la
+        # fenêtre modale
+        storage = messages.get_messages(request)
+
+        if storage:
+            context.update({"modal": "modal.html",
+                            "modal_content": storage})
+
         return render(request, "accounts/index.html", context)
 
 
@@ -97,21 +125,28 @@ def login_view(request):
     """
     next_url = request.GET.get("next", "accounts:dashboard")
     context = {"next": next_url}
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+
         if user:
             login(request, user)
+
             return redirect(next_url)
+
         else:
             form = LoginForm
             context["form"] = form
             context["message"] = "Adresse email ou mot de passe non valide."
+
             return render(request, "accounts/login.html", context)
+
     else:
         form = LoginForm()
         context["form"] = form
+
         return render(request, "accounts/login.html", context)
 
 
@@ -143,6 +178,7 @@ class SignupView(CreateView):
                    "modal_content": storage}
         # Récupère le nombre de demandes de l'utilisateur
         context.update(get_user_requests_total(self.request.user))
+
         return render(self.request, "accounts/dashboard.html", context)
 
 
@@ -159,13 +195,53 @@ def account_created_view(request):
         :template:"accounts/account-created.html"
     """
     context = {}
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
+
         if user:
             login(request, user)
+
     return render(request, "accounts/account-created.html", context)
+
+
+class DeleteAccountView(DeleteView):
+    """
+    A class-based view for a user to delete his/her account.
+
+    Context:
+        form:  :form:"accounts.SignupForm"
+
+    Template:
+        :template:"accounts/delete-account.html"
+    """
+    model = CustomUser
+    # form_class = DeleteAccountForm
+    template_name = "accounts/delete-account.html"
+    success_url = reverse_lazy("accounts:index")
+
+    def post(self, request, *args, **kwargs):
+        # Override form_valid function from parent class to add automatic login
+        # after signup
+        if self.kwargs.get("pk") == self.request.user.pk:
+            message = "Votre compte a bien été supprimé ! A bientôt !"
+            messages.add_message(self.request,
+                                 level=messages.INFO,
+                                 message=message)
+            user = CustomUser.objects.filter(pk=self.request.user.pk)
+            user.delete()
+
+            return HttpResponseRedirect(reverse_lazy("accounts:index"))
+
+        else:
+            message = "Vous ne pouvez pas supprimé le compte d'un autre."
+            messages.add_message(self.request,
+                                 level=messages.INFO,
+                                 message=message)
+
+            return HttpResponseRedirect(reverse_lazy("accounts:index"))
 
 
 def logout_view(request):
@@ -179,6 +255,7 @@ def logout_view(request):
         None
     """
     logout(request)
+
     return redirect("accounts:index")
 
 
@@ -199,13 +276,16 @@ def dashboard_view(request):
     context.update(get_user_suggested_blurays(request.user))
     # Récupère les messages le cas échéant et les envoie à la fenêtre modale
     storage = messages.get_messages(request)
+
     if storage:
         context.update({"modal": "modal.html",
                         "modal_content": storage})
+
     # Récupère le nombre de demandes de l'utilisateur
     context.update(get_user_requests(request.user))
     # Récupère le nombre de demandes de l'utilisateur pour la navbar
     context.update(get_user_requests_total(request.user))
+
     return render(request, "accounts/dashboard.html", context)
 
 
@@ -214,6 +294,7 @@ class SearchResultsView(ListView):
     queryset = BluRay.objects.filter(movie__title_vf="Dune")
 
     def get_keyword(self):
+
         return self.request.GET.get("Q", "")
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -235,6 +316,7 @@ class SearchResultsView(ListView):
         context.update(get_movies_results(keyword))
         # Récupère les données de recherche pour les personnalités
         context.update(get_people_results(keyword))
+
         return context
 
 
@@ -256,6 +338,7 @@ def help_view(request):
     context.update(requests_forms)
     # Récupère le nombre de demandes de l'utilisateur
     context.update(get_user_requests_total(request.user))
+
     return render(request, "accounts/help.html", context)
 
 
@@ -277,6 +360,7 @@ def contact_view(request):
     context.update(requests_forms)
     # Récupère le nombre de demandes de l'utilisateur
     context.update(get_user_requests_total(request.user))
+
     return render(request, "accounts/contact.html", context)
 
 
@@ -291,15 +375,19 @@ def send_message_view(request):
         context.update(requests_forms)
         # Récupère le nombre de demandes de l'utilisateur
         context.update(get_user_requests_total(request.user))
+
         if not request.POST.get("formulaire_bloodeal") == "BLOODEAL":
             message = "Seriez-vous un robot ? ... "
             storage = [message]
             context.update({"modal": "modal.html", "modal_content": storage})
+
             return render(request, "accounts/contact.html", context)
+
         else:
             formulaire_nom = request.POST.get("formulaire_nom")
             formulaire_email = request.POST.get("formulaire_email")
             formulaire_message = request.POST.get("formulaire_message")
+
             try:
                 message = EmailMultiAlternatives(f"[BLOODEAL] Message de {formulaire_nom}",
                                                  formulaire_message,
@@ -308,6 +396,7 @@ def send_message_view(request):
                                                  reply_to=[formulaire_email])
                 message.send()
                 message = "Merci de votre message."
+
             except (smtplib.SMTPServerDisconnected,
                     smtplib.SMTPDataError,
                     ConnectionRefusedError) as error:
@@ -315,10 +404,14 @@ def send_message_view(request):
                 message = "Désolé, votre message n'a pas pu être envoyé ..."
             storage = [message]
             context.update({"modal": "modal.html", "modal_content": storage})
+
             return render(request, "accounts/dashboard.html", context)
+
     else:
+
         return redirect("accounts:index")
 
 
 def sentry_error(request):
+
     return 1 / 0

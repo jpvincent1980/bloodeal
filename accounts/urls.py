@@ -9,7 +9,7 @@ from .views import (
     dashboard_view,
     SearchResultsView,
     help_view,
-    contact_view, send_message_view)
+    contact_view, send_message_view, DeleteAccountView)
 
 # Création d'un espace de noms
 app_name = 'accounts'
@@ -18,6 +18,7 @@ urlpatterns = [
     path('', index_view, name="index"),
     path('signup/', SignupView.as_view(), name="signup"),
     path('account-created/', account_created_view, name="account_created"),
+    path('delete-account/<int:pk>/', DeleteAccountView.as_view(), name="delete_account"),
     path('login/', login_view, name="login"),
     path('dashboard/', dashboard_view, name="dashboard"),
     path('logout/', logout_view, name="logout"),
