@@ -20,9 +20,9 @@
         <div class="capsule-text text-align-center">
             <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
                 {% if bluray.title %}
-                    <h2 class="justify-content-center">{{ bluray.title }}</h2>
+                    <h2 class="justify-content-center">{{ bluray.title|truncatechars:90 }}</h2>
                 {% else %}
-                    <h2 class="justify-content-center">{{ bluray.movie }}</h2>
+                    <h2 class="justify-content-center">{{ bluray.movie|truncatechars:90 }}</h2>
                 {% endif %}
             </a>
             {% if bluray.uhd %}

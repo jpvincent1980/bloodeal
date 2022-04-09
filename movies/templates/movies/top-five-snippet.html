@@ -18,7 +18,7 @@
         </div>
         </div>
         <div class="capsule-text text-align-center">
-            <h2 class="justify-content-center"><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie }}</a></h2>
+            <h2 class="justify-content-center"><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie|truncatechars:90 }}</a></h2>
             {% with total=movie.num_favorites %}
                 ♥ par {{ total }} membre{{total|pluralize}}
             {% endwith %}
