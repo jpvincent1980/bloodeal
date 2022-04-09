@@ -20,7 +20,7 @@
             </div>
             </div>
             <div class="capsule-text">
-                <h2><a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">{{ favorite_movie }}</a></h2>
+                <h2><a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">{{ favorite_movie|truncatechars:40 }}</a></h2>
                 <p>{{ favorite_movie.release_year }}</p>
                 {% if favorite_movie.directors %}
                     <p>De
@@ -97,9 +97,9 @@
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}">
                     {% if favorite_bluray.title %}
-                        <h2>{{ favorite_bluray.title }}</h2>
+                        <h2>{{ favorite_bluray.title|truncatechars:40 }}</h2>
                     {% else %}
-                        <h2>{{ favorite_bluray.movie }}</h2>
+                        <h2>{{ favorite_bluray.movie|truncatechars:40 }}</h2>
                     {% endif %}
                 </a>
                 {% if favorite_bluray.uhd %}
