@@ -15,16 +15,16 @@
                     {% if next_bluray.slug %}
                     <a href="{% url 'blurays:blurays_detail' slug=next_bluray.slug pk=next_bluray.pk %}">
                     {% if next_bluray.title %}
-                        <h2>{{ next_bluray.title }}</h2>
+                        <h2>{{ next_bluray.title|truncatechars:40 }}</h2>
                     {% else %}
-                        <h2>{{ next_bluray.movie }}</h2>
+                        <h2>{{ next_bluray.movie|truncatechars:40 }}</h2>
                     {% endif %}
                     </a>
                     {% else %}
                         {% if next_bluray.title %}
-                            <h2>{{ next_bluray.title }}</h2>
+                            <h2>{{ next_bluray.title|truncatechars:40 }}</h2>
                         {% else %}
-                            <h2>{{ next_bluray.movie }}</h2>
+                            <h2>{{ next_bluray.movie|truncatechars:40 }}</h2>
                         {% endif %}
                     {% endif %}
                     {% if next_bluray.uhd %}
