@@ -4,7 +4,7 @@
     {% if latest_blurays %}
     <h2>Dernière sortie</h2>
     <p>{% with latest_blurays|first as latest_bluray %}{{ latest_bluray.release_date|date:"d/m/Y"|title }}</p>
-    <div class="capsule">
+    <div class="capsule align-items-center">
                 {% if latest_bluray.bluray_image %}
                 <div class="capsule-image" style="background-image: url({{ latest_bluray.bluray_image.url }});">
                 {% else %}

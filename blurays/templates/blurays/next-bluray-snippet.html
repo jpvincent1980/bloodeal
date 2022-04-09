@@ -4,7 +4,7 @@
     {% if next_blurays %}
     <h2>Prochaine sortie</h2>
     <p>{% with next_blurays|first as next_bluray %}{{ next_bluray.release_date|date:"d/m/Y"|title }}</p>
-    <div class="capsule">
+    <div class="capsule align-items-center">
                 {% if next_bluray.bluray_image %}
                 <div class="capsule-image" style="background-image: url({{ next_bluray.bluray_image.url }});">
                 {% else %}

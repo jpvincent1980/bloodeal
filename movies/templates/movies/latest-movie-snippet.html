@@ -4,7 +4,7 @@
     {% if latest_movies %}
     <h2>Gros plan sur ...</h2>
     {% with latest_movies|first as latest_movie %}
-    <div class="capsule">
+    <div class="capsule align-items-center">
                 {% if latest_movie.movie_image %}
                 <div class="capsule-image" style="background-image: url({{ latest_movie.movie_image.url }});">
                 {% else %}
