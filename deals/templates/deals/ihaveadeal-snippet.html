@@ -1,10 +1,14 @@
 <div class="dashboard-block-element min-height-20vh justify-content-center">
     <div class="capsule justify-content-center text-align-center">
     <div class="capsule-text">
-        <h2>J'ai un bon plan</h2>
-        <p class="text-align-center"><a href="{% url 'user_requests:deal_request_create' %}">
-            <button class="btn btn-submit margin-1rem">Je le partage</button>
-        </a></p>
+        {% if user.is_authenticated %}
+            <h2>J'ai un bon plan</h2>
+            <p class="text-align-center"><a href="{% url 'user_requests:deal_request_create' %}">
+                <button class="btn btn-submit">Je le partage</button>
+            </a></p>
+        {% else %}
+            <p class="text-align-center margin-1rem">Authentifiez-vous pour partager un bon plan.</p>
+        {% endif %}
     </div>
     </div>
 </div>

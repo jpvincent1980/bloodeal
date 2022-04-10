@@ -1,0 +1,38 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-30vh">
+    {% if user_favorite_movies %}
+    <div class="dashboard-block-element-title">
+        <h2>VOS FILMS PREFERES ({{ user_favorite_movies|length }})</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-wrap">
+    {% for user_favorite_movie in user_favorite_movies %}
+    <div class="capsule width-25 margin-bottom-1rem">
+            {% if user_favorite_movie.movie_image %}
+                <div class="capsule-image" style="background-image: url({{ user_favorite_movie.movie_image.url }});">
+                {% else %}
+                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+            {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if user_favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_favorite_movie_{{ user_favorite_movie.pk }}',{{ user_favorite_movie.pk }}, 'movie')" id="user_favorite_movie_{{ user_favorite_movie.pk }}"></i>
+            </div>
+            </div>
+            <div class="capsule-text">
+                <a href="{% url 'movies:movies_detail' slug=user_favorite_movie.slug pk=user_favorite_movie.pk %}">
+                <h2>{{ user_favorite_movie|truncatechars:18 }}</h2>
+                </a>
+                <p>Sorti en {{ user_favorite_movie.release_year }}</p>
+            </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <div class="capsule justify-content-center margin-auto">
+        {% if user.is_authenticated %}
+            <h2 class="margin-1rem width-100 text-align-center">Vous n'avez aucun film dans vos favoris.</h2>
+        {% else %}
+            <h2>Identifiez-vous pour marquer des films comme favoris.</h2>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

@@ -1,0 +1,43 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-30vh">
+    {% if latest_deals %}
+    <div class="dashboard-block-element-title">
+        <h2>LES DERNIERS BONS PLANS ({{ latest_deals|length }})</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-wrap">
+    {% for latest_deal in latest_deals %}
+    <div class="capsule width-25 margin-bottom-1rem">
+        {% if latest_deal.bluray.bluray_image %}
+            <div class="capsule-image" style="background-image: url({{ latest_deal.bluray.bluray_image.url }});">
+        {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+            <a href="{{ latest_deal.amazon_aff_link }}" target="_blank">
+                <p class="deal-price {% if latest_deal.status != '1' %}inactif{% endif %}">
+                {{ latest_deal.price }}€
+                </p>
+            </a>
+        </div>
+        <div class="capsule-text">
+            <a href="{% url 'deals:deals_detail' pk=latest_deal.pk %}">
+                {% if latest_deal.bluray.title %}
+                    <h2>{{ latest_deal.bluray.title|truncatechars:18 }}</h2>
+                {% else %}
+                    <h2>{{ latest_deal.bluray.movie|truncatechars:18 }}</h2>
+                {% endif %}
+            </a>
+                {% if latest_deal.bluray.uhd %}
+                    <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                {% endif %}
+                <p>Posté le {{ latest_deal.date_created|date:"d/m/Y" }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <div class="capsule justify-content-center margin-auto">
+        <h2>Nous n'avons aucun bon plan à partager.</h2>
+    </div>
+    {% endif %}
+</div>

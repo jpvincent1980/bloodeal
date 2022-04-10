@@ -82,7 +82,7 @@ class BluRay(models.Model):
             return mark_safe('<img src="%s" height="100px" />' % cloudinary_url)
 
 
-def get_blurays(user):
+def get_blurays(user=None):
 
     blurays = BluRay.objects.all()
     top_blurays = blurays.annotate(num_favorites=Count("favorite_bluray")).order_by("-num_favorites")[:5]

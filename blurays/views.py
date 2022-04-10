@@ -17,11 +17,17 @@ class BluRayListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(BluRayListView, self).get_context_data(**kwargs)
-        context.update(get_blurays(self.request.user))
-        context.update(get_user_all_favorites(self.request.user))
-        requests_forms = generate_initialized_request_forms(self.request.user)
-        context.update(requests_forms)
-        context.update(get_user_requests_total(self.request.user))
+
+        if not self.request.user.is_anonymous:
+            context.update(get_blurays(self.request.user))
+            context.update(get_user_all_favorites(self.request.user))
+            requests_forms = generate_initialized_request_forms(self.request.user)
+            context.update(requests_forms)
+            context.update(get_user_requests_total(self.request.user))
+
+        else:
+            context.update(get_blurays())
+
         return context
 
 

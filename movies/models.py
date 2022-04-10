@@ -114,7 +114,7 @@ class MovieActor(models.Model):
         unique_together = ("movie", "actor")
 
 
-def get_movies(user):
+def get_movies(user=None):
 
     movies = Movie.objects.all()
     top_movies = movies.annotate(num_favorites=Count("favorite_movie")).order_by("-num_favorites")[:5]

@@ -1,0 +1,47 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-30vh">
+    {% if user_recommended_deals %}
+    <div class="dashboard-block-element-title">
+        <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_recommended_deals|length }})</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-wrap">
+    {% for user_recommended_deal in user_recommended_deals %}
+    <div class="capsule width-25 margin-bottom-1rem">
+        {% if user_recommended_deal.bluray.bluray_image %}
+            <div class="capsule-image" style="background-image: url({{ user_recommended_deal.bluray.bluray_image.url }});">
+        {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+            <a href="{{ user_recommended_deal.amazon_aff_link }}" target="_blank">
+                <p class="deal-price {% if user_recommended_deal.status != '1' %}inactif{% endif %}">
+                {{ user_recommended_deal.price }}€
+                </p>
+            </a>
+        </div>
+        <div class="capsule-text">
+            <a href="{% url 'deals:deals_detail' pk=user_recommended_deal.pk %}">
+                {% if user_recommended_deal.bluray.title %}
+                    <h2>{{ user_recommended_deal.bluray.title|truncatechars:18 }}</h2>
+                {% else %}
+                    <h2>{{ user_recommended_deal.bluray.movie|truncatechars:18 }}</h2>
+                {% endif %}
+            </a>
+                {% if user_recommended_deal.bluray.uhd %}
+                    <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+                {% endif %}
+                <p>Posté le {{ user_recommended_deal.date_created|date:"d/m/Y" }}</p>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <div class="capsule justify-content-center margin-auto">
+        {% if user.is_authenticated %}
+            <h2>Nous n'avons aucun bon plan recommandé selon vos favoris.</h2>
+        {% else %}
+            <h2>Identifiez-vous pour bénéficier de bons plans recommandés.</h2>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

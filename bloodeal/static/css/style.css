@@ -386,7 +386,7 @@ p .btn {
 }
 
 .padding-1rem {
-    padding: 1rem;
+    padding: 1rem !important;
 }
 
 .margin-auto {
@@ -394,7 +394,7 @@ p .btn {
 }
 
 .margin-1rem {
-    margin: 1rem;
+    margin: 1rem !important;
 }
 
 .margin-bottom-1rem {

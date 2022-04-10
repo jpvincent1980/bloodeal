@@ -1,5 +1,6 @@
 from django.urls import path
 
+from deals.views import DealListView
 from .views import (
     index_view,
     SignupView,
@@ -15,7 +16,8 @@ from .views import (
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', index_view, name="index"),
+    path('', DealListView.as_view(), name="index"),
+    path('authenticate', index_view, name="authenticate"),
     path('signup/', SignupView.as_view(), name="signup"),
     path('account-created/', account_created_view, name="account_created"),
     path('delete-account/<int:pk>/', DeleteAccountView.as_view(), name="delete_account"),

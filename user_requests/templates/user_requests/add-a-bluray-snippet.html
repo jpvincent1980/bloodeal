@@ -1,4 +1,5 @@
 <div class="dashboard-block-element min-height-20vh justify-content-center padding-1rem">
+    {% if user.is_authenticated %}
     <h2>Suggérer un Blu-Ray</h2>
     <form method="post" action="{% url 'user_requests:bluray_request_create' %}">
         {% csrf_token %}
@@ -26,4 +27,9 @@
             {% endfor %}
         <button type="submit" name="bluray_request_form" class="btn btn-submit">J'envoie ma suggestion</button>
     </form>
+    {% else %}
+    <div class="capsule-text">
+        <p class="text-align-center margin-1rem">Authentifiez-vous pour suggérer un blu-ray.</p>
+    </div>
+    {% endif %}
 </div>

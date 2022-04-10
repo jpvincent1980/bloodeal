@@ -1,0 +1,44 @@
+{% load static %}
+
+<div class="dashboard-block-element min-height-30vh">
+    {% if bluray_list %}
+    <div class="dashboard-block-element-title">
+        <h2>TOUS LES BLU-RAYS ({{ bluray_list|length }})</h2>
+    </div>
+    <div class="dashboard-block-element-content flex-wrap">
+    {% for bluray in bluray_list %}
+    <div class="capsule width-25 margin-bottom-1rem">
+        {% if bluray.bluray_image %}
+            <div class="capsule-image" style="background-image: url({{ bluray.bluray_image.url }});">
+        {% else %}
+            <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+        {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="bluray_{{ bluray.pk }}"></i>
+            </div>
+        </div>
+        <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">
+            <div class="capsule-text">
+                {% if bluray.title %}
+                    <h2>{{ bluray.title|truncatechars:18 }}</h2>
+                {% else %}
+                    <h2>{{ bluray.movie|truncatechars:18 }}</h2>
+                {% endif %}
+        </a>
+            {% if bluray.uhd %}
+                <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
+            {% endif %}
+            {% if bluray.release_date %}
+            <p>Sortie: {{ bluray.release_date|date:"d/m/Y" }}</p>
+            {% endif %}
+            <p><a href="{{ bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
+            </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% else %}
+      <div class="capsule justify-content-center margin-auto flex-wrap">
+        <h2 class="margin-1rem">Aucun blu-ray n'est enregistré dans notre base de données.</h2>
+    </div>
+    {% endif %}
+</div>
