@@ -5,19 +5,22 @@ from .views import (
     index_view,
     SignupView,
     account_created_view,
+    authenticate_view,
     login_view,
     logout_view,
     dashboard_view,
     SearchResultsView,
     help_view,
-    contact_view, send_message_view, DeleteAccountView)
+    contact_view,
+    send_message_view,
+    DeleteAccountView)
 
 # Création d'un espace de noms
 app_name = 'accounts'
 
 urlpatterns = [
-    path('', DealListView.as_view(), name="index"),
-    path('authenticate', index_view, name="authenticate"),
+    path('', index_view, name="index"),
+    path('authenticate', authenticate_view, name="authenticate"),
     path('signup/', SignupView.as_view(), name="signup"),
     path('account-created/', account_created_view, name="account_created"),
     path('delete-account/<int:pk>/', DeleteAccountView.as_view(), name="delete_account"),

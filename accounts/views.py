@@ -31,6 +31,16 @@ def index_view(request):
     Template:
         None
     """
+    if request.user.is_authenticated:
+
+        return redirect("accounts:dashboard")
+
+    else:
+
+        return redirect("deals:deals_list")
+
+
+def authenticate_view(request):
     next_url = request.GET.get("next", "accounts:dashboard")
 
     if request.user.is_authenticated:
@@ -84,26 +94,12 @@ def index_view(request):
 
             return render(request, "accounts/dashboard.html", context)
 
-        else:
-            login_form = LoginForm(auto_id="login_%s")
-            context = {"login_form": login_form,
-                       "signup_form": signup_form}
-            storage = messages.get_messages(request)
-            if storage:
-                context.update({"modal": "modal.html",
-                                "modal_content": storage})
-
-            return render(request, "accounts/index.html", context)
-
     else:
         login_form = LoginForm(auto_id="login_%s")
         signup_form = SignupForm(auto_id="signup_%s")
         context = {"login_form": login_form,
                    "signup_form": signup_form}
-        # Récupère les messages le cas échéant et les envoie à la
-        # fenêtre modale
         storage = messages.get_messages(request)
-
         if storage:
             context.update({"modal": "modal.html",
                             "modal_content": storage})
