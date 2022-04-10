@@ -8,10 +8,14 @@
     {% for deal in user_deals %}
     <div class="capsule align-items-center flex-column width-100">
         {% if deal.bluray.bluray_image %}
-        <div class="capsule-image" style="background-image: url({{ deal.bluray.bluray_image.url }});"></div>
+        <div class="capsule-image" style="background-image: url({{ deal.bluray.bluray_image.url }});">
         {% else %}
-        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});"></div>
+        <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
         {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if deal.bluray in user_deals %}press{% endif %}" onclick="favorite('deal_bluray_{{ deal.bluray.pk }}',{{ deal.bluray.pk }}, 'bluray')" id="deal_bluray_{{ deal.bluray.pk }}"></i>
+            </div>
+        </div>
         <div class="capsule-text text-align-center">
             <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
                 {% if deal.bluray.title %}

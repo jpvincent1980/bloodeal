@@ -10,6 +10,9 @@
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
+                    <div class="favorite-wrapper">
+                        <i class="favorite {% if bluray in latest_blurays %}press{% endif %}" onclick="favorite('latest_bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="latest_bluray_{{ bluray.pk }}"></i>
+                    </div>
                 </div>
                 <div class="capsule-text">
                     {% if latest_bluray.slug %}
