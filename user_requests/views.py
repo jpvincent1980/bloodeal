@@ -1,9 +1,11 @@
 import re
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView, ListView
 
 from blurays.models import get_blurays, BluRay, get_user_requested_blurays
@@ -19,6 +21,7 @@ from .forms import BluRayCreationForm, generate_initialized_request_forms
 
 
 # Create your views here.
+@method_decorator(login_required, name='dispatch')
 class MovieRequestCreateView(CreateView):
     model = MovieRequest
     fields = ["imdb_link", "status", "user"]
@@ -61,10 +64,7 @@ class MovieRequestCreateView(CreateView):
         return context
 
 
-class MovieRequestView(DetailView):
-    model = MovieRequest
-
-
+@method_decorator(login_required, name='dispatch')
 class BluRayRequestCreateView(CreateView):
     model = BluRayRequest
     form_class = BluRayCreationForm
@@ -107,10 +107,7 @@ class BluRayRequestCreateView(CreateView):
         return context
 
 
-class BluRayRequestView(DetailView):
-    model = BluRayRequest
-
-
+@method_decorator(login_required, name='dispatch')
 class PeopleRequestCreateView(CreateView):
     model = PeopleRequest
     fields = ["imdb_link", "status", "user"]
@@ -153,10 +150,7 @@ class PeopleRequestCreateView(CreateView):
         return context
 
 
-class PeopleRequestView(DetailView):
-    model = PeopleRequest
-
-
+@method_decorator(login_required, name='dispatch')
 class DealRequestCreateView(CreateView):
     model = DealRequest
     fields = ["amazon_link", "price", "user"]
@@ -189,6 +183,7 @@ class DealRequestCreateView(CreateView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class UserRequestListView(ListView):
     template_name = "user_requests/user-requests.html"
 
