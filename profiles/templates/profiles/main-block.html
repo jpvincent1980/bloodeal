@@ -15,9 +15,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-            <div class="favorite-wrapper">
-                <i class="favorite {% if favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('favorite_movie_{{ favorite_movie.pk }}',{{ favorite_movie.pk }}, 'movie')" id="favorite_movie_{{ favorite_movie.pk }}"></i>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('favorite_movie_{{ favorite_movie.pk }}',{{ favorite_movie.pk }}, 'movie')" id="favorite_movie_{{ favorite_movie.pk }}"></i>
+                </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <h2><a href="{% url 'movies:movies_detail' slug=favorite_movie.slug pk=favorite_movie.pk %}">{{ favorite_movie|truncatechars:40 }}</a></h2>
@@ -58,9 +60,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
+            {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
                     <i class="favorite {% if people in user_favorite_people %}press{% endif %}" onclick="favorite('favorite_people_{{ people.pk }}',{{ people.pk }}, 'people')" id="favorite_people_{{ people.pk }}"></i>
                 </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">
@@ -90,9 +94,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
+            {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
                     <i class="favorite {% if favorite_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ favorite_bluray.pk }}',{{ favorite_bluray.pk }}, 'bluray')" id="favorite_bluray_{{ favorite_bluray.pk }}"></i>
                 </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=favorite_bluray.slug pk=favorite_bluray.pk %}">

@@ -13,9 +13,11 @@
         {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
         {% endif %}
+        {% if user.is_authenticated %}
             <div class="favorite-wrapper">
                 <i class="favorite {% if movie in user_favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="movie_{{ movie.pk }}"></i>
             </div>
+        {% endif %}
         </div>
         <div class="capsule-text">
             <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie|truncatechars:18 }}</a></h2>

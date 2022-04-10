@@ -25,9 +25,11 @@
                     {% else %}
                     <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
-                <div class="favorite-wrapper">
-                    <i class="favorite {% if blurays_result in user_favorite_blurays %}press{% endif %}" onclick="favorite('blurays_result_{{ blurays_result.pk }}',{{ blurays_result.pk }}, 'bluray')" id="blurays_result_{{ blurays_result.pk }}"></i>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="favorite-wrapper">
+                        <i class="favorite {% if blurays_result in user_favorite_blurays %}press{% endif %}" onclick="favorite('blurays_result_{{ blurays_result.pk }}',{{ blurays_result.pk }}, 'bluray')" id="blurays_result_{{ blurays_result.pk }}"></i>
+                    </div>
+                {% endif %}
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'blurays:blurays_detail' slug=blurays_result.slug pk=blurays_result.pk %}">
@@ -59,9 +61,11 @@
                     {% else %}
                     <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
-                <div class="favorite-wrapper">
-                    <i class="favorite {% if movies_result in user_favorite_movies %}press{% endif %}" onclick="favorite('movies_result_{{ movies_result.pk }}',{{ movies_result.pk }}, 'movie')" id="movies_result_{{ movies_result.pk }}"></i>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="favorite-wrapper">
+                        <i class="favorite {% if movies_result in user_favorite_movies %}press{% endif %}" onclick="favorite('movies_result_{{ movies_result.pk }}',{{ movies_result.pk }}, 'movie')" id="movies_result_{{ movies_result.pk }}"></i>
+                    </div>
+                {% endif %}
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'movies:movies_detail' slug=movies_result.slug pk=movies_result.pk %}">
@@ -92,9 +96,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
+            {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
                     <i class="favorite {% if people_result in user_favorite_people %}press{% endif %}" onclick="favorite('people_result_{{ people_result.pk }}',{{ people_result.pk }}, 'people')" id="people_result_{{ people_result.pk }}"></i>
                 </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'people:people_detail' slug=people_result.slug pk=people_result.pk %}">

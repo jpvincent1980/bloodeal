@@ -7,9 +7,11 @@
         {% else %}
         <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
         {% endif %}
-        <div class="favorite-wrapper">
-            <i class="favorite {% if people in user_favorite_people %}press{% endif %}" onclick="favorite('people_{{ people.pk }}',{{ people.pk }}, 'people')" id="people_{{ people.pk }}"></i>
-        </div>
+        {% if user.is_authenticated %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if people in user_favorite_people %}press{% endif %}" onclick="favorite('people_{{ people.pk }}',{{ people.pk }}, 'people')" id="people_{{ people.pk }}"></i>
+            </div>
+        {% endif %}
         </div>
         <div class="capsule-text">
             <a href="{% url 'people:people_detail' slug=people.slug pk=people.pk %}">

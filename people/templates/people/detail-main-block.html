@@ -51,9 +51,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-            <div class="favorite-wrapper">
-                <i class="favorite {% if people_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if people_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
+                </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <h2><a href="{% url 'movies:movies_detail' slug=people_movie.slug pk=people_movie.pk %}">{{ people_movie.title_vf }}</a></h2>
@@ -83,9 +85,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-            <div class="favorite-wrapper">
-                <i class="favorite {% if people_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if people_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
+                </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=people_bluray.slug pk=people_bluray.pk %}">

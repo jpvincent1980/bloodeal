@@ -51,9 +51,11 @@
             {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
+            {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
                     <i class="favorite {% if bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('favorite_bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="favorite_bluray_{{ bluray.pk }}"></i>
                 </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=bluray.slug pk=bluray.pk %}">

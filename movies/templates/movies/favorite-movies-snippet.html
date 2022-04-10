@@ -13,9 +13,11 @@
                 {% else %}
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
             {% endif %}
-            <div class="favorite-wrapper">
-                <i class="favorite {% if user_favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_favorite_movie_{{ user_favorite_movie.pk }}',{{ user_favorite_movie.pk }}, 'movie')" id="user_favorite_movie_{{ user_favorite_movie.pk }}"></i>
-            </div>
+            {% if user.is_authenticated %}
+                <div class="favorite-wrapper">
+                    <i class="favorite {% if user_favorite_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_favorite_movie_{{ user_favorite_movie.pk }}',{{ user_favorite_movie.pk }}, 'movie')" id="user_favorite_movie_{{ user_favorite_movie.pk }}"></i>
+                </div>
+            {% endif %}
             </div>
             <div class="capsule-text">
                 <a href="{% url 'movies:movies_detail' slug=user_favorite_movie.slug pk=user_favorite_movie.pk %}">
