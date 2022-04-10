@@ -106,7 +106,7 @@ def get_user_all_favorites(user):
     user_movies_recommended_favorites = movies_favorites.difference(favorite_movies)
     bluray_people_favorites = BluRay.objects.filter(movie__in=movies_favorites)
     # Join all BluRay querysets from previous queries
-    all_blurays = bluray_movies_favorites | bluray_people_favorites
+    all_blurays = bluray_movies_favorites | bluray_people_favorites | favorite_blurays
     user_recommended_favorites = all_blurays.difference(favorite_blurays)
     return {"user_favorite_movies": favorite_movies,
             "user_recommended_movies": user_movies_recommended_favorites,

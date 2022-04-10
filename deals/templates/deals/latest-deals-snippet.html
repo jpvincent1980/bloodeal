@@ -13,6 +13,9 @@
         {% else %}
             <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
         {% endif %}
+            <div class="favorite-wrapper">
+                <i class="favorite {% if latest_deal.bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('latest_deal_bluray_{{ latest_deal.bluray.pk }}',{{ latest_deal.bluray.pk }}, 'bluray')" id="latest_deal_bluray_{{ latest_deal.bluray.pk }}"></i>
+            </div>
             <a href="{{ latest_deal.amazon_aff_link }}" target="_blank">
                 <p class="deal-price {% if latest_deal.status != '1' %}inactif{% endif %}">
                 {{ latest_deal.price }}€
