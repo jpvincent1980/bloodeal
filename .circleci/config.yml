@@ -35,7 +35,7 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install postgresql-client
-            python -m pytest --co
+            python -m pytest --disable-warnings --co
 
   lint:
     executor: python/default
