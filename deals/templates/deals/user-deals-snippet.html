@@ -13,7 +13,7 @@
         <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
         {% endif %}
             <div class="favorite-wrapper">
-                <i class="favorite {% if deal.bluray in favorite_blurays %}press{% endif %}" onclick="favorite('deal_bluray_{{ deal.bluray.pk }}',{{ deal.bluray.pk }}, 'bluray')" id="deal_bluray_{{ deal.bluray.pk }}"></i>
+                <i class="favorite {% if deal.bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('deal_bluray_{{ deal.bluray.pk }}',{{ deal.bluray.pk }}, 'bluray')" id="deal_bluray_{{ deal.bluray.pk }}"></i>
             </div>
         </div>
         <div class="capsule-text text-align-center">

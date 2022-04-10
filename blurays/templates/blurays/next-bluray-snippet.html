@@ -11,7 +11,7 @@
                 <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                     <div class="favorite-wrapper">
-                        <i class="favorite {% if bluray in favorite_blurays %}press{% endif %}" onclick="favorite('next_bluray_{{ bluray.pk }}',{{ bluray.pk }}, 'bluray')" id="next_bluray_{{ bluray.pk }}"></i>
+                        <i class="favorite {% if next_bluray in favorite_blurays %}press{% endif %}" onclick="favorite('next_bluray_{{ next_bluray.pk }}',{{ next_bluray.pk }}, 'bluray')" id="next_bluray_{{ next_bluray.pk }}"></i>
                     </div>
                 </div>
                 <div class="capsule-text">
