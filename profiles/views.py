@@ -158,7 +158,7 @@ class ProfileUpdate(UpdateView):
 
 
 @ensure_csrf_cookie
-@method_decorator(login_required, name='dispatch')
+# @method_decorator(login_required, name='dispatch')
 def add_to_favorite_view(request):
     user = request.user
     type = request.POST.get("type")
