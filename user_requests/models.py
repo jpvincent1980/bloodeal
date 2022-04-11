@@ -82,8 +82,15 @@ class PeopleRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Demande - Personnalité"
-        verbose_name_plural = "Demandes - Personnalités"
+        verbose_name = "Traité - Personnalité"
+        verbose_name_plural = "Traité - Personnalités"
+
+
+class PeopleRequestOpen(PeopleRequest):
+    class Meta:
+        proxy = True
+        verbose_name = "A traiter - Personnalité"
+        verbose_name_plural = "A traiter - Personnalités"
 
 
 class MovieRequest(models.Model):
@@ -143,8 +150,15 @@ class MovieRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Demande - Film"
-        verbose_name_plural = "Demandes - Films"
+        verbose_name = "Traité - Film"
+        verbose_name_plural = "Traité - Films"
+
+
+class MovieRequestOpen(MovieRequest):
+    class Meta:
+        proxy = True
+        verbose_name = "A traiter - Film"
+        verbose_name_plural = "A traiter - Films"
 
 
 class BluRayRequest(models.Model):
@@ -189,8 +203,15 @@ class BluRayRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Demande - Blu-Ray"
-        verbose_name_plural = "Demandes - Blu-Rays"
+        verbose_name = "Traité - Blu-Ray"
+        verbose_name_plural = "Traité - Blu-Rays"
+
+
+class BluRayRequestOpen(BluRayRequest):
+    class Meta:
+        proxy = True
+        verbose_name = "A traiter - Blu-Ray"
+        verbose_name_plural = "A traiter - Blu-Rays"
 
 
 class DealRequest(models.Model):
@@ -241,8 +262,15 @@ class DealRequest(models.Model):
         return super().save(**kwargs)
 
     class Meta:
-        verbose_name = "Demande - Bon Plan"
-        verbose_name_plural = "Demande - Bons Plans"
+        verbose_name = "Traité - Bon Plan"
+        verbose_name_plural = "Traité - Bons Plans"
+
+
+class DealRequestOpen(DealRequest):
+    class Meta:
+        proxy = True
+        verbose_name = "A traiter - Bon plan"
+        verbose_name_plural = "A traiter - Bons plans"
 
 
 def get_user_requests_blurays(user, requests_filter=[choice[0] for choice in STATUS_CHOICES]):
