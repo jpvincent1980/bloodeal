@@ -241,12 +241,12 @@ p .btn {
 .dashboard-block-element {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 95%;
     box-sizing: border-box;
     border: 0;
     filter: drop-shadow(0 0 0.2rem black);
     background: var(--element-bg-color);
-    margin: 1vw 0;
+    margin: 1vw auto;
 }
 
 .dashboard-block-element  a {
@@ -320,12 +320,12 @@ p .btn {
 }
 
 .side-block-min-width {
-    min-width: 15%;
+    min-width: 15vw;
 }
 
 .main-block-min-width {
     justify-content: flex-start;
-    min-width: 65%;
+    min-width: 65vw;
 }
 
 .shadow {
@@ -644,6 +644,10 @@ path.search {
 
     .dashboard-wrapper {
         flex-direction: column;
+    }
+
+    .dashboard-block-element {
+        width: 90vw;
     }
 
 }
