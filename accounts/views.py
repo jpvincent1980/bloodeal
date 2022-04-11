@@ -100,6 +100,7 @@ def authenticate_view(request):
         context = {"login_form": login_form,
                    "signup_form": signup_form}
         storage = messages.get_messages(request)
+
         if storage:
             context.update({"modal": "modal.html",
                             "modal_content": storage})
@@ -219,6 +220,7 @@ class DeleteAccountView(DeleteView):
     success_url = reverse_lazy("accounts:index")
 
     def post(self, request, *args, **kwargs):
+
         # Override form_valid function from parent class to add automatic login
         # after signup
         if self.kwargs.get("pk") == self.request.user.pk:
@@ -328,13 +330,15 @@ def help_view(request):
         :template:"accounts/help.html"
     """
     # Récupère les données pour le bloc de droite
-    context = get_movies(request.user)
-    context.update(get_blurays(request.user))
-    # Récupère les données pour le bloc de gauche
-    requests_forms = generate_initialized_request_forms(request.user)
-    context.update(requests_forms)
-    # Récupère le nombre de demandes de l'utilisateur
-    context.update(get_user_requests_total(request.user))
+    context = get_movies()
+    context.update(get_blurays())
+
+    if request.user.is_authenticated:
+        # Récupère les données pour le bloc de gauche
+        requests_forms = generate_initialized_request_forms(request.user)
+        context.update(requests_forms)
+        # Récupère le nombre de demandes de l'utilisateur
+        context.update(get_user_requests_total(request.user))
 
     return render(request, "accounts/help.html", context)
 
@@ -350,28 +354,31 @@ def contact_view(request):
         :template:"accounts/help.html"
     """
     # Récupère les données pour le bloc de droite
-    context = get_movies(request.user)
-    context.update(get_blurays(request.user))
-    # Récupère les données pour le bloc de gauche
-    requests_forms = generate_initialized_request_forms(request.user)
-    context.update(requests_forms)
-    # Récupère le nombre de demandes de l'utilisateur
-    context.update(get_user_requests_total(request.user))
+    context = get_movies()
+    context.update(get_blurays())
 
-    return render(request, "accounts/contact.html", context)
-
-
-@login_required
-def send_message_view(request):
-    if request.method == "POST":
-        # Récupère les données pour le bloc de droite
-        context = get_movies(request.user)
-        context.update(get_blurays(request.user))
+    if request.user.is_authenticated:
         # Récupère les données pour le bloc de gauche
         requests_forms = generate_initialized_request_forms(request.user)
         context.update(requests_forms)
         # Récupère le nombre de demandes de l'utilisateur
         context.update(get_user_requests_total(request.user))
+
+    return render(request, "accounts/contact.html", context)
+
+
+def send_message_view(request):
+    if request.method == "POST":
+        # Récupère les données pour le bloc de droite
+        context = get_movies()
+        context.update(get_blurays())
+
+        if request.user.is_authenticated:
+            # Récupère les données pour le bloc de gauche
+            requests_forms = generate_initialized_request_forms(request.user)
+            context.update(requests_forms)
+            # Récupère le nombre de demandes de l'utilisateur
+            context.update(get_user_requests_total(request.user))
 
         if not request.POST.get("formulaire_bloodeal") == "BLOODEAL":
             message = "Seriez-vous un robot ? ... "
