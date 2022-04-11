@@ -72,7 +72,7 @@ main {
 }
 
 h1 {
-    font-size: 5rem;
+    font-size: 6vw;
     margin: 5rem;
     color: var(--main-txt-color);
 }
@@ -620,7 +620,7 @@ path.search {
 
 /* Start of responsive handling */
 
-@media (max-width: 1520px) {
+@media only screen and (max-width: 1520px) {
 
     nav span {
         display: none;
@@ -641,3 +641,19 @@ path.search {
     .dashboard-wrapper {
         flex-direction: column;
     }
+
+}
+
+@media only screen and (max-width: 700px) {
+
+    h1 {
+        font-size: 8vw;
+    }
+
+    .index-page {
+        flex-direction: column;
+        margin: auto;
+        width: 90%;
+    }
+
+}
