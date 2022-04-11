@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-30vh">
     {% if user_favorite_blurays %}
     <div class="dashboard-block-element-title">
-        <h2>VOS BLU-RAYS PREFERES ({{ user_favorite_blurays|length }})</h2>
+        <h2 class="padding-1rem">VOS BLU-RAYS PREFERES ({{ user_favorite_blurays|length }})</h2>
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for favorite_bluray in user_favorite_blurays %}
@@ -41,9 +41,9 @@
     {% else %}
         <div class="capsule justify-content-center margin-auto flex-wrap">
             {% if user.is_authenticated %}
-                <h2 class="margin-1rem">Vous n'avez aucun blu-ray dans vos favoris.</h2>
+                <h2 class="margin-1rem text-align-center">Vous n'avez aucun blu-ray dans vos favoris.</h2>
             {% else %}
-                <h2>Connectez-vous pour marquer des blu-rays comme favoris.</h2>
+                <h2 class="margin-1rem text-align-center">Connectez-vous pour marquer des blu-rays comme favoris.</h2>
             {% endif %}
         </div>
     {% endif %}

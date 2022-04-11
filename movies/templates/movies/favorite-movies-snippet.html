@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-30vh">
     {% if user_favorite_movies %}
     <div class="dashboard-block-element-title">
-        <h2>VOS FILMS PREFERES ({{ user_favorite_movies|length }})</h2>
+        <h2 class="padding-1rem">VOS FILMS PREFERES ({{ user_favorite_movies|length }})</h2>
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for user_favorite_movie in user_favorite_movies %}
@@ -31,9 +31,9 @@
     {% else %}
     <div class="capsule justify-content-center margin-auto">
         {% if user.is_authenticated %}
-            <h2 class="margin-1rem width-100 text-align-center">Vous n'avez aucun film dans vos favoris.</h2>
+            <h2 class="margin-1rem text-align-center">Vous n'avez aucun film dans vos favoris.</h2>
         {% else %}
-            <h2>Connectez-vous pour marquer des films comme favoris.</h2>
+            <h2 class="margin-1rem text-align-center">Connectez-vous pour marquer des films comme favoris.</h2>
         {% endif %}
     </div>
     {% endif %}

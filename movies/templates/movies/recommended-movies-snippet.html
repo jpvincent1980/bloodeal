@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-30vh">
     {% if user_recommended_movies %}
     <div class="dashboard-block-element-title">
-        <h2>NOS RECOMMANDATIONS DE FILMS ({{ user_recommended_movies|length }})</h2>
+        <h2 class="padding-1rem">NOS RECOMMANDATIONS DE FILMS ({{ user_recommended_movies|length }})</h2>
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for user_recommended_movie in user_recommended_movies %}
@@ -31,9 +31,9 @@
     {% else %}
     <div class="capsule justify-content-center margin-auto flex-wrap">
         {% if user.is_authenticated %}
-            <h2 class="margin-1rem width-100 text-align-center">Nous n'avons aucune recommandation de films pour vous. </h2>
+            <h2 class="margin-1rem text-align-center">Nous n'avons aucune recommandation de films pour vous. </h2>
             <br>
-            <h2 class="margin-1rem width-100 text-align-center">Pensez à ajouter des personnalités à vos favoris.</h2>
+            <h2 class="margin-1rem text-align-center">Pensez à ajouter des personnalités à vos favoris.</h2>
         {% else %}
             <h2>Connectez-vous pour bénéficier de recommandations de films.</h2>
         {% endif %}

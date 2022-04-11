@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-30vh">
     {% if user_recommended_blurays %}
     <div class="dashboard-block-element-title">
-        <h2>NOS RECOMMANDATIONS DE BLU-RAYS ({{ user_recommended_blurays|length }})</h2>
+        <h2 class="padding-1rem">NOS RECOMMANDATIONS DE BLU-RAYS ({{ user_recommended_blurays|length }})</h2>
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for user_recommended_bluray in user_recommended_blurays %}
@@ -41,9 +41,9 @@
     {% else %}
             <div class="capsule justify-content-center margin-auto flex-wrap">
                 {% if user.is_authenticated %}
-                    <h2 class="margin-1rem">Nous n'avons aucune recommandation de blu-ray pour vous.</h2>
+                    <h2 class="margin-1rem text-align-center">Nous n'avons aucune recommandation de blu-ray pour vous.</h2>
                     <br>
-                    <h2 class="margin-1rem">Pensez à ajouter des films ou des personnalités à vos favoris.</h2>
+                    <h2 class="margin-1rem text-align-center">Pensez à ajouter des films ou des personnalités à vos favoris.</h2>
                 {% else %}
                     <h2>Connectez-vous pour bénéficier de recommandations de blu-rays.</h2>
                 {% endif %}

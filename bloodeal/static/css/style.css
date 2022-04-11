@@ -637,3 +637,7 @@ path.search {
     .search-wrapper input {
     min-width: 0;
 }
+
+    .dashboard-wrapper {
+        flex-direction: column;
+    }

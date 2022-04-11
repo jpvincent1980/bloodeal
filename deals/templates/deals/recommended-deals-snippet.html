@@ -3,7 +3,7 @@
 <div class="dashboard-block-element min-height-30vh">
     {% if user_recommended_deals %}
     <div class="dashboard-block-element-title">
-        <h2>BONS PLANS RECOMMANDES POUR VOUS ({{ user_recommended_deals|length }})</h2>
+        <h2 class="padding-1rem">BONS PLANS RECOMMANDES POUR VOUS ({{ user_recommended_deals|length }})</h2>
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for user_recommended_deal in user_recommended_deals %}
@@ -41,9 +41,9 @@
     {% else %}
     <div class="capsule justify-content-center margin-auto">
         {% if user.is_authenticated %}
-            <h2>Nous n'avons aucun bon plan recommandé selon vos favoris.</h2>
+            <h2 class="margin-1rem text-align-center">Nous n'avons aucun bon plan recommandé selon vos favoris.</h2>
         {% else %}
-            <h2>Connectez-vous pour bénéficier de bons plans recommandés.</h2>
+            <h2 class="margin-1rem text-align-center">Connectez-vous pour bénéficier de bons plans recommandés.</h2>
         {% endif %}
     </div>
     {% endif %}
