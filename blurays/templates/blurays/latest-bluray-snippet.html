@@ -4,11 +4,11 @@
     {% if latest_blurays %}
     <h2>Dernière sortie</h2>
     <p>{% with latest_blurays|first as latest_bluray %}{{ latest_bluray.release_date|date:"d/m/Y"|title }}</p>
-    <div class="capsule align-items-center">
+    <div class="capsule align-items-center flex-wrap">
                 {% if latest_bluray.bluray_image %}
-                <div class="capsule-image" style="background-image: url({{ latest_bluray.bluray_image.url }});">
+                <div class="capsule-image margin-auto" style="background-image: url({{ latest_bluray.bluray_image.url }});">
                 {% else %}
-                <div class="capsule-image" style="background-image: url({% static 'img/nopic.jpg' %});">
+                <div class="capsule-image margin-auto" style="background-image: url({% static 'img/nopic.jpg' %});">
                 {% endif %}
                     {% if user.is_authenticated %}
                     <div class="favorite-wrapper">
@@ -16,7 +16,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="capsule-text">
+                <div class="capsule-text margin-auto text-align-center">
                     {% if latest_bluray.slug %}
                     <a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}">
                     {% if latest_bluray.title %}
