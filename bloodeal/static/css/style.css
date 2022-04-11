@@ -190,6 +190,7 @@ p .btn {
 
 .capsule-text h2 {
     display: flex;
+    justify-content: center;
     color: black;
     margin:0;
     padding: 0.2rem;
@@ -307,6 +308,7 @@ p .btn {
 .requests-list {
     display: flex;
     align-items: center;
+    padding: 2vw;
 }
 
 .requests-list h2,span {
@@ -416,6 +418,10 @@ p .btn {
 .display-flex {
     display: flex;
     align-items: center;
+}
+
+.mobile-display-none {
+    display: flex;
 }
 
 a .color-black {
@@ -676,6 +682,10 @@ path.search {
 
     .width-25 {
     width: 100%;
+}
+
+    .mobile-display-none {
+    display: none;
 }
 
 }
