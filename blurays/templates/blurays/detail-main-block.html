@@ -32,7 +32,9 @@
                     {% if bluray.uhd %}
                         <p><img src="{% static 'img/logo-4k.png' %}" alt="Logo Blu-Ray 4K" width="100px"></p>
                     {% endif %}
+                {% if bluray.release_date %}
                 <p>Sortie: {{ bluray.release_date|date:"d/m/Y" }}</p>
+                {% endif %}
                 <p><a href="{{ bluray.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
             </div>
         </div>

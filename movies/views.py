@@ -38,23 +38,30 @@ class MovieDetailView(DetailView):
     def get_context_data(self, **kwargs):
         """Insert the single object into the context dict."""
         context = {}
+
         if self.object:
             context["object"] = self.object
             context_object_name = self.get_context_object_name(self.object)
+
             if context_object_name:
                 context[context_object_name] = self.object
+
         movie_blurays = BluRay.objects.filter(movie=self.object)
         deals = Deal.objects.filter(bluray__in=movie_blurays)
         context.update({"movie_blurays": movie_blurays,
                         "deals": deals})
-        context.update(get_movies(self.request.user))
-        context.update(get_blurays(self.request.user))
-        # Récupère les données pour le bloc central
-        context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user))
+        context.update(get_movies())
+        context.update(get_blurays())
         # Récupère un message à afficher dans la fenêtre modale le cas échéant
         storage = messages.get_messages(self.request)
+
         if storage:
             context.update({"modal": "modal.html",
                             "modal_content": storage})
+
+        if not self.request.user.is_anonymous:
+            # Récupère les données pour le bloc central
+            context.update(get_user_all_favorites(self.request.user))
+            context.update(get_user_requests_total(self.request.user))
+
         return super().get_context_data(**context)

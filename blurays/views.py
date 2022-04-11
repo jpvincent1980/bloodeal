@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.db.models import Count
 from django.views.generic import ListView, DetailView
 
 from deals.models import get_deals
@@ -39,12 +38,16 @@ class BluRayDetailView(DetailView):
         context = super(BluRayDetailView, self).get_context_data(**kwargs)
         # Récupère un message à afficher dans la fenêtre modale le cas échéant
         storage = messages.get_messages(self.request)
+
         if storage:
             context.update({"modal": "modal.html",
                             "modal_content": storage})
-        context.update(get_movies(self.request.user))
-        context.update(get_blurays(self.request.user))
-        context.update(get_user_all_favorites(self.request.user))
-        context.update(get_user_requests_total(self.request.user))
+        context.update(get_movies())
+        context.update(get_blurays())
         context.update(get_deals(self.object))
+
+        if not self.request.user.is_anonymous:
+            context.update(get_user_all_favorites(self.request.user))
+            context.update(get_user_requests_total(self.request.user))
+
         return context

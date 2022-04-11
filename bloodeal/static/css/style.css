@@ -547,7 +547,8 @@ path {
 }
 
 .search-wrapper input {
-    width: 15rem;
+    min-width: 15rem;
+    width: -webkit-fill-available;
     margin: 0 1rem 0 0;
     max-height: 1.5rem;
 }
@@ -622,10 +623,17 @@ path.search {
 @media (max-width: 1520px) {
 
     nav span {
-        font-size: 2rem;
+        display: none;
     }
 
     nav li {
         padding: 0 0.2rem;
     }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .search-wrapper input {
+    min-width: 0;
 }
