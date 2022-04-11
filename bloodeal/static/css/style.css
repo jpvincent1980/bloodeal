@@ -397,6 +397,10 @@ p .btn {
     margin: 1rem !important;
 }
 
+.margin-1vw {
+    margin: 1vw;
+}
+
 .margin-bottom-1rem {
     margin-bottom: 1rem;
 }
