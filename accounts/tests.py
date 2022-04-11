@@ -13,6 +13,8 @@ class AccountsTest(TestCase):
 
     def test_index_anonymous_user(self):
         url = reverse("accounts:index")
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 302)
         response = self.client.get(url, follow=True)
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "deals/deals_list.html")
@@ -22,6 +24,8 @@ class AccountsTest(TestCase):
         self.client.login(email="test@gmail.com",
                           password="azerty01")
         url = reverse("accounts:index")
+        response = self.client.get(url)
+        self.failUnlessEqual(response.status_code, 302)
         response = self.client.get(url, follow=True)
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "accounts/dashboard.html")
