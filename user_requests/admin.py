@@ -355,5 +355,3 @@ class DealRequestOpenAdmin(admin.ModelAdmin):
             return format_html('<a href="{}">{}</a>', link, obj.amazon_link)
         return ""
     link_to_amazon.short_description = 'Amazon'
-
-
