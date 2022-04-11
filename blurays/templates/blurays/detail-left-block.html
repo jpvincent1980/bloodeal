@@ -1,10 +1,8 @@
 {% load static %}
 
-<section class="dashboard-block side-block-min-width">
+<section class="dashboard-block side-block-min-width mobile-display-none">
     {% include "deals/ihaveadeal-snippet.html" %}
     {% with movie=bluray.movie %}
         {% include "movies/movie-snippet.html" %}
     {% endwith %}
-<!--    <div class="dashboard-block-element min-height-20vh"></div>-->
-<!--    <div class="dashboard-block-element min-height-20vh"></div>-->
 </section>

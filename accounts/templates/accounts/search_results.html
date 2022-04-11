@@ -15,7 +15,7 @@
         <div class="dashboard-block-element min-height-30vh">
             {% if blurays_results %}
             <div class="dashboard-block-element-title">
-                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES BLU-RAYS ({{ blurays_results|length }})</h2>
+                <h2 class="padding-1rem">RESULTATS DE VOTRE RECHERCHE DANS LES BLU-RAYS ({{ blurays_results|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
             {% for blurays_result in blurays_results %}
@@ -42,7 +42,7 @@
             {% endfor %}
             </div>
             {% else %}
-            <div class="capsule justify-content-center text-align-center margin-auto">
+            <div class="capsule justify-content-center text-align-center margin-auto padding-1rem">
                 <h2>Nous n'avons trouvé aucun résultat dans les blu-rays pour le mot clé "{{ keyword }}".</h2>
             </div>
             {% endif %}
@@ -51,7 +51,7 @@
         <div class="dashboard-block-element min-height-30vh">
             {% if movies_results %}
             <div class="dashboard-block-element-title">
-                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES FILMS ({{ movies_results|length }})</h2>
+                <h2 class="padding-1rem">RESULTATS DE VOTRE RECHERCHE DANS LES FILMS ({{ movies_results|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
             {% for movies_result in movies_results %}
@@ -77,7 +77,7 @@
             {% endfor %}
             </div>
             {% else %}
-            <div class="capsule justify-content-center text-align-center margin-auto">
+            <div class="capsule justify-content-center text-align-center margin-auto padding-1rem">
                 <h2>Nous n'avons trouvé aucun résultat dans les films pour le mot clé "{{ keyword }}".</h2>
             </div>
             {% endif %}
@@ -86,7 +86,7 @@
         <div class="dashboard-block-element min-height-30vh">
             {% if people_results %}
             <div class="dashboard-block-element-title">
-                <h2>RESULTATS DE VOTRE RECHERCHE DANS LES PERSONNALITES ({{ people_results|length }})</h2>
+                <h2 class="padding-1rem">RESULTATS DE VOTRE RECHERCHE DANS LES PERSONNALITES ({{ people_results|length }})</h2>
             </div>
             <div class="dashboard-block-element-content flex-wrap">
             {% for people_result in people_results %}
@@ -111,7 +111,7 @@
             {% endfor %}
             </div>
             {% else %}
-            <div class="capsule justify-content-center text-align-center margin-auto">
+            <div class="capsule justify-content-center text-align-center margin-auto padding-1rem">
                 <h2>Nous n'avons trouvé aucun résultat dans les personnalités pour le mot clé "{{ keyword }}".</h2>
             </div>
             {% endif %}
