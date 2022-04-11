@@ -223,7 +223,7 @@ p .btn {
 .dashboard-wrapper {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100vw;
     min-height: 85vh;
     margin-bottom: var(--footer-height);
 }
@@ -233,8 +233,8 @@ p .btn {
     flex-direction: column;
     min-height: 100%;
     justify-content: flex-start;
-    margin: 0 auto;
-    padding: 1rem;
+    margin: 1vw;
+    padding: 0;
     background: var(--site-bg-color);
 }
 
@@ -246,7 +246,7 @@ p .btn {
     border: 0;
     filter: drop-shadow(0 0 0.2rem black);
     background: var(--element-bg-color);
-    margin: 0 0 1rem 0;
+    margin: 1vw 0;
 }
 
 .dashboard-block-element  a {
@@ -620,7 +620,7 @@ path.search {
 
 /* Start of responsive handling */
 
-@media only screen and (max-width: 1520px) {
+@media (max-width: 1024px) {
 
     nav span {
         display: none;
@@ -644,7 +644,7 @@ path.search {
 
 }
 
-@media only screen and (max-width: 700px) {
+@media (max-width: 700px) {
 
     h1 {
         font-size: 8vw;
