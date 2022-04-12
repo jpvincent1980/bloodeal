@@ -1,35 +1,41 @@
 {% load static %}
 
 <header>
-    <nav>
-        <span class="bloodeal"><a href="{% url 'accounts:index' %}">BL💿💿DEAL</a></span>
-        <ul class="nav">
-            <li>
-                <form action="{% url 'accounts:search_results' %}" method="GET" class="search-wrapper">
-                    <input type="search" name="Q" placeholder="Tapez un mot-clé">
-                        <button style="background: none; border: none;">
-                           <svg width="44px" height="44px" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g class="search-icon">
-                                <path class="search" d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"/>
-                                <path class="search" d="M19.25 19.25L15.2625 15.2625"/>
-                              </g>
-                            </svg>
-                      </button>
-                </form>
-            </li>
+    <nav class="nav-nav">
+        <span class="nav-title"><a href="{% url 'accounts:index' %}">BL💿💿DEAL</a></span>
+        <form class="nav-search-wrapper" action="{% url 'accounts:search_results' %}" method="GET">
+            <input class="nav-search-bar" type="search" name="Q" placeholder="Tapez un mot-clé">
+                <button>
+                   <svg width="44px" height="44px" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g class="search-icon">
+                        <path class="search" d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"/>
+                        <path class="search" d="M19.25 19.25L15.2625 15.2625"/>
+                      </g>
+                    </svg>
+              </button>
+        </form>
+        <div class="nav-burger" id="nav-burger">
+            <div class="nav-burger-line"></div>
+            <div class="nav-burger-line"></div>
+            <div class="nav-burger-line"></div>
+        </div>
+        <ul class="nav-ul" id="nav-ul">
             {% if not request.user.is_authenticated %}
-            <li class="btn btn-delete"><a href="{% url 'accounts:authenticate' %}">INSCRIPTION / CONNEXION</a></li>
+            <li class="nav-li">
+                    <a style="color: black; font-weight: 600;" href="{% url 'accounts:authenticate' %}">INSCRIPTION / CONNEXION</a>
+            </li>
             {% endif %}
-            <li><a href="{% url 'deals:deals_list' %}">BONS PLANS</a></li>
-            <li><a href="{% url 'blurays:blurays_list' %}">BLU-RAYS</a></li>
-            <li><a href="{% url 'movies:movies_list' %}">FILMS</a></li>
+            <li class="nav-li"><a href="{% url 'deals:deals_list' %}">BONS PLANS</a></li>
+            <li class="nav-li"><a href="{% url 'blurays:blurays_list' %}">BLU-RAYS</a></li>
+            <li class="nav-li"><a href="{% url 'movies:movies_list' %}">FILMS</a></li>
             {% if request.user.is_authenticated %}
-                <li><a href="{% url 'profiles:favorites_list' %}">FAVORIS</a></li>
-                <li style="position: relative;"><a href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=1+2+3+4">VOS DEMANDES</a>
+                <li class="nav-li"><a href="{% url 'profiles:favorites_list' %}">FAVORIS</a></li>
+                <li class="nav-li" style="position: relative;"><a href="{% url 'user_requests:user_requests' pk=request.user.pk %}?filter=1+2+3+4">VOS DEMANDES</a>
                 {% if user_requests_total %}<span class="notification">{{ user_requests_total }}</span>{% endif %}</li>
-                <li><a href="{% url 'profiles:profile_update' %}">PROFIL</a></li>
-                <li><a href="{% url 'accounts:logout' %}">SE DECONNECTER</a></li>
+                <li class="nav-li"><a href="{% url 'profiles:profile_update' %}">PROFIL</a></li>
+                <li class="nav-li"><a href="{% url 'accounts:logout' %}">SE DECONNECTER</a></li>
             {% endif %}
+
         </ul>
     </nav>
 </header>

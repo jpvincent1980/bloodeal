@@ -300,21 +300,22 @@ class SearchResultsView(ListView):
         # Récupère le mot clé du champ de recherche
         keyword = self.get_keyword()
         context.update({"keyword": keyword})
-        # Récupère les données pour le bloc de gauche
-        requests_forms = generate_initialized_request_forms(self.request.user)
-        context.update(requests_forms)
         # Récupère les données pour le bloc de droite
-        context.update(get_movies(self.request.user))
-        context.update(get_blurays(self.request.user))
-        # Récupère les données pour le bloc central
-        context.update(get_user_all_favorites(self.request.user))
+        context.update(get_movies())
+        context.update(get_blurays())
         # Récupère les données de recherche pour les blu-rays
         context.update(get_blurays_results(keyword))
         # Récupère les données de recherche pour les films
         context.update(get_movies_results(keyword))
         # Récupère les données de recherche pour les personnalités
         context.update(get_people_results(keyword))
-        # print(context)
+
+        if self.request.user.is_authenticated:
+            # Récupère les données pour le bloc de gauche
+            requests_forms = generate_initialized_request_forms(self.request.user)
+            context.update(requests_forms)
+            # Récupère les données pour le bloc central
+            context.update(get_user_all_favorites(self.request.user))
 
         return context
 

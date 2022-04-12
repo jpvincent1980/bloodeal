@@ -1,3 +1,20 @@
+// Handles the burger menu
+const burger = document.getElementById("nav-burger")
+const menu = document.getElementById("nav-ul")
+const menuItems = document.getElementsByClassName("nav-li")
+
+burger.addEventListener("click", function(event) {
+    for (let menuItem of menuItems) {
+    menuItem.classList.toggle("show")}
+})
+
+for (let menuItem of menuItems) {
+    menuItem.addEventListener("click", function(event) {
+        for (let menuItem of menuItems) {
+        menuItem.classList.toggle("show")}
+    });
+    }
+
 // Handles the import of the IMDB rating
 function imdb(d,s,id) {
 var js,stags=d.getElementsByTagName(s)[0];

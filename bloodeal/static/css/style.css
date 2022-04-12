@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
 :root {
-    /*--site-bg-color: rgba(70,130,180,1);*/
     --site-bg-color: rgba(0,149,213,1);
     --element-bg-color: rgba(255,255,255,1);
     --capsule-bg-color: rgba(255,255,255,1);
@@ -10,7 +9,6 @@
     --capsule-image-width: 45%;
     --capsule-image-margin-width: 2%;
     --capsule-text-width: 73%;
-    /*--elements-bg-color: steelblue;*/
     --elements-bg-color: var(--site-bg-color);
     --btn-delete-bg-color: indianred;
     --btn-validated-bg-color: green;
@@ -18,6 +16,8 @@
     --autofill-input-color: rgba(232,240,254,1);
     --main-txt-color: rgba(255,255,255,1);
     --footer-height: 5vh;
+    --search-glass-width: 30px;
+    --burger-line-height: 4px;
 }
 
 * {
@@ -30,23 +30,11 @@ body {
 
 nav {
     display: flex;
-    justify-content: space-between;
-    padding: 0.8rem 2rem;
-}
-
-nav span {
-    font-size: 3rem;
-    font-weight: 600;
 }
 
 ul {
     display: flex;
     list-style-type: none;
-    align-items: center;
-}
-
-li {
-    display: inline;
 }
 
 a {
@@ -77,21 +65,68 @@ h1 {
     color: var(--main-txt-color);
 }
 
-.nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+.nav-nav {
+    align-items: center;
 }
 
-.nav li {
+.nav-title {
+    margin: auto;
+    font-size: 3vw;
+    font-weight: 600;
+    width: -webkit-fill-available;
+    text-align: center;
+}
+
+.nav-search-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+input.nav-search-bar {
+    margin: 0;
+    min-width: 20vw;
+    width: fit-content;
+    height: calc(var(--search-glass-width) * 1.5);
+    max-height: 1.5rem;
+}
+
+.nav-search-wrapper button {
+    margin-left: calc(var(--search-glass-width) * 0.25);
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.nav-search-wrapper svg {
+    width: var(--search-glass-width);
+    height: var(--search-glass-width);
+}
+
+.nav-ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin: auto;
+    width: 100%;
+}
+
+.nav-ul li {
     line-height: 2rem;
     font-size: 0.8rem;
     color: var(--main-txt-color);
-    padding: 0 1rem;
 }
 
-.bloodeal {
-    font-size: 3vw;
+.nav-burger {
+    display: none;
+    height: calc(var(--burger-line-height) * 7);
+}
+
+.nav-burger-line {
+    width: calc(var(--burger-line-height) * 10);
+    height: var(--burger-line-height);
+    margin-top: var(--burger-line-height);
+    background: white;
 }
 
 form {
@@ -188,7 +223,6 @@ p .btn {
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    /*width: var(--capsule-text-width);*/
     width: fit-content;
 }
 
@@ -228,7 +262,7 @@ p .btn {
 .dashboard-wrapper {
     display: flex;
     justify-content: center;
-    width: 100vw;
+    width: 100%;
     min-height: 85vh;
     margin-bottom: var(--footer-height);
 }
@@ -315,9 +349,9 @@ p .btn {
     padding: 2vw;
 }
 
-.requests-list h2,span {
+.requests-list h2, .requests-list span {
     margin: 1rem;
-    padding: 0;
+    padding: 1rem;
 }
 
 .requests-list a {
@@ -428,11 +462,19 @@ p .btn {
     display: flex;
 }
 
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block !important;
+}
+
 a .color-black {
     color: black;
 }
 
-footer {
+footer ul {
     display: flex;
     position: fixed;
     justify-content: center;
@@ -442,7 +484,12 @@ footer {
     min-height: var(--footer-height);
     bottom: 0;
     background: var(--site-bg-color);
+}
+
+footer li {
     color: var(--main-txt-color);
+    font-size: 0.8rem;
+    margin: 1vw;
 }
 
 /* Beginning of IMDB handling */
@@ -472,7 +519,7 @@ footer {
 
 .favorite {
   cursor:pointer;
-  padding: 0.5vw 0.8vw 0.5vw 0.8vw;
+  padding: 0.5rem 0.9rem;
   background:#fff;
   border-radius:50%;
   display:inline-block;
@@ -488,7 +535,7 @@ footer {
 .favorite:before {
     content:'❥';
     color:#aaa;
-    font-size: 1vw;
+    font-size: 1.5rem;
     font-style:normal;
 }
 
@@ -558,21 +605,6 @@ path {
     fill: none;
 }
 
-.search-wrapper {
-    display: flex;
-}
-
-.search-wrapper input {
-    min-width: 15rem;
-    width: -webkit-fill-available;
-    margin: 0 1rem 0 0;
-    max-height: 1.5rem;
-}
-
-.search-wrapper svg {
-    cursor: pointer;
-}
-
 path.search {
     stroke: white;
     stroke-width: 2;
@@ -636,9 +668,49 @@ path.search {
 
 /* Start of responsive handling */
 
-@media (max-width: 1480px) {
+@media (max-width: 1540px) {
 
-    .bloodeal {
+    main {
+        margin-top: calc(var(--burger-line-height) * 10);
+    }
+
+    .nav-nav {
+        flex-direction: column;
+    }
+
+    .nav-title {
+        display: none;
+    }
+
+    .nav-search-wrapper {
+        display: none;
+    }
+
+    .nav-burger {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        padding: calc(var(--burger-line-height) * 2);
+        background: var(--site-bg-color);
+        z-index: 1;
+    }
+
+    .nav-ul {
+        flex-direction: column;
+        text-align: right;
+        position: fixed;
+        left: 0;
+        top: calc(var(--burger-line-height) * 9);
+        width: 100vw;
+        background: var(--site-bg-color);
+        z-index: 2;
+    }
+
+    .nav-li {
+        padding: 0 calc(var(--burger-line-height) * 2);
         display: none;
     }
 
@@ -646,8 +718,8 @@ path.search {
 
 @media (max-width: 1024px) {
 
-    nav li {
-        padding: 0 0.2rem;
+    h1 {
+        font-size: 8vw;
     }
 
     h2 {
@@ -655,8 +727,8 @@ path.search {
     }
 
     .search-wrapper input {
-    min-width: 0;
-}
+        min-width: 0;
+    }
 
     .dashboard-wrapper {
         flex-direction: column;
@@ -666,34 +738,18 @@ path.search {
         width: 90vw;
     }
 
-}
-
-@media (max-width: 700px) {
-
-    h1 {
-        font-size: 8vw;
-    }
-
     .index-page {
         flex-direction: column;
         margin: auto;
         width: 90%;
     }
 
-    .favorite {
-        padding: 1vw 1.8vw;
-    }
-
-    .favorite:before {
-        font-size: 3vw;
-    }
-
     .width-25 {
-    width: 100%;
-}
+        width: 100%;
+    }
 
     .mobile-display-none {
-    display: none;
-}
+        display: none;
+    }
 
 }

@@ -1,8 +1,8 @@
 {% load static %}
 
 <footer>
-    <ul class="nav">
-        <li>&copy; {% now "Y" %} BLOODEAL</li>
+    <ul>
+        <li><a href="{% url 'accounts:index' %}">&copy; {% now "Y" %} BLOODEAL</a></li>
         <li><a href="{% url 'accounts:help' %}">AIDE</a></li>
         <li><a href="{% url 'accounts:contact' %}">CONTACT</a></li>
     </ul>
