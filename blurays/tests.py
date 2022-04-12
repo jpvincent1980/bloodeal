@@ -15,6 +15,8 @@ class BluRaysTest(TestCase):
     def test_bluray_list_view_anonymous_user(self):
         url = reverse("blurays:blurays_list")
         response = self.client.get(url)
+        self.assertURLEqual(reverse("blurays:blurays_list"),
+                            "/blurays/list/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "blurays/blurays_list.html")
         self.assertNotIn("PROFIL", response.content.decode())
@@ -24,6 +26,8 @@ class BluRaysTest(TestCase):
                           password="azerty01")
         url = reverse("blurays:blurays_list")
         response = self.client.get(url)
+        self.assertURLEqual(reverse("blurays:blurays_list"),
+                            "/blurays/list/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "blurays/blurays_list.html")
         self.assertIn("PROFIL", response.content.decode())
@@ -32,6 +36,10 @@ class BluRaysTest(TestCase):
         url = reverse("blurays:blurays_detail", kwargs={"pk": self.bluray.pk,
                                                         "slug": self.bluray.slug})
         response = self.client.get(url)
+        self.assertURLEqual(reverse("blurays:blurays_detail",
+                                    kwargs={"pk": self.bluray.pk,
+                                            "slug": self.bluray.slug}),
+                            f"/blurays/{self.bluray.slug}/{self.bluray.pk}/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "blurays/blurays_detail.html")
         self.assertNotIn("PROFIL", response.content.decode())
@@ -43,6 +51,10 @@ class BluRaysTest(TestCase):
         url = reverse("blurays:blurays_detail", kwargs={"pk": self.bluray.pk,
                                                         "slug": self.bluray.slug})
         response = self.client.get(url)
+        self.assertURLEqual(reverse("blurays:blurays_detail",
+                                    kwargs={"pk": self.bluray.pk,
+                                            "slug": self.bluray.slug}),
+                            f"/blurays/{self.bluray.slug}/{self.bluray.pk}/")
         self.failUnlessEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "blurays/blurays_detail.html")
         self.assertIn("PROFIL", response.content.decode())

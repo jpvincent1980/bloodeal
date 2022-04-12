@@ -90,6 +90,10 @@ h1 {
     padding: 0 1rem;
 }
 
+.bloodeal {
+    font-size: 3vw;
+}
+
 form {
     width: 100%;
 }
@@ -632,11 +636,15 @@ path.search {
 
 /* Start of responsive handling */
 
-@media (max-width: 1024px) {
+@media (max-width: 1480px) {
 
-    nav span {
+    .bloodeal {
         display: none;
     }
+
+}
+
+@media (max-width: 1024px) {
 
     nav li {
         padding: 0 0.2rem;
