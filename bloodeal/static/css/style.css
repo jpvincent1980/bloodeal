@@ -326,14 +326,14 @@ p .btn {
 .notification {
     position: absolute;
     top: 0;
-    right:0;
+    right: -0.3rem;
     background: red;
     border-radius: 50%;
-    line-height: 0.8rem;
-    font-size: 0.8rem;
+    line-height: 0.6rem;
+    font-size: 0.6rem;
     padding: 0.2rem;
-    width: 0.8rem;
-    height: 0.8rem;
+    width: 0.6rem;
+    height: 0.6rem;
     margin: auto;
     text-align: center;
     z-index: -1;
