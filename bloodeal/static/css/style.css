@@ -336,7 +336,7 @@ p .btn {
     height: 0.6rem;
     margin: auto;
     text-align: center;
-    z-index: -1;
+    z-index: 0;
 }
 
 .inactif {
