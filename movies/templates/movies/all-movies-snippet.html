@@ -15,13 +15,19 @@
         {% endif %}
         {% if user.is_authenticated %}
             <div class="favorite-wrapper">
-                <i class="favorite {% if movie in user_favorite_movies %}press{% endif %}" onclick="favorite('movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="movie_{{ movie.pk }}"></i>
+                <div class="favorite" onclick="favorite('movie_{{ movie.pk }}',{{ movie.pk }}, 'movie')" id="movie_{{ movie.pk }}">
+                    <svg class="favorite-svg-heart {% if movie in user_favorite_movies %}press{% endif %}" viewBox="0 0 24 24">
+                      <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                    </svg>
+                </div>
             </div>
         {% endif %}
         </div>
         <div class="capsule-text">
             <h2><a href="{% url 'movies:movies_detail' slug=movie.slug pk=movie.pk %}">{{ movie|truncatechars:18 }}</a></h2>
+            {% if movie.release_year %}
             <p>{{ movie.release_year }}</p>
+            {% endif %}
             {% if movie.directors %}
                 <p>De
                 {% for director in movie.directors %}<a href="{% url 'people:people_detail' slug=director.slug pk=director.pk %}">{{ director }}</a>

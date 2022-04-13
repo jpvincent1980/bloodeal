@@ -533,32 +533,30 @@ footer li {
 
 .favorite {
   cursor:pointer;
-  padding: 0.5rem 0.9rem;
+  padding: 1rem 1rem 0.6rem;
   background:#fff;
   border-radius:50%;
   display:inline-block;
   margin:0 0 15px;
-  transition:.2s;
-  transform: rotate(90deg);
 }
 
-.favorite:hover {
-  color:#666;
+.favorite-svg-heart {
+    width: 1vw;
 }
 
-.favorite:before {
-    content:'❥';
-    color:#aaa;
-    font-size: 1.5rem;
-    font-style:normal;
+.favorite-svg-heart path {
+    stroke: white;
+    stroke-width: 0;
+    fill: lightgrey;
+    z-index: 1;
 }
 
-.press {
-  animation: size .4s;
+.favorite-svg-heart:hover path {
+    fill: #e23b3b;
 }
 
-.press:before {
-  color:#e23b3b;
+.press path {
+  fill: #e23b3b;
 }
 
 @keyframes size {

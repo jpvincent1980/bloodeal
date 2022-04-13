@@ -12,7 +12,8 @@
             <span class="nav-home">
                 <a href="{% url 'accounts:index' %}">
                     <img src="{% static 'img/logo-home.png' %}" alt="Home Logo - Freepik.com">
-                </a></span>
+                </a>
+            </span>
             <form class="nav-search-wrapper" action="{% url 'accounts:search_results' %}" method="GET">
                 <input class="nav-search-bar" type="search" name="Q" placeholder="Tapez un mot-clé">
                     <button>

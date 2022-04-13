@@ -15,7 +15,11 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if user_recommended_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('user_recommended_movie_{{ user_recommended_movie.pk }}',{{ user_recommended_movie.pk }}, 'movie')" id="user_recommended_movie_{{ user_recommended_movie.pk }}"></i>
+                    <div class="favorite" onclick="favorite('user_recommended_movie_{{ user_recommended_movie.pk }}',{{ user_recommended_movie.pk }}, 'movie')" id="user_recommended_movie_{{ user_recommended_movie.pk }}">
+                        <svg class="favorite-svg-heart {% if user_recommended_movie in user_favorite_movies %}press{% endif %}" viewBox="0 0 24 24">
+                          <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                        </svg>
+                    </div>
                 </div>
             {% endif %}
             </div>
@@ -31,9 +35,9 @@
     {% else %}
     <div class="capsule justify-content-center margin-auto flex-wrap">
         {% if user.is_authenticated %}
-            <h2 class="margin-1rem text-align-center">Nous n'avons aucune recommandation de films pour vous. </h2>
+            <h2 class="margin-1rem text-align-center width-100">Nous n'avons aucune recommandation de films pour vous. </h2>
             <br>
-            <h2 class="margin-1rem text-align-center">Pensez à ajouter des personnalités à vos favoris.</h2>
+            <h2 class="margin-1rem text-align-center width-100">Pensez à ajouter des personnalités à vos favoris.</h2>
         {% else %}
             <h2>Connectez-vous pour bénéficier de recommandations de films.</h2>
         {% endif %}

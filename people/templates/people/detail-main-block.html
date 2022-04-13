@@ -53,7 +53,11 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if people_movie in user_favorite_movies %}press{% endif %}" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}"></i>
+                    <div class="favorite" onclick="favorite('people_movie_{{ people_movie.pk }}',{{ people_movie.pk }}, 'movie')" id="people_movie_{{ people_movie.pk }}">
+                        <svg class="favorite-svg-heart {% if people_movie in user_favorite_movies %}press{% endif %}" viewBox="0 0 24 24">
+                          <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                        </svg>
+                    </div>
                 </div>
             {% endif %}
             </div>
@@ -87,7 +91,11 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if people_bluray in user_favorite_blurays %}press{% endif %}" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}"></i>
+                    <div class="favorite" onclick="favorite('people_bluray_{{ people_bluray.pk }}',{{ people_bluray.pk }}, 'bluray')" id="people_bluray_{{ people_bluray.pk }}">
+                        <svg class="favorite-svg-heart {% if people_bluray in user_favorite_blurays %}press{% endif %}" viewBox="0 0 24 24">
+                          <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                        </svg>
+                    </div>
                 </div>
             {% endif %}
             </div>

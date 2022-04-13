@@ -27,7 +27,11 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <div class="favorite-wrapper">
-                        <i class="favorite {% if blurays_result in user_favorite_blurays %}press{% endif %}" onclick="favorite('blurays_result_{{ blurays_result.pk }}',{{ blurays_result.pk }}, 'bluray')" id="blurays_result_{{ blurays_result.pk }}"></i>
+                        <div class="favorite" onclick="favorite('blurays_result_{{ blurays_result.pk }}',{{ blurays_result.pk }}, 'bluray')" id="blurays_result_{{ blurays_result.pk }}">
+                            <svg class="favorite-svg-heart {% if blurays_result in user_favorite_blurays %}press{% endif %}" viewBox="0 0 24 24">
+                              <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                            </svg>
+                        </div>
                     </div>
                 {% endif %}
                 </div>
@@ -63,7 +67,11 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <div class="favorite-wrapper">
-                        <i class="favorite {% if movies_result in user_favorite_movies %}press{% endif %}" onclick="favorite('movies_result_{{ movies_result.pk }}',{{ movies_result.pk }}, 'movie')" id="movies_result_{{ movies_result.pk }}"></i>
+                        <div class="favorite" onclick="favorite('movies_result_{{ movies_result.pk }}',{{ movies_result.pk }}, 'movie')" id="movies_result_{{ movies_result.pk }}">
+                            <svg class="favorite-svg-heart {% if movies_result in user_favorite_movies %}press{% endif %}" viewBox="0 0 24 24">
+                              <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                            </svg>
+                        </div>
                     </div>
                 {% endif %}
                 </div>
@@ -98,7 +106,11 @@
             {% endif %}
             {% if user.is_authenticated %}
                 <div class="favorite-wrapper">
-                    <i class="favorite {% if people_result in user_favorite_people %}press{% endif %}" onclick="favorite('people_result_{{ people_result.pk }}',{{ people_result.pk }}, 'people')" id="people_result_{{ people_result.pk }}"></i>
+                    <div class="favorite" onclick="favorite('people_result_{{ people_result.pk }}',{{ people_result.pk }}, 'people')" id="people_result_{{ people_result.pk }}">
+                        <svg class="favorite-svg-heart {% if people_result in user_favorite_people %}press{% endif %}" viewBox="0 0 24 24">
+                          <path id="heart" d="M12 4.435c-1.989-5.399-12-4.597-12 3.568 0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-8.118-10-8.999-12-3.568z" />
+                        </svg>
+                    </div>
                 </div>
             {% endif %}
             </div>
