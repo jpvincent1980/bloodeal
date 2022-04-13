@@ -7,7 +7,7 @@
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for bluray in bluray_list %}
-    <div class="capsule width-25 margin-bottom-1rem">
+    <div class="capsule capsule-all width-25 margin-bottom-1rem">
         {% if bluray.bluray_image %}
             <div class="capsule-image" style="background-image: url({{ bluray.bluray_image.url }});">
         {% else %}
@@ -42,6 +42,9 @@
     </div>
     {% endfor %}
     </div>
+    {% if bluray_list|length > 4 %}
+        <p><a href="#" id="loadMore">Voir tout</a></p>
+    {% endif %}
     {% else %}
       <div class="capsule justify-content-center margin-auto flex-wrap">
         <h2 class="margin-1rem">Aucun blu-ray n'est enregistré dans notre base de données.</h2>

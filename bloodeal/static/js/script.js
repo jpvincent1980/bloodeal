@@ -15,6 +15,34 @@ for (let menuItem of menuItems) {
     });
     }
 
+// Hnadles the show more function
+let capsules = document.getElementsByClassName("capsule-all")
+let capsulesTotal = capsules.length
+const loadMore = document.getElementById("loadMore")
+
+console.log([...capsules]);
+console.log([...capsules].slice(0, 4));
+for (let capsule of [...capsules].slice(0, 4)) {
+    capsule.style.display = "flex";
+}
+loadMore.addEventListener("click", function(e) {
+    e.preventDefault();
+    if (loadMore.textContent === "Voir tout") {
+        for (let capsule of [...capsules].slice(4, capsulesTotal)) {
+        capsule.style.display = "flex";
+        };
+        loadMore.textContent = "Voir moins";
+        loadMore.classList.add("loadLess");
+        }
+    else {
+        for (let capsule of [...capsules].slice(4, capsulesTotal)) {
+        capsule.style.display = "none";
+        };
+        loadMore.textContent = "Voir tout";
+        loadMore.classList.remove("loadLess");
+    };
+})
+
 // Handles the import of the IMDB rating
 function imdb(d,s,id) {
 var js,stags=d.getElementsByTagName(s)[0];

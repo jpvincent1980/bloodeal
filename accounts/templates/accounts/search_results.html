@@ -37,9 +37,15 @@
                 </div>
                 <div class="capsule-text">
                     <a href="{% url 'blurays:blurays_detail' slug=blurays_result.slug pk=blurays_result.pk %}">
-                    <h2>{{ blurays_result.movie }}</h2>
+                    {% if blurays_result.title %}
+                        <h2>{{ blurays_result.title }}</h2>
+                    {% else %}
+                        <h2>{{ blurays_result.movie }}</h2>
+                    {% endif %}
                     </a>
+                    {% if blurays_result.release_date %}
                     <p>Sortie: {{ blurays_result.release_date|date:"d/m/Y" }}</p>
+                    {% endif %}
                     <p><a href="{{ blurays_result.amazon_aff_link }}" target=_blank">Acheter sur Amazon</a></p>
                 </div>
         </div>
@@ -79,7 +85,9 @@
                     <a href="{% url 'movies:movies_detail' slug=movies_result.slug pk=movies_result.pk %}">
                     <h2>{{ movies_result }}</h2>
                     </a>
-                    <p>Sorti en {{ umovies_result.release_year }}</p>
+                    {% if movies_result.release_year %}
+                    <p>Sorti en {{ movies_result.release_year }}</p>
+                    {% endif %}
                 </div>
         </div>
             {% endfor %}

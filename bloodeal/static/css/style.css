@@ -222,6 +222,10 @@ p .btn {
     padding: 0.5rem 0;
 }
 
+.capsule-all {
+    display: none;
+}
+
 .capsule-image {
     position: relative;
     min-width: var(--capsule-image-width);
@@ -578,6 +582,25 @@ footer li {
 }
 
 /* End of bell handling */
+
+/* Beginning of LoadMore handling */
+
+#loadMore {
+  width: 200px;
+  color: #fff;
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--site-bg-color);
+}
+
+.loadLess {
+  background: indianred !important;
+}
+
+/* End of LoadMore handling */
 
 /* backToTop button handling */
 

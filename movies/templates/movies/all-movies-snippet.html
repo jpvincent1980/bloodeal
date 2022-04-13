@@ -7,7 +7,7 @@
     </div>
     <div class="dashboard-block-element-content flex-wrap">
     {% for movie in movie_list %}
-    <div class="capsule width-25 margin-bottom-1rem">
+    <div class="capsule capsule-all width-25 margin-bottom-1rem">
         {% if movie.movie_image %}
             <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});">
         {% else %}
@@ -42,6 +42,9 @@
     </div>
     {% endfor %}
     </div>
+    {% if movie_list|length > 4 %}
+        <p><a href="#" id="loadMore">Voir tout</a></p>
+    {% endif %}
     {% else %}
       <div class="capsule justify-content-center margin-auto">
         <h2 class="margin-1rem width-100 text-align-center">Aucun film n'est enregistré dans notre base de données.</h2>
