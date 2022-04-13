@@ -246,7 +246,7 @@ p .btn {
 
 .capsule-text h2 {
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
     color: black;
     margin:0;
     padding: 0.2rem;
