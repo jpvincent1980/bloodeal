@@ -138,6 +138,7 @@ input.nav-search-bar {
 .nav-burger-line {
     width: calc(var(--burger-line-height) * 10);
     height: var(--burger-line-height);
+    border-radius: 20rem;
     margin-top: var(--burger-line-height);
     background: white;
 }
