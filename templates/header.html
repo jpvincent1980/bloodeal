@@ -2,23 +2,34 @@
 
 <header>
     <nav class="nav-nav">
-        <span class="nav-title"><a href="{% url 'accounts:index' %}">BL💿💿DEAL</a></span>
-        <form class="nav-search-wrapper" action="{% url 'accounts:search_results' %}" method="GET">
-            <input class="nav-search-bar" type="search" name="Q" placeholder="Tapez un mot-clé">
-                <button>
-                   <svg width="44px" height="44px" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g class="search-icon">
-                        <path class="search" d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"/>
-                        <path class="search" d="M19.25 19.25L15.2625 15.2625"/>
-                      </g>
-                    </svg>
-              </button>
-        </form>
-        <div class="nav-burger" id="nav-burger">
-            <div class="nav-burger-line"></div>
-            <div class="nav-burger-line"></div>
-            <div class="nav-burger-line"></div>
+        <div class="nav-burger-and-searchbar">
+            <span class="nav-title"><a href="{% url 'accounts:index' %}">BL💿💿DEAL</a></span>
+            <div class="nav-burger" id="nav-burger">
+                <div class="nav-burger-line"></div>
+                <div class="nav-burger-line"></div>
+                <div class="nav-burger-line"></div>
+            </div>
+            <span class="nav-home">
+                <a href="{% url 'accounts:index' %}">
+                    <img src="{% static 'img/logo-home.png' %}" alt="Home Logo - Freepik.com">
+                </a></span>
+            <form class="nav-search-wrapper" action="{% url 'accounts:search_results' %}" method="GET">
+                <input class="nav-search-bar" type="search" name="Q" placeholder="Tapez un mot-clé">
+                    <button>
+                       <svg width="44px" height="44px" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g class="search-icon">
+                            <path class="search" d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"/>
+                            <path class="search" d="M19.25 19.25L15.2625 15.2625"/>
+                          </g>
+                        </svg>
+                  </button>
+            </form>
         </div>
+<!--        <div class="nav-burger" id="nav-burger">-->
+<!--            <div class="nav-burger-line"></div>-->
+<!--            <div class="nav-burger-line"></div>-->
+<!--            <div class="nav-burger-line"></div>-->
+<!--        </div>-->
         <ul class="nav-ul" id="nav-ul">
             {% if not request.user.is_authenticated %}
             <li class="nav-li">
