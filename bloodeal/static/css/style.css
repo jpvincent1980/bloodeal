@@ -559,13 +559,6 @@ footer li {
   fill: #e23b3b;
 }
 
-@keyframes size {
-  0% {padding:10px 12px 8px;}
-  50% {padding:14px 16px 12px;
-    margin-top:-4px;}
-  100% {padding:10px 12px 8px;}
-}
-
 /* End of favorite handling */
 
 /* Beginning of bell handling */
@@ -778,6 +771,10 @@ path.search {
 
     .width-25 {
         width: 80vw;
+    }
+
+    .favorite-svg-heart {
+        width: 2.5vw;
     }
 
     .mobile-display-none {
