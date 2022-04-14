@@ -77,7 +77,7 @@ h1 {
 
 .nav-title {
     margin: auto;
-    font-size: 3vw;
+    font-size: 2.5vw;
     font-weight: 600;
     width: -webkit-fill-available;
     text-align: center;
@@ -93,12 +93,14 @@ h1 {
 .nav-search-wrapper {
     display: flex;
     justify-content: center;
+    padding: 1vw;
 }
 
 input.nav-search-bar {
     margin: 0;
     min-width: 20vw;
-    width: fit-content;
+    /*width: fit-content;*/
+    width: 100%;
     height: calc(var(--search-glass-width) * 1.5);
     max-height: 1.5rem;
 }
@@ -696,7 +698,7 @@ path.search {
 
 /* Start of responsive handling */
 
-@media (max-width: 1540px) {
+@media (max-width: 1024px) {
 
     main {
         margin-top: calc(var(--burger-line-height) * 14);
@@ -742,7 +744,6 @@ path.search {
 
     input.nav-search-bar {
         min-width: 5vw;
-        width: 60vw;
     }
 
     .nav-ul {
@@ -764,7 +765,7 @@ path.search {
 
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
 
     h1 {
         font-size: 8vw;
