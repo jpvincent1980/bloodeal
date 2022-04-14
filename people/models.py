@@ -75,7 +75,7 @@ class People(models.Model):
 def get_people(user):
 
     people = People.objects.all()
-    top_people = people.annotate(num_favorites=Count("favorite_people")).order_by("-num_favorites")[:5]
+    top_people = people.annotate(num_favorites=Count("favorite_people")).order_by("-num_favorites")
     favorite_people = people.filter(favorite_people__user=user)
 
     return {"movies": people,

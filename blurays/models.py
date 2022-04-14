@@ -85,7 +85,7 @@ class BluRay(models.Model):
 def get_blurays(user=None):
 
     blurays = BluRay.objects.all()
-    top_blurays = blurays.annotate(num_favorites=Count("favorite_bluray")).order_by("-num_favorites")[:5]
+    top_blurays = blurays.annotate(num_favorites=Count("favorite_bluray")).order_by("-num_favorites")
     favorite_blurays = blurays.filter(favorite_bluray__user=user)
 
     return {"blurays": blurays,

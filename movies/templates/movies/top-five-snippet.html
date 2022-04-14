@@ -6,7 +6,7 @@
         <h2>TOP 5</h2>
     </div>
     <div class="dashboard-block-element-content flex-column">
-    {% for movie in top_movies %}
+    {% for movie in top_movies|slice:":5" %}
     <div class="capsule align-items-center flex-column width-100">
         {% if movie.movie_image %}
         <div class="capsule-image" style="background-image: url({{ movie.movie_image.url }});">
