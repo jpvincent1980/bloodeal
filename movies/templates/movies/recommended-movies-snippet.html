@@ -25,7 +25,7 @@
             </div>
             <div class="capsule-text">
                 <a href="{% url 'movies:movies_detail' slug=user_recommended_movie.slug pk=user_recommended_movie.pk %}">
-                <h2>{{ user_recommended_movie|truncatechars:18 }}</h2>
+                <h2>{{ user_recommended_movie|truncatechars:30 }}</h2>
                 </a>
                 <p>Sorti en {{ user_recommended_movie.release_year }}</p>
             </div>

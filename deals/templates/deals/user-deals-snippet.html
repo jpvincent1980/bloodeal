@@ -23,9 +23,9 @@
         <div class="capsule-text text-align-center">
             <a href="{% url 'deals:deals_detail' pk=deal.pk %}">
                 {% if deal.bluray.title %}
-                    <h2 class="justify-content-center">{{ deal.bluray.title|truncatechars:90 }}</h2>
+                    <h2 class="justify-content-center">{{ deal.bluray.title|truncatechars:40 }}</h2>
                 {% else %}
-                    <h2 class="justify-content-center">{{ deal.bluray.movie|truncatechars:90 }}</h2>
+                    <h2 class="justify-content-center">{{ deal.bluray.movie|truncatechars:40 }}</h2>
                 {% endif %}
             </a>
         </div>

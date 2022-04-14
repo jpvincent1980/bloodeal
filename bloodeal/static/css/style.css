@@ -243,7 +243,7 @@ p .btn {
     flex-direction: column;
     justify-content: center;
     text-align: left;
-    width: fit-content;
+    width: 50%;
 }
 
 .capsule-text h2 {
@@ -253,10 +253,11 @@ p .btn {
     margin:0;
     padding: 0.2rem;
     overflow: hidden;
+    font-size: 1.2rem;
 }
 
 .capsule-text h3 {
-    font-size: 1.4rem;
+    font-size: 1rem;
     margin: 0.4rem;
 }
 

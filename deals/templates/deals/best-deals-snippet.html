@@ -31,9 +31,9 @@
         <div class="capsule-text">
             <a href="{% url 'deals:deals_detail' pk=best_deal.pk %}">
                 {% if best_deal.bluray.title %}
-                    <h2>{{ best_deal.bluray.title|truncatechars:18 }}</h2>
+                    <h2>{{ best_deal.bluray.title|truncatechars:30 }}</h2>
                 {% else %}
-                    <h2>{{ best_deal.bluray.movie|truncatechars:18 }}</h2>
+                    <h2>{{ best_deal.bluray.movie|truncatechars:30 }}</h2>
                 {% endif %}
             </a>
                 {% if best_deal.bluray.uhd %}

@@ -26,9 +26,9 @@
             <div class="capsule-text">
                 <a href="{% url 'blurays:blurays_detail' slug=user_recommended_bluray.slug pk=user_recommended_bluray.pk %}">
                 {% if user_recommended_bluray.title %}
-                    <h2>{{ user_recommended_bluray.title|truncatechars:18 }}</h2>
+                    <h2>{{ user_recommended_bluray.title|truncatechars:30 }}</h2>
                 {% else %}
-                    <h2>{{ user_recommended_bluray.movie|truncatechars:18 }}</h2>
+                    <h2>{{ user_recommended_bluray.movie|truncatechars:30 }}</h2>
                 {% endif %}
                 </a>
                 {% if user_recommended_bluray.uhd %}
