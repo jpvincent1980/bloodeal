@@ -18,6 +18,7 @@
     --footer-height: 5vh;
     --search-glass-width: 30px;
     --burger-line-height: 4px;
+    --blur-height: 20vh;
 }
 
 * {
@@ -218,6 +219,7 @@ p .btn {
 .capsule {
     box-sizing: border-box;
     display: flex;
+    align-items: center;
     overflow: inherit;
     background: var(--capsule-bg-color);
     max-height: 100%;
@@ -272,6 +274,7 @@ p .btn {
 }
 
 .capsule-text p {
+    font-size: 0.9rem;
     margin: 0.2rem;
 }
 
@@ -587,6 +590,16 @@ footer li {
 /* End of bell handling */
 
 /* Beginning of LoadMore handling */
+
+.loadMore-container:before {
+    content: "";
+    display: block;
+    position: relative;
+    background: linear-gradient(180deg,hsla(0,0%,100%,0.4) 0,#fff);
+    margin-top: calc(var(--blur-height) * -1);
+    height: var(--blur-height);
+    width: 100%;
+}
 
 #loadMore {
   width: 200px;

@@ -4,7 +4,7 @@
     {% if latest_movies %}
     <h2>Gros plan sur ...</h2>
     {% with latest_movies|first as latest_movie %}
-    <div class="capsule align-items-center flex-wrap">
+    <div class="capsule align-items-center flex-wrap flex-column">
                 {% if latest_movie.movie_image %}
                 <div class="capsule-image margin-auto" style="background-image: url({{ latest_movie.movie_image.url }});">
                 {% else %}
@@ -20,7 +20,7 @@
                     </div>
                     {% endif %}
                 </div>
-                <div class="capsule-text margin-auto text-align-center">
+                <div class="capsule-text margin-auto text-align-center width-100">
                     <p>
                         {% if latest_movie.slug %}
                         <a href="{% url 'movies:movies_detail' slug=latest_movie.slug pk=latest_movie.pk %}">

@@ -19,6 +19,7 @@ for (let menuItem of menuItems) {
 let capsules = document.getElementsByClassName("capsule-all")
 let capsulesTotal = capsules.length
 const loadMore = document.getElementById("loadMore")
+const loadMoreContainer = document.getElementById("loadMore-container")
 
 if (loadMore) {
 
@@ -33,6 +34,7 @@ if (loadMore) {
             };
             loadMore.textContent = "Voir moins";
             loadMore.classList.add("loadLess");
+            loadMoreContainer.classList.toggle("loadMore-container");
             }
         else {
             for (let capsule of [...capsules].slice(4, capsulesTotal)) {
@@ -40,6 +42,7 @@ if (loadMore) {
             };
             loadMore.textContent = "Voir tout";
             loadMore.classList.remove("loadLess");
+            loadMoreContainer.classList.toggle("loadMore-container");
         };
     });
 }
