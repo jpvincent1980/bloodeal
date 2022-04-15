@@ -24,10 +24,10 @@
                     <p>
                         {% if latest_movie.slug %}
                         <a href="{% url 'movies:movies_detail' slug=latest_movie.slug pk=latest_movie.pk %}">
-                            <h2>{{ latest_movie|truncatechars:40 }}</h2>
+                            <h2 class="justify-content-center">{{ latest_movie|truncatechars:40 }}</h2>
                         </a>
                         {% else %}
-                            <h2>{{ latest_movie|truncatechars:40 }}</h2>
+                            <h2 class="justify-content-center">{{ latest_movie|truncatechars:40 }}</h2>
                         {% endif %}
                     </p>
                     {% if latest_movie.directors %}

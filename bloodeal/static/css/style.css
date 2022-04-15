@@ -254,7 +254,7 @@ p .btn {
     color: black;
     margin:0;
     padding: 0.2rem;
-    overflow: hidden;
+    /*overflow: hidden;*/
     font-size: 1.2rem;
 }
 
@@ -278,7 +278,7 @@ p .btn {
     margin: 0.2rem;
 }
 
-.counter {
+.capsule-text p.counter {
     font-size: 4rem;
     font-weight: 600;
 }

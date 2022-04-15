@@ -24,16 +24,16 @@
                     {% if latest_bluray.slug %}
                     <a href="{% url 'blurays:blurays_detail' slug=latest_bluray.slug pk=latest_bluray.pk %}">
                     {% if latest_bluray.title %}
-                        <h2>{{ latest_bluray.title|truncatechars:40 }}</h2>
+                        <h2 class="justify-content-center">{{ latest_bluray.title|truncatechars:40 }}</h2>
                     {% else %}
-                        <h2>{{ latest_bluray.movie|truncatechars:40 }}</h2>
+                        <h2 class="justify-content-center">{{ latest_bluray.movie|truncatechars:40 }}</h2>
                     {% endif %}
                     </a>
                     {% else %}
                         {% if latest_bluray.title %}
-                            <h2>{{ latest_bluray.title|truncatechars:40 }}</h2>
+                            <h2 class="justify-content-center">{{ latest_bluray.title|truncatechars:40 }}</h2>
                         {% else %}
-                            <h2>{{ latest_bluray.movie|truncatechars:40 }}</h2>
+                            <h2 class="justify-content-center">{{ latest_bluray.movie|truncatechars:40 }}</h2>
                         {% endif %}
                     {% endif %}
                     {% if latest_bluray.uhd %}
