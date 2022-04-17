@@ -595,7 +595,7 @@ footer li {
     content: "";
     display: block;
     position: relative;
-    background: linear-gradient(180deg,hsla(0,0%,100%,0.4) 0,#fff);
+    background: linear-gradient(180deg,hsla(0,0%,100%,0) 0,#fff);
     margin-top: calc(var(--blur-height) * -1);
     height: var(--blur-height);
     width: 100%;
