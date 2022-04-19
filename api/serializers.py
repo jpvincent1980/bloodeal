@@ -1,3 +1,4 @@
+from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
 from accounts.models import CustomUser
@@ -27,6 +28,11 @@ class BluRaySerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    requested_by = SlugRelatedField(read_only=True,
+                                    slug_field="pseudo")
+    movie = SlugRelatedField(read_only=True,
+                             slug_field="title_vf")
+
     class Meta:
         model = BluRay
         fields = ["id", "movie", "slug", "title", "uhd", "vf", "forced_sub",
@@ -39,6 +45,11 @@ class DealSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    requested_by = SlugRelatedField(read_only=True,
+                                    slug_field="pseudo")
+    bluray = SlugRelatedField(read_only=True,
+                              slug_field="title")
+
     class Meta:
         model = Deal
         fields = ["id", "bluray", "amazon_aff_link", "requested_by", "status",
@@ -50,6 +61,9 @@ class MovieSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    requested_by = SlugRelatedField(read_only=True,
+                                    slug_field="pseudo")
+
     class Meta:
         model = Movie
         fields = ["id", "title_vf", "title_vo", "slug", "release_year",
@@ -61,6 +75,11 @@ class MovieActorSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    movie = SlugRelatedField(read_only=True,
+                             slug_field="title_vf")
+    actor = SlugRelatedField(read_only=True,
+                             slug_field="people_full_name")
+
     class Meta:
         model = MovieActor
         fields = ["id", "movie", "actor", "date_created", "date_updated"]
@@ -70,6 +89,11 @@ class MovieDirectorSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    movie = SlugRelatedField(read_only=True,
+                             slug_field="title_vf")
+    director = SlugRelatedField(read_only=True,
+                             slug_field="people_full_name")
+
     class Meta:
         model = MovieDirector
         fields = ["id", "movie", "director", "date_created", "date_updated"]
@@ -90,6 +114,11 @@ class FavoriteBluRaySerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+    bluray = SlugRelatedField(read_only=True,
+                              slug_field="title")
+
     class Meta:
         model = FavoriteBluRay
         fields = ["id", "user", "bluray", "date_created", "date_updated"]
@@ -99,6 +128,11 @@ class FavoriteMovieSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+    movie = SlugRelatedField(read_only=True,
+                             slug_field="title_vf")
+
     class Meta:
         model = FavoriteMovie
         fields = ["id", "user", "movie", "date_created", "date_updated"]
@@ -108,6 +142,11 @@ class FavoritePeopleSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+    people = SlugRelatedField(read_only=True,
+                              slug_field="people_full_name")
+
     class Meta:
         model = FavoritePeople
         fields = ["id", "user", "people", "date_created", "date_updated"]
@@ -117,6 +156,9 @@ class BluRayRequestSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+
     class Meta:
         model = BluRayRequest
         fields = ["id", "user", "amazon_link", "asin", "bluray", "status",
@@ -127,6 +169,9 @@ class MovieRequestSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+
     class Meta:
         model = MovieRequest
         fields = ["id", "user", "imdb_link", "imdb_id", "title_vf", "title_vo",
@@ -138,6 +183,9 @@ class PeopleRequestSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+
     class Meta:
         model = PeopleRequest
         fields = ["id", "user", "imdb_link", "imdb_id",
@@ -149,6 +197,11 @@ class DealRequestSerializer(ModelSerializer):
     """
     A custom ModelSerializer that serializes CustomUser instances.
     """
+    user = SlugRelatedField(read_only=True,
+                            slug_field="pseudo")
+    bluray = SlugRelatedField(read_only=True,
+                              slug_field="title")
+
     class Meta:
         model = DealRequest
         fields = ["id", "user", "bluray", "amazon_link", "asin", "price",

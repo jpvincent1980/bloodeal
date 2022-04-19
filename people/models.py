@@ -55,6 +55,10 @@ class People(models.Model):
 
         return f"{self.first_name} {self.last_name}"
 
+    @property
+    def people_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
 
