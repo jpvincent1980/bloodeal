@@ -17,7 +17,7 @@ class IsRequester(BasePermission):
     Custom permission to allow users to update data they requested.
     """
     def has_permission(self, request, view):
-        return request.method in SAFE_METHODS
+        return request.method in SAFE_METHODS or request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
         return obj.requested_by == request.user
@@ -28,7 +28,7 @@ class IsUser(BasePermission):
     Custom permission to allow users to update their favorites.
     """
     def has_permission(self, request, view):
-        return request.method in SAFE_METHODS
+        return request.method in SAFE_METHODS or request.user.is_authenticated
 
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user
