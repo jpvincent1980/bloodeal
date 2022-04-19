@@ -43,7 +43,7 @@ class DealDetailView(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealDetailView, self).get_context_data(**kwargs)
-        user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
+        user_deals = Deal.objects.filter(requested_by=self.request.user).order_by("-date_created")
         bluray = BluRay.objects.filter(deal_bluray=self.object)
         movie = Movie.objects.filter(bluray_movie__in=bluray)
         movie = movie[0] if movie else movie
@@ -57,14 +57,14 @@ class DealDetailView(DetailView):
 
 class DealCreateView(SuperUserRequiredMixin, CreateView):
     model = Deal
-    fields = ["amazon_link", "price", "created_by"]
+    fields = ["amazon_link", "price", "requested_by"]
     template_name = "deals/deals_create.html"
     success_url = reverse_lazy("accounts:dashboard")
 
     def get_initial(self):
         initial = super().get_initial()
         initial = initial.copy()
-        initial["created_by"] = self.request.user.pk
+        initial["requested_by"] = self.request.user.pk
         return initial
 
     def form_valid(self, form):
@@ -79,7 +79,7 @@ class DealCreateView(SuperUserRequiredMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(DealCreateView, self).get_context_data(**kwargs)
-        user_deals = Deal.objects.filter(created_by=self.request.user).order_by("-date_created")
+        user_deals = Deal.objects.filter(requested_by=self.request.user).order_by("-date_created")
         context.update({"user_deals": user_deals})
         context.update(get_movies(self.request.user))
         context.update(get_blurays(self.request.user))

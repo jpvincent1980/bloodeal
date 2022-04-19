@@ -1,3 +1,4 @@
+from rest_framework.fields import CurrentUserDefault
 from rest_framework.relations import SlugRelatedField
 from rest_framework.serializers import ModelSerializer
 
@@ -26,7 +27,7 @@ class CustomUserSerializer(ModelSerializer):
 
 class BluRaySerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes BluRay instances.
     """
     requested_by = SlugRelatedField(read_only=True,
                                     slug_field="pseudo")
@@ -43,7 +44,7 @@ class BluRaySerializer(ModelSerializer):
 
 class DealSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes Deal instances.
     """
     requested_by = SlugRelatedField(read_only=True,
                                     slug_field="pseudo")
@@ -59,7 +60,7 @@ class DealSerializer(ModelSerializer):
 
 class MovieSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes Movie instances.
     """
     requested_by = SlugRelatedField(read_only=True,
                                     slug_field="pseudo")
@@ -73,7 +74,7 @@ class MovieSerializer(ModelSerializer):
 
 class MovieActorSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes MovieActor instances.
     """
     movie = SlugRelatedField(read_only=True,
                              slug_field="title_vf")
@@ -87,7 +88,7 @@ class MovieActorSerializer(ModelSerializer):
 
 class MovieDirectorSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes MovieDirector instances.
     """
     movie = SlugRelatedField(read_only=True,
                              slug_field="title_vf")
@@ -101,7 +102,7 @@ class MovieDirectorSerializer(ModelSerializer):
 
 class PeopleSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes People instances.
     """
     class Meta:
         model = People
@@ -112,9 +113,17 @@ class PeopleSerializer(ModelSerializer):
 
 class FavoriteBluRaySerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes FavoriteBluRay instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
     bluray = SlugRelatedField(read_only=True,
                               slug_field="title")
@@ -126,11 +135,19 @@ class FavoriteBluRaySerializer(ModelSerializer):
 
 class FavoriteMovieSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes FavoriteMovie instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super(FavoriteMovieSerializer, self).__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
-    movie = SlugRelatedField(read_only=True,
+    movie = SlugRelatedField(queryset=Movie.objects.all(),
                              slug_field="title_vf")
 
     class Meta:
@@ -140,11 +157,19 @@ class FavoriteMovieSerializer(ModelSerializer):
 
 class FavoritePeopleSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes FavoritePeople instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
-    people = SlugRelatedField(read_only=True,
+    people = SlugRelatedField(queryset=People.objects.all(),
                               slug_field="people_full_name")
 
     class Meta:
@@ -154,9 +179,17 @@ class FavoritePeopleSerializer(ModelSerializer):
 
 class BluRayRequestSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes BluRayRequest instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
 
     class Meta:
@@ -167,9 +200,17 @@ class BluRayRequestSerializer(ModelSerializer):
 
 class MovieRequestSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes MovieRequest instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
 
     class Meta:
@@ -181,9 +222,17 @@ class MovieRequestSerializer(ModelSerializer):
 
 class PeopleRequestSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes PeopleRequest instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
 
     class Meta:
@@ -195,9 +244,17 @@ class PeopleRequestSerializer(ModelSerializer):
 
 class DealRequestSerializer(ModelSerializer):
     """
-    A custom ModelSerializer that serializes CustomUser instances.
+    A custom ModelSerializer that serializes DealRequest instances.
     """
-    user = SlugRelatedField(read_only=True,
+    def __init__(self, *args, **kwargs):
+        current_user = kwargs['context']['request'].user
+        super().__init__(*args, **kwargs)
+        if not current_user.is_staff:
+            self.fields["user"].queryset = CustomUser.objects.filter(pk=current_user.pk)
+        else:
+            self.fields["user"].queryset = CustomUser.objects.all()
+
+    user = SlugRelatedField(queryset=CustomUser.objects.all(),
                             slug_field="pseudo")
     bluray = SlugRelatedField(read_only=True,
                               slug_field="title")

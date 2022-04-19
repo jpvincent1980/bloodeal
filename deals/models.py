@@ -90,7 +90,7 @@ def get_deals(bluray=None, movie=None, people=None, user=None):
         context.update({"people_deals": people_deals})
 
     if user:
-        user_deals = Deal.objects.filter(created_by=user).order_by("-date_created")
+        user_deals = Deal.objects.filter(requested_by=user).order_by("-date_created")
         context.update({"user_deals": user_deals})
 
     return context
