@@ -139,7 +139,7 @@ class PeopleRequestViewSet(ModelViewSet):
     """
     queryset = PeopleRequest.objects.all()
     serializer_class = PeopleRequestSerializer
-    permission_classes = [IsRequester | IsAdmin]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class MovieRequestViewSet(ModelViewSet):
@@ -149,7 +149,7 @@ class MovieRequestViewSet(ModelViewSet):
     """
     queryset = MovieRequest.objects.all()
     serializer_class = MovieRequestSerializer
-    permission_classes = [IsRequester | IsAdmin]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class BluRayRequestViewSet(ModelViewSet):
@@ -159,7 +159,7 @@ class BluRayRequestViewSet(ModelViewSet):
     """
     queryset = BluRayRequest.objects.all()
     serializer_class = BluRayRequestSerializer
-    permission_classes = [IsRequester | IsAdmin]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class DealRequestViewSet(ModelViewSet):
@@ -169,4 +169,4 @@ class DealRequestViewSet(ModelViewSet):
     """
     queryset = DealRequest.objects.all()
     serializer_class = DealRequestSerializer
-    permission_classes = [IsRequester | IsAdmin]
+    permission_classes = [IsUser | IsAdmin]
