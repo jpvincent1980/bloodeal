@@ -41,7 +41,7 @@ class DealSerializer(ModelSerializer):
     """
     class Meta:
         model = Deal
-        fields = ["id", "bluray", "amazon_aff_link", "created_by", "status",
+        fields = ["id", "bluray", "amazon_aff_link", "requested_by", "status",
                   "price", "start_date", "end_date", "date_created",
                   "date_updated"]
 
