@@ -84,3 +84,6 @@ class CustomUser(AbstractUser):
         name = self.pseudo if self.pseudo else self.email
 
         return f"{name}"
+
+    def join_date(self):
+        return self.date_joined.strftime("%d/%m/%Y")

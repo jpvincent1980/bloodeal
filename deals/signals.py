@@ -15,12 +15,12 @@ def create_deal(sender, instance, **kwargs):
             amazon_aff_link = f"https://www.amazon.fr/dp/{instance.asin}?m=A1X6FK5RDHNB96&tag=laureatis-21"
         bluray = BluRay.objects.filter(amazon_asin=instance.asin)
         bluray = bluray[0] if bluray else None
-        created_by = instance.user
+        requested_by = instance.user
         status = "1"
         price = instance.price
         deal = Deal.objects.create(bluray=bluray,
                                    amazon_aff_link=amazon_aff_link,
-                                   created_by=created_by,
+                                   requested_by=requested_by,
                                    status=status,
                                    price=price)
         instance.deal = deal

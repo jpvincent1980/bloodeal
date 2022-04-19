@@ -16,14 +16,14 @@ class DealAdmin(admin.ModelAdmin):
                     "amazon_aff_link",
                     "start_date",
                     "end_date",
-                    "created_by",
+                    "requested_by",
                     "status",
                     "price")
     list_editable = ("bluray",
                      "amazon_aff_link",
                      "start_date",
                      "end_date",
-                     "created_by",
+                     "requested_by",
                      "status",
                      "price")
     search_fields = ("bluray",

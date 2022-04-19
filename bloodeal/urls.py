@@ -33,6 +33,7 @@ urlpatterns = [
     path('movies/', include("movies.urls"), name="movies"),
     path('people/', include("people.urls"), name="people"),
     path('requests/', include("user_requests.urls"), name="user_requests"),
+    path('api/', include("api.urls"), name="api"),
     path('site-admin/', admin.site.urls),
     path('sentry-debug/', sentry_error, name="sentry"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

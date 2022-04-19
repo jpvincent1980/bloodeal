@@ -27,10 +27,10 @@ class Deal(models.Model):
                                       blank=False,
                                       null=False,
                                       verbose_name="Lien Amazon")
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   on_delete=models.CASCADE,
-                                   related_name='deal_user',
-                                   blank=False, null=False)
+    requested_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                     on_delete=models.CASCADE,
+                                     related_name='deal_user',
+                                     blank=False, null=False)
     status = models.CharField(max_length=56,
                               choices=CHOICES,
                               default="3",
