@@ -2,11 +2,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from .models import People
-from user_requests.models import PeopleRequest
+from user_requests.models import PeopleRequestOpen
 
 
-@receiver(post_save, sender=PeopleRequest)
-def create_deal(sender, instance, **kwargs):
+@receiver(post_save, sender=PeopleRequestOpen)
+def create_people(sender, instance, **kwargs):
     if instance.status == "2":
         imdb_id = instance.imdb_id
         requested_by = instance.user

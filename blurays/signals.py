@@ -2,11 +2,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from .models import BluRay
-from user_requests.models import BluRayRequest
+from user_requests.models import BluRayRequestOpen
 
 
-@receiver(post_save, sender=BluRayRequest)
-def create_deal(sender, instance, **kwargs):
+@receiver(post_save, sender=BluRayRequestOpen)
+def create_bluray(sender, instance, **kwargs):
     if instance.status == "2":
         if not instance.asin:
             amazon_link = instance.amazon_link

@@ -3,10 +3,10 @@ from django.dispatch import receiver
 
 from blurays.models import BluRay
 from .models import Deal
-from user_requests.models import DealRequest
+from user_requests.models import DealRequestOpen
 
 
-@receiver(post_save, sender=DealRequest)
+@receiver(post_save, sender=DealRequestOpen)
 def create_deal(sender, instance, **kwargs):
     if instance.status == "2" and not instance.deal:
         if not instance.asin:
