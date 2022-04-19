@@ -92,7 +92,7 @@ class MovieDirectorSerializer(ModelSerializer):
     movie = SlugRelatedField(read_only=True,
                              slug_field="title_vf")
     director = SlugRelatedField(read_only=True,
-                             slug_field="people_full_name")
+                                slug_field="people_full_name")
 
     class Meta:
         model = MovieDirector
