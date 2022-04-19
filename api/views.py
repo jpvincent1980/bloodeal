@@ -1,5 +1,4 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAdminUser
 
 from .serializers import (
     CustomUserSerializer,
@@ -17,7 +16,7 @@ from .serializers import (
     BluRayRequestSerializer,
     DealRequestSerializer)
 
-from .permissions import IsAnonymous, IsRequester, IsUser
+from .permissions import IsAnonymous, IsRequester, IsUser, IsAdmin
 
 from accounts.models import CustomUser
 from blurays.models import BluRay
@@ -40,7 +39,7 @@ class CustomUserViewSet(ModelViewSet):
     """
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdmin]
 
 
 class BluRayViewSet(ModelViewSet):
@@ -50,7 +49,7 @@ class BluRayViewSet(ModelViewSet):
     """
     queryset = BluRay.objects.all()
     serializer_class = BluRaySerializer
-    permission_classes = [IsAnonymous | IsRequester | IsAdminUser]
+    permission_classes = [IsAnonymous | IsRequester | IsAdmin]
 
 
 class MovieViewSet(ModelViewSet):
@@ -60,7 +59,7 @@ class MovieViewSet(ModelViewSet):
     """
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-    permission_classes = [IsAnonymous | IsRequester | IsAdminUser]
+    permission_classes = [IsAnonymous | IsRequester | IsAdmin]
 
 
 class MovieDirectorViewSet(ModelViewSet):
@@ -90,7 +89,7 @@ class PeopleViewSet(ModelViewSet):
     """
     queryset = People.objects.all()
     serializer_class = PeopleSerializer
-    permission_classes = [IsAnonymous | IsRequester | IsAdminUser]
+    permission_classes = [IsAnonymous | IsRequester | IsAdmin]
 
 
 class DealViewSet(ModelViewSet):
@@ -100,7 +99,7 @@ class DealViewSet(ModelViewSet):
     """
     queryset = Deal.objects.all()
     serializer_class = DealSerializer
-    permission_classes = [IsAnonymous | IsRequester | IsAdminUser]
+    permission_classes = [IsAnonymous | IsRequester | IsAdmin]
 
 
 class FavoriteMovieViewSet(ModelViewSet):
@@ -110,7 +109,7 @@ class FavoriteMovieViewSet(ModelViewSet):
     """
     queryset = FavoriteMovie.objects.all()
     serializer_class = FavoriteMovieSerializer
-    permission_classes = [IsUser | IsAdminUser]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class FavoritePeopleViewSet(ModelViewSet):
@@ -120,7 +119,7 @@ class FavoritePeopleViewSet(ModelViewSet):
     """
     queryset = FavoritePeople.objects.all()
     serializer_class = FavoritePeopleSerializer
-    permission_classes = [IsUser | IsAdminUser]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class FavoriteBluRayViewSet(ModelViewSet):
@@ -130,7 +129,7 @@ class FavoriteBluRayViewSet(ModelViewSet):
     """
     queryset = FavoriteBluRay.objects.all()
     serializer_class = FavoriteBluRaySerializer
-    permission_classes = [IsUser | IsAdminUser]
+    permission_classes = [IsUser | IsAdmin]
 
 
 class PeopleRequestViewSet(ModelViewSet):
@@ -140,7 +139,7 @@ class PeopleRequestViewSet(ModelViewSet):
     """
     queryset = PeopleRequest.objects.all()
     serializer_class = PeopleRequestSerializer
-    permission_classes = [IsRequester | IsAdminUser]
+    permission_classes = [IsRequester | IsAdmin]
 
 
 class MovieRequestViewSet(ModelViewSet):
@@ -150,7 +149,7 @@ class MovieRequestViewSet(ModelViewSet):
     """
     queryset = MovieRequest.objects.all()
     serializer_class = MovieRequestSerializer
-    permission_classes = [IsRequester | IsAdminUser]
+    permission_classes = [IsRequester | IsAdmin]
 
 
 class BluRayRequestViewSet(ModelViewSet):
@@ -160,7 +159,7 @@ class BluRayRequestViewSet(ModelViewSet):
     """
     queryset = BluRayRequest.objects.all()
     serializer_class = BluRayRequestSerializer
-    permission_classes = [IsRequester | IsAdminUser]
+    permission_classes = [IsRequester | IsAdmin]
 
 
 class DealRequestViewSet(ModelViewSet):
@@ -170,4 +169,4 @@ class DealRequestViewSet(ModelViewSet):
     """
     queryset = DealRequest.objects.all()
     serializer_class = DealRequestSerializer
-    permission_classes = [IsRequester | IsAdminUser]
+    permission_classes = [IsRequester | IsAdmin]
