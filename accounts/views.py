@@ -1,13 +1,17 @@
 import smtplib
+import io
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView
+from reportlab.pdfbase.pdfmetrics import stringWidth, getRegisteredFontNames
+from reportlab.pdfgen import canvas
+from reportlab.rl_settings import defaultPageSize
 
 from accounts.models import CustomUser
 from bloodeal.settings import EMAIL_HOST_USER
@@ -420,3 +424,39 @@ def send_message_view(request):
 def sentry_error(request):
 
     return 1 / 0
+
+
+def generate_pdf(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Sets "background" color to red
+    p.setFillColor("red")
+    p.rect(0, 0, 400, 400, fill=1)
+
+    # Sets font parameters
+    p.setFont("Helvetica", 36)
+    p.setFillColorRGB(255, 255, 255, 1)
+
+    # Sets page size
+    p.setPageSize((400, 400))
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    text1 = "CARTE DE MEMBRE"
+    p.drawCentredString(200, 250, text1)
+
+    text2 = f"{request.user}"
+    p.drawCentredString(200, 150, text2)
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='hello.pdf')

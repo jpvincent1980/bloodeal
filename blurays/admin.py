@@ -1,8 +1,11 @@
+import csv
+
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
-from movies.models import Movie
 from .models import BluRay
 
 
@@ -13,6 +16,7 @@ class BluRayAdmin(admin.ModelAdmin):
     A class inheriting from ModelAdmin to manage BluRay instances in the Admin
     interface.
     """
+    actions = ["export_csv"]
     list_per_page = 11
     list_display = ("id", "image_tag", "link_to_movie", "movie", "slug",
                     "title", "uhd", "vf", "forced_sub", "ean",
@@ -37,3 +41,15 @@ class BluRayAdmin(admin.ModelAdmin):
             return format_html('<a href="{}" target="_blank">{}</a>', link, obj.amazon_aff_link)
         return ""
     link_to_amazon.short_description = 'Amazon'
+
+    @admin.action(description=_("Exporter en CSV"))
+    def export_csv(self, request, queryset):
+        response = HttpResponse(content_type="text/csv",
+                                headers={"Content-Disposition": "attachment; filename=extraction.csv"},
+                                )
+        writer = csv.writer(response)
+        # Pour récupérer le nom des champs sur la première ligne du CSV
+        writer.writerow([key for key, value in queryset.values()[0].items()])
+        # Pour récupérer les valeurs de tous les éléments du Queryset
+        writer.writerows(queryset.values_list())
+        return response

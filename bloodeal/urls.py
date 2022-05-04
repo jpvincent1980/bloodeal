@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.views.generic import RedirectView
 
-from accounts.views import sentry_error
+from accounts.views import sentry_error, generate_pdf
 
 favicon_view = RedirectView.as_view(url='/static/img/favicon.png',
                                     permanent=True)
@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/', include("api.urls"), name="api"),
     path('site-admin/', admin.site.urls),
     path('sentry-debug/', sentry_error, name="sentry"),
+    path('pdf/', generate_pdf, name="pdf"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
