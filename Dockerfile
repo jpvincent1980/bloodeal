@@ -3,8 +3,8 @@
 # Image used for our application
 FROM python:3.10-slim-buster
 
-# Creation of a working directory to be used as default path
-WORKDIR /app
+# Name of the new image author
+MAINTAINER Jean-Philippe Vincent
 
 # Set environment variables
 # This prevents Python from writing out pyc files
@@ -13,6 +13,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 # Set port number
 ENV PORT=8000
+
+# Creation of a working directory to be used as default path
+WORKDIR /app
 
 # Copying the requirements.txt file into the default path
 COPY requirements.txt /app

@@ -86,7 +86,15 @@ class PeopleRequest(models.Model):
         verbose_name_plural = "Traité - Personnalités"
 
 
+# Le filtre est fait via le manager au niveau du proxy model
+class PeopleRequestManager(models.Manager):
+    def get_queryset(self):
+        return super(PeopleRequestManager, self).get_queryset().filter(status="1")
+
+
 class PeopleRequestOpen(PeopleRequest):
+    objects = PeopleRequestManager()
+
     class Meta:
         proxy = True
         verbose_name = "A traiter - Personnalité"
@@ -154,6 +162,8 @@ class MovieRequest(models.Model):
         verbose_name_plural = "Traité - Films"
 
 
+# Le filtre sera fait en surchagreant la méthode get_queryset au niveau du
+# ModelAdmin
 class MovieRequestOpen(MovieRequest):
     class Meta:
         proxy = True

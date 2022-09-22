@@ -77,11 +77,11 @@ class PeopleRequestOpenAdmin(admin.ModelAdmin):
                      "status")
     ordering = ("user", )
 
-    def get_queryset(self, request):
-        queryset = super().get_queryset(request)
-        queryset = queryset.filter(status="1")
-
-        return queryset
+    # def get_queryset(self, request):
+    #     queryset = super().get_queryset(request)
+    #     queryset = queryset.filter(status="1")
+    #
+    #     return queryset
 
     def link_to_people(self, obj):
         if obj.people:
