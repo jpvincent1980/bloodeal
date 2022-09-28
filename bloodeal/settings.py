@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'deals',
     'cloudinary',
     'cloudinary_storage',
+    'api'
 ]
 
 MIDDLEWARE = [
