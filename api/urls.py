@@ -20,10 +20,14 @@ from .views import (
     PeopleRequestViewSet,
     DealRequestViewSet)
 
+app_name = "api"
+
 router = DefaultRouter()
+router.APIRootView.__name__ = "Bloodeal"
+router.APIRootView.__doc__ = "API de l'application Bloodeal"
 router.register(r'users', CustomUserViewSet)
 router.register(r'blurays', BluRayViewSet)
-router.register(r'movies', MovieViewSet)
+router.register(r'movies', MovieViewSet, basename="movies")
 router.register(r'movies_directors', MovieDirectorViewSet)
 router.register(r'movies_actors', MovieActorViewSet)
 router.register(r'people', PeopleViewSet)
@@ -40,4 +44,5 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path('login/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
     path('v1/', include(router.urls)),
+    path('v1/', router.APIRootView.as_view(), name="v1"),
 ]
